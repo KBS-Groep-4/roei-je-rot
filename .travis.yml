@@ -1,0 +1,23 @@
+# Build only pushed (merged) master or any pull request. This avoids the
+# pull request to be build twice.
+branches:
+  only:
+    - master
+
+language: csharp
+
+os:
+  - linux
+  - windows
+  - osx
+
+dotnet: 2.2.0
+
+git:
+  depth: 1
+  quiet: true
+
+script:
+  - dotnet restore
+  - dotnet build
+  - dotnet test
