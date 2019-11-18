@@ -6,11 +6,11 @@
         xmlns:local="clr-namespace:RoeiJeRot.View.Wpf"
         mc:Ignorable="d"
         Title="Roei Je Rot" Height="600" Width="800"
-        Background="LightGray"
+        Background="#DDDDFF"
         Icon="http://www.gehandicaptenroeien.nl/wp-content/uploads/2016/11/logo_gehandicapt_roeien_dordrecht_bl_kl-180x122.png"
         ResizeMode="CanMinimize">
     <Grid>
-        <Border Background="Gray" CornerRadius="5" BorderBrush="Gray" BorderThickness="5" Margin="331,335,331,190"/>
+        <Border Background="#7777FF" CornerRadius="5" BorderBrush="#7777FF" BorderThickness="5" Margin="331,335,331,190"/>
         <Button Content="Inloggen" Foreground="White" Background="Transparent" BorderBrush="Transparent" Margin="331,335,331,190"></Button>
         <Label Content="Log in" FontSize="30" HorizontalAlignment="Left" Margin="340,231,0,0" VerticalAlignment="Top" Height="51" Width="92"/>
         <TextBox HorizontalAlignment="Center" Margin="0,287,0,0" Text="Username" TextWrapping="Wrap" VerticalAlignment="Top" Width="236" Height="19"/>
