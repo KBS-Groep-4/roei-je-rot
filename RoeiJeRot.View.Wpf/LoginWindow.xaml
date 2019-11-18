@@ -22,7 +22,6 @@
         </Grid.RowDefinitions>
         <Border Grid.Row="1" Grid.Column="1" Background="#3300EE" CornerRadius="5" BorderBrush="#3300EE" BorderThickness="5" Margin="0,335,0,175" HorizontalAlignment="Center" Width="178"/>
         <Button Grid.Row="1" Grid.Column="1" Content="Inloggen" Foreground="White" Background="Transparent" BorderBrush="Transparent" Margin="211,335,211,175"></Button>
-        <Label Grid.Row="1" Grid.Column="1" Content="Log in" FontSize="30" HorizontalAlignment="Center" Margin="0,231,0,0" VerticalAlignment="Top" Height="51" Width="92"/>
         <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Margin="0,287,0,0" Text="Gebruikersnaam" TextWrapping="Wrap" VerticalAlignment="Top" Width="236" Height="19"/>
         <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Margin="0,311,0,0" Text="Wachtwoord" TextWrapping="Wrap" VerticalAlignment="Top" Width="236" Height="19"/>
         <Image Grid.Row="1" Grid.Column="1" Source="/rsc/logo.png" Stretch="None" HorizontalAlignment="Center" Height="126" Margin="0,140,0,0" VerticalAlignment="Top" Width="186"/>
