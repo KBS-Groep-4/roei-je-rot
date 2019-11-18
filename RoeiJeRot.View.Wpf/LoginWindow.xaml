@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Roei Je Rot" Height="600" Width="800"
         Background="#EEEEEE"
-        Icon="http://www.gehandicaptenroeien.nl/wp-content/uploads/2016/11/logo_gehandicapt_roeien_dordrecht_bl_kl-180x122.png"
+        Icon="/rsc/logo.png"
          MinHeight="600" MinWidth="800">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -25,7 +25,7 @@
         <Label Grid.Row="1" Grid.Column="1" Content="Log in" FontSize="30" HorizontalAlignment="Center" Margin="0,231,0,0" VerticalAlignment="Top" Height="51" Width="92"/>
         <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Margin="0,287,0,0" Text="Gebruikersnaam" TextWrapping="Wrap" VerticalAlignment="Top" Width="236" Height="19"/>
         <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Margin="0,311,0,0" Text="Wachtwoord" TextWrapping="Wrap" VerticalAlignment="Top" Width="236" Height="19"/>
-        <Image Grid.Row="1" Grid.Column="1" Source="http://www.gehandicaptenroeien.nl/wp-content/uploads/2016/11/logo_gehandicapt_roeien_dordrecht_bl_kl-180x122.png" Stretch="None" HorizontalAlignment="Center" Height="126" Margin="0,140,0,0" VerticalAlignment="Top" Width="186"/>
+        <Image Grid.Row="1" Grid.Column="1" Source="/rsc/logo.png" Stretch="None" HorizontalAlignment="Center" Height="126" Margin="0,140,0,0" VerticalAlignment="Top" Width="186"/>
         <Label Grid.Row="1" Grid.Column="1" Content="Roeivereniging Roei Je Rot" FontSize="50" HorizontalAlignment="Center" Margin="0,51,0,0" VerticalAlignment="Top" Height="77" Width="596"/>
     </Grid>
 </Window>
