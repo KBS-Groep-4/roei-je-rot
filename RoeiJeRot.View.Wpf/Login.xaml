@@ -8,14 +8,24 @@
         Title="Roei Je Rot" Height="600" Width="800"
         Background="#EEEEEE"
         Icon="http://www.gehandicaptenroeien.nl/wp-content/uploads/2016/11/logo_gehandicapt_roeien_dordrecht_bl_kl-180x122.png"
-        ResizeMode="CanMinimize">
+         MinHeight="600" MinWidth="800">
     <Grid>
-        <Border Background="#3300EE" CornerRadius="5" BorderBrush="#3300EE" BorderThickness="5" Margin="331,335,331,190"/>
-        <Button Content="Inloggen" Foreground="White" Background="Transparent" BorderBrush="Transparent" Margin="331,335,331,190"></Button>
-        <Label Content="Log in" FontSize="30" HorizontalAlignment="Left" Margin="340,231,0,0" VerticalAlignment="Top" Height="51" Width="92"/>
-        <TextBox HorizontalAlignment="Center" Margin="0,287,0,0" Text="Username" TextWrapping="Wrap" VerticalAlignment="Top" Width="236" Height="19"/>
-        <TextBox HorizontalAlignment="Center" Margin="0,311,0,0" Text="Password" TextWrapping="Wrap" VerticalAlignment="Top" Width="236" Height="19"/>
-        <Image Source="http://www.gehandicaptenroeien.nl/wp-content/uploads/2016/11/logo_gehandicapt_roeien_dordrecht_bl_kl-180x122.png" Stretch="None" HorizontalAlignment="Left" Height="126" Margin="296,140,0,0" VerticalAlignment="Top" Width="186"/>
-        <Label Content="Roeivereniging Roei Je Rot" FontSize="50" HorizontalAlignment="Center" Margin="0,51,0,0" VerticalAlignment="Top"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition Width="600"/>
+            <ColumnDefinition Width="100*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100*"/>
+            <RowDefinition Height="550"/>
+            <RowDefinition Height="100*"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="1" Grid.Column="1" Background="#3300EE" CornerRadius="5" BorderBrush="#3300EE" BorderThickness="5" Margin="0,335,0,175" HorizontalAlignment="Center" Width="178"/>
+        <Button Grid.Row="1" Grid.Column="1" Content="Inloggen" Foreground="White" Background="Transparent" BorderBrush="Transparent" Margin="211,335,211,175"></Button>
+        <Label Grid.Row="1" Grid.Column="1" Content="Log in" FontSize="30" HorizontalAlignment="Center" Margin="0,231,0,0" VerticalAlignment="Top" Height="51" Width="92"/>
+        <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Margin="0,287,0,0" Text="Gebruikersnaam" TextWrapping="Wrap" VerticalAlignment="Top" Width="236" Height="19"/>
+        <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Margin="0,311,0,0" Text="Wachtwoord" TextWrapping="Wrap" VerticalAlignment="Top" Width="236" Height="19"/>
+        <Image Grid.Row="1" Grid.Column="1" Source="http://www.gehandicaptenroeien.nl/wp-content/uploads/2016/11/logo_gehandicapt_roeien_dordrecht_bl_kl-180x122.png" Stretch="None" HorizontalAlignment="Center" Height="126" Margin="0,140,0,0" VerticalAlignment="Top" Width="186"/>
+        <Label Grid.Row="1" Grid.Column="1" Content="Roeivereniging Roei Je Rot" FontSize="50" HorizontalAlignment="Center" Margin="0,51,0,0" VerticalAlignment="Top" Height="77" Width="596"/>
     </Grid>
 </Window>
