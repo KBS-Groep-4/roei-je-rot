@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RoeiJeRot.Database.Database;
 using RoeiJeRot.Logic.Config;
+using RoeiJeRot.Logic.Services;
 
 namespace RoeiJeRot.View.Wpf
 {
@@ -33,28 +34,36 @@ namespace RoeiJeRot.View.Wpf
                 {
                     services.Configure<Config>(context.Configuration)
                         .AddSingleton<IConfig, Config>(_ => new Config(context.Configuration))
-                        .AddSingleton<MainWindow>()
                         .AddDbContext<RoeiJeRotDbContext>(opts =>
                         {
                             opts.UseSqlServer(context.Configuration["connectionString"],
                                 o => o.MigrationsAssembly("LocatieNu.Web.Api"));
-                        });
+                        })
+                        .AddSingleton<IUserService, UserService>()
+                        .AddSingleton<MainWindow>()
+                        .AddSingleton<DataSeeder>();
                 })
                 .ConfigureLogging(logging => { logging.AddConsole(); })
                 .Build();
+
+            var seeder = _host.Services.GetService<DataSeeder>();
+            seeder.Seed();
         }
 
         private async void Application_Startup(object sender, StartupEventArgs e)
         {
             await _host.StartAsync();
+
+            var mainWindow = _host.Services.GetService<MainWindow>();
+            mainWindow.Show();
         }
 
         private async void Application_Exit(object sender, ExitEventArgs e)
         {
-            await _host.StartAsync();
-
-            var mainWindow = _host.Services.GetService<MainWindow>();
-            mainWindow.Show();
+            using (_host)
+            {
+                await _host.StopAsync(TimeSpan.FromSeconds(5));
+            }
         }
     }
 }
