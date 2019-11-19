@@ -27,7 +27,7 @@ namespace RoeiJeRot.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Boats");
+                    b.ToTable("boats");
                 });
 
             modelBuilder.Entity("RoeiJeRot.Database.Database.User", b =>
@@ -37,9 +37,15 @@ namespace RoeiJeRot.Database.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("users");
                 });
 #pragma warning restore 612, 618
         }

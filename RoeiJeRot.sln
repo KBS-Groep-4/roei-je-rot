@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoeiJeRot.View.Wpf", "RoeiJ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoeiJeRot.Logic", "RoeiJeRot.Logic\RoeiJeRot.Logic.csproj", "{3ECC003F-17C2-4E52-8D4D-7A3A0286191E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoeiJeRot.View.Console", "RoeiJeRot.View.Console\RoeiJeRot.View.Console.csproj", "{9E5F8877-A0FA-4F10-97F1-1A5E4DF17D8E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,10 +33,6 @@ Global
 		{3ECC003F-17C2-4E52-8D4D-7A3A0286191E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3ECC003F-17C2-4E52-8D4D-7A3A0286191E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3ECC003F-17C2-4E52-8D4D-7A3A0286191E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9E5F8877-A0FA-4F10-97F1-1A5E4DF17D8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9E5F8877-A0FA-4F10-97F1-1A5E4DF17D8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9E5F8877-A0FA-4F10-97F1-1A5E4DF17D8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9E5F8877-A0FA-4F10-97F1-1A5E4DF17D8E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -7,6 +7,9 @@ using Microsoft.Extensions.Configuration;
 
 namespace RoeiJeRot.Database.Database
 {
+    /// <summary>
+    /// Class that provides access to the database.
+    /// </summary>
     public class RoeiJeRotDbContext : DbContext
     {
         public RoeiJeRotDbContext()
@@ -17,7 +20,14 @@ namespace RoeiJeRot.Database.Database
         {
         }
 
+        /// <summary>
+        /// A list with boats from the database.
+        /// </summary>
         public DbSet<Boat> Boats { get; set; }
+
+        /// <summary>
+        /// A list with users from the database.
+        /// </summary>
         public DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
