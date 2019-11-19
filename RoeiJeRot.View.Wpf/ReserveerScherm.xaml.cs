@@ -26,5 +26,10 @@ namespace RoeiJeRot.View.Wpf
         {
 
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RoeiJeRot.View.Wpf"
         mc:Ignorable="d"
-        Title="ReserveerScherm" Height="900" Width="1600">
+        Title="ReserveerScherm" Height="900" Width="1600" MinWidth="1500" MinHeight="800">
     <Grid Margin="42,20,42,20">
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
@@ -42,11 +42,29 @@
                     <StackPanel Margin="10" Orientation="Vertical">
                         <StackPanel Orientation="Horizontal">
                             <Label Content="Wanneer:" FontSize="32" Width="auto"/>
-                            <Button Content="Nu" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="20"/>
+                            <Button Content="Vandaag" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="20"/>
                         </StackPanel>
                         <Calendar />
                     </StackPanel>
+                    <StackPanel Margin="10" Orientation="Vertical" Grid.Column="1">
+                        <Label Content="Reserveerbare tijden:" FontSize="32" Width="auto" Padding="5,5,5,0"/>
+                        <Label Content="10:32 tot 19:30" FontSize="20" Padding="5 0 5 5"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Vanaf (H:MM)" FontSize="18" Padding="5 5 5 0"/>
+                            <Button Content="Nu" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="20"/>
+                        </StackPanel>
+                        <TextBox Text="13:20" TextWrapping="Wrap" VerticalAlignment="Top" Margin="15 0 15 0"/>
+
+                        <Label Content="Aantal minuten (Max: 120):" FontSize="18" Padding="5 5 5 0"/>
+                        <TextBox Text="120" TextWrapping="Wrap" VerticalAlignment="Top" Margin="15 0 15 0"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2" Orientation="Vertical" Margin="10">
+                        <Label Content="Filter:" FontSize="32"></Label>
+                    </StackPanel>
                 </Grid>
+                <StackPanel Grid.Row="1" Orientation="Vertical" Margin="10">
+                    <Label Content="Beschikbare Boten:" FontSize="32"/>
+                </StackPanel>
             </Grid>
             <StackPanel Grid.Column="1" Orientation="Vertical" Margin="10, 0, 10, 0">
                 <StackPanel Height="auto">
@@ -59,7 +77,7 @@
                                 <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock HorizontalAlignment="Center" Text="13-19-2019 13:37" TextWrapping="Wrap" VerticalAlignment="Center" Height="32" Width="62"/>
+                            <TextBlock HorizontalAlignment="Right" Text="13-19-2019 13:37" TextWrapping="Wrap" VerticalAlignment="Center" Height="32" Width="62" Margin="0,0,4,0"/>
                             <Button Content="Annuleren" Grid.Column="3"/>
                             <Button Content="Ophalen" Grid.Column="2"/>
                             <TextBlock Grid.Column="1" HorizontalAlignment="Center" Text="Type&#x0a;Nr." TextWrapping="Wrap" VerticalAlignment="Center"/>
