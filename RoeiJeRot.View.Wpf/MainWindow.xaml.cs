@@ -1,19 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using RoeiJeRot.Logic.Config;
+﻿using System.Windows;
+using RoeiJeRot.Logic.Services;
 
 namespace RoeiJeRot.View.Wpf
 {
@@ -22,9 +8,20 @@ namespace RoeiJeRot.View.Wpf
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private readonly IUserService _userService;
+
+        public MainWindow(IUserService userService)
         {
+            _userService = userService;
             InitializeComponent();
+        }
+
+        private void btnGetUsers_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var user in _userService.GetUsersExample())
+            {
+                lstUserList.Items.Add(user.FirstName);
+            }
         }
     }
 }
