@@ -22,7 +22,9 @@ namespace RoeiJeRot.View.Wpf
 
             rs.Activate();
             rs.Show();
-            
+
+        }
+
         private void btnGetUsers_Click(object sender, RoutedEventArgs e)
         {
             foreach (var user in _userService.GetUsers())
