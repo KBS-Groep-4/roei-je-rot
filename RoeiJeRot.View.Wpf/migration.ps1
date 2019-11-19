@@ -1,4 +1,4 @@
-﻿Get-ChildItem ".\Migrations\*" -Filter *.cs | 
+﻿Get-ChildItem "../RoeiJeRot.Database/Migrations/*" -Filter *.cs | 
 Foreach-Object {
     Remove-Item $_.FullName
 }

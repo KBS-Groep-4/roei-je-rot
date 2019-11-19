@@ -7,7 +7,7 @@ namespace RoeiJeRot.Database.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Boats",
+                name: "boats",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -15,29 +15,31 @@ namespace RoeiJeRot.Database.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Boats", x => x.Id);
+                    table.PrimaryKey("PK_boats", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "users",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1")
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.PrimaryKey("PK_users", x => x.Id);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Boats");
+                name: "boats");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "users");
         }
     }
 }
