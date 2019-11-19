@@ -7,9 +7,16 @@ using RoeiJeRot.Database.Database;
 
 namespace RoeiJeRot.Logic.Services
 {
+    /// <summary>
+    /// Interface for logic that retrieves user data from database.
+    /// </summary>
     public interface IUserService
     {
-        List<User> GetUsersExample();
+        /// <summary>
+        ///  Returns a list of users from the database.
+        /// </summary>
+        /// <returns></returns>
+        List<User> GetUsers();
     }
 
     public class UserService : IUserService
@@ -21,15 +28,9 @@ namespace RoeiJeRot.Logic.Services
             _context = context;
         }
 
-        /// <summary>
-        ///  Voorbeeld voor get users database query.
-        /// </summary>
-        /// <returns></returns>
-        public List<User> GetUsersExample()
+        public List<User> GetUsers()
         {
-            return _context.Users
-                .Where(x => x.FirstName == "Pauul")
-                .ToList();
+            return _context.Users.ToList();
         }
     }
 }

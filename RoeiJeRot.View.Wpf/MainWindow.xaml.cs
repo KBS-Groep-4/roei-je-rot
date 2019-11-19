@@ -18,7 +18,7 @@ namespace RoeiJeRot.View.Wpf
 
         private void btnGetUsers_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var user in _userService.GetUsersExample())
+            foreach (var user in _userService.GetUsers())
             {
                 lstUserList.Items.Add(user.FirstName);
             }

@@ -6,6 +6,9 @@ using RoeiJeRot.Database.Database;
 
 namespace RoeiJeRot.View.Wpf
 {
+    /// <summary>
+    /// Data seeder that inserts test data into the database.
+    /// </summary>
     internal class DataSeeder
     {
         private readonly RoeiJeRotDbContext _context;
@@ -16,6 +19,9 @@ namespace RoeiJeRot.View.Wpf
 
         }
 
+        /// <summary>
+        /// Inserts test data into database.
+        /// </summary>
         public void Seed()
         {
             if (!_context.Users.Any()) {
@@ -23,9 +29,10 @@ namespace RoeiJeRot.View.Wpf
             }
         }
 
-        public void SeedUsers()
+        private void SeedUsers()
         {
-            _context.Users.Add(new User() {FirstName = "Pauul", LastName = "Stra"});
+            _context.Users.Add(new User() {FirstName = "Paul", LastName = "Hiemstra"});
+            _context.Users.Add(new User() { FirstName = "Frank", LastName = "de Milt" });
             _context.SaveChanges();
         }
     }
