@@ -44,7 +44,23 @@
                             <Label Content="Wanneer:" FontSize="32" Width="auto"/>
                             <Button Content="Vandaag" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="20"/>
                         </StackPanel>
-                        <Calendar />
+                        <Calendar Foreground="#FF333333" >
+                            <Calendar.BorderBrush>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FFA3AEB9"/>
+                                    <GradientStop Color="#FF8399A9" Offset="0.375"/>
+                                    <GradientStop Color="#FF718597" Offset="0.375"/>
+                                    <GradientStop Color="#FF122BC5" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Calendar.BorderBrush>
+                            <Calendar.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#4C122BC5" Offset="0.148"/>
+                                    <GradientStop Color="#FFECF0F4" Offset="0.148"/>
+                                    <GradientStop Color="#FF122BC5" Offset="0"/>
+                                </LinearGradientBrush>
+                            </Calendar.Background>
+                        </Calendar>
                     </StackPanel>
                     <StackPanel Margin="10" Orientation="Vertical" Grid.Column="1">
                         <Label Content="Reserveerbare tijden:" FontSize="32" Width="auto" Padding="5,5,5,0"/>
@@ -96,8 +112,7 @@
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock HorizontalAlignment="Center" Text="13-19-2019 13:37" TextWrapping="Wrap" VerticalAlignment="Center" Height="32" Width="62"/>
-                            <Button Content="Annuleren" Grid.Column="3"/>
-                            <Button Content="Ophalen" Grid.Column="2"/>
+                            <Button Content="Terugbrengen" Grid.Column="3"/>
                             <TextBlock Grid.Column="1" HorizontalAlignment="Center" Text="Type&#x0a;Nr." TextWrapping="Wrap" VerticalAlignment="Center"/>
                         </Grid>
                     </StackPanel>
