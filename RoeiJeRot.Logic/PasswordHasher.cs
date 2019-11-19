@@ -4,11 +4,11 @@ namespace RoeiJeRot.Logic
 {
     class PasswordHasher
     {
-        public bool compareHash(string dbHash, string password)
+        public bool CompareHash(string dbHash, string password)
         {
             bool value = false;
 
-            if (dbHash == getPasswordHash(password))
+            if (dbHash == GetPasswordHash(password))
             {
                 value = true;
             }
@@ -16,7 +16,7 @@ namespace RoeiJeRot.Logic
             return value;
         }
 
-        public string getPasswordHash(string password)
+        public string GetPasswordHash(string password)
         {
             var crypt = new System.Security.Cryptography.SHA256Managed();
             var hash = new StringBuilder();
