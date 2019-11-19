@@ -16,6 +16,15 @@ namespace RoeiJeRot.View.Wpf
             InitializeComponent();
         }
 
+        private void NaarReserveren(object sender, RoutedEventArgs e)
+        {
+            ReserveerScherm rs = new ReserveerScherm();
+
+            rs.Activate();
+            rs.Show();
+
+        }
+
         private void btnGetUsers_Click(object sender, RoutedEventArgs e)
         {
             foreach (var user in _userService.GetUsers())
