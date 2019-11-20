@@ -2,7 +2,7 @@
 
 namespace RoeiJeRot.Logic
 {
-    static class Hasher
+    public static class Hasher
     {
         /// <summary>
         /// Compares the specified database hash.
