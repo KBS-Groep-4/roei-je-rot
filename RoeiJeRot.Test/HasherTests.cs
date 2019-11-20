@@ -13,8 +13,6 @@ namespace RoeiJeRot.Test
         [TestCase("ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad", "abc")]
         public void ComparePassworToHash(string dbHash, string password)
         {
-            //Arrange
-
             //Act
             bool value = Hasher.Compare(dbHash, password);
 
