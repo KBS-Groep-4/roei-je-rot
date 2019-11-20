@@ -13,7 +13,7 @@ namespace RoeiJeRot.Database.Database
         public DateTime Date { get; set; }
         public byte Duration { get; set; }
 
-        [ForeignKey(nameof(User))]
+        [ForeignKey(nameof(ReservedBy))]
         public int ReservedByUserId { get; set; }
         [ForeignKey(nameof(ReservedSailingBoat))]
         public int ReservedSailingBoatId { get; set; }
