@@ -2,6 +2,9 @@
 
 namespace RoeiJeRot.Logic
 {
+    /// <summary>
+    /// Class to compare hashes from the database to the password the user inputs.
+    /// </summary>
     public static class Hasher
     {
         /// <summary>
