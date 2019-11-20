@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RoeiJeRot.Database.Database
@@ -11,5 +12,15 @@ namespace RoeiJeRot.Database.Database
 
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string StreetName { get; set; }
+        public string HouseNumber { get; set; }
+        public string City { get; set; }
+        public string Country { get; set; }
+        public int SailingLevel { get; set; }
+        public string Username { get; set; }
+        public string  Password { get; set; }
+        
+        public virtual ICollection<SailingReservation> Reservations { get; set; }
+        public virtual ICollection<SailingBoatDamageReport> DamageReports { get; set; }
     }
 }
