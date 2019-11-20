@@ -24,9 +24,9 @@ namespace RoeiJeRot.View.Wpf
         /// </summary>
         public void Seed()
         {
-            if (!_context.Users.Any()) {
-                SeedUsers();
-            }
+            //if (!_context.Users.Any()) {
+            //    SeedUsers();
+            //}
         }
 
         private void SeedUsers()
