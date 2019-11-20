@@ -23,12 +23,32 @@ namespace RoeiJeRot.Database.Database
         /// <summary>
         /// A list with boats from the database.
         /// </summary>
-        public DbSet<Boat> Boats { get; set; }
+        public DbSet<SailingBoat> SailingBoats { get; set; }
 
         /// <summary>
         /// A list with users from the database.
         /// </summary>
         public DbSet<User> Users { get; set; }
+
+        /// <summary>
+        /// A list with reservations from the database.
+        /// </summary>
+        public DbSet<SailingReservation> Reservations { get; set; }
+
+        /// <summary>
+        /// A list with sailing boat damage reports from the database.
+        /// </summary>
+        public DbSet<SailingBoatDamageReport> SailingBoatDamageReports { get; set; }
+
+        /// <summary>
+        /// A list with sailing boat competitions from the database.
+        /// </summary>
+        public DbSet<SailingCompetition> SailingCompetitions { get; set; }
+
+        /// <summary>
+        /// A list with sailing boat competition participants from the database.
+        /// </summary>
+        public DbSet<SailingCompetitionParticipant> SailingCompetitionParticipants { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
