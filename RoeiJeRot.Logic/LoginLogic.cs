@@ -4,7 +4,7 @@ using System.Linq;
 namespace RoeiJeRot.Logic
 {
     /// <summary>
-    /// Class to implement logic for login screen.
+    /// Logic for login related tasks.
     /// </summary>
     public class LoginLogic
     {

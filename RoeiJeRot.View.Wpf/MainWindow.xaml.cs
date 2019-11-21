@@ -16,7 +16,7 @@ namespace RoeiJeRot.View.Wpf
             InitializeComponent();
         }
 
-        private void NaarReserveren(object sender, RoutedEventArgs e)
+        private void OnReserveWindowClick(object sender, RoutedEventArgs e)
         {
             ReserveerScherm rs = new ReserveerScherm();
 
@@ -24,7 +24,7 @@ namespace RoeiJeRot.View.Wpf
             rs.Show();
         }
 
-        private void NaarInloggen(object sender, RoutedEventArgs e)
+        private void OnLoginWindowClick(object sender, RoutedEventArgs e)
         {
             LoginWindow lw = new LoginWindow(_userService);
 

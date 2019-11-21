@@ -11,6 +11,7 @@ namespace RoeiJeRot.View.Wpf
     public partial class LoginWindow : Window
     {
         private LoginLogic _loginLogic;
+
         public LoginWindow(IUserService userService)
         {
             _loginLogic = new LoginLogic(userService);
@@ -24,7 +25,6 @@ namespace RoeiJeRot.View.Wpf
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void OnInloggenClick(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine($"Username: {UsernameTextbox.Text}, password: {PasswordTextbox.Password}");
             if (_loginLogic.AuthenticateUser(UsernameTextbox.Text, PasswordTextbox.Password))
             {
                 MessageBox.Show("Invoer incorrect.", "Invoer correct");

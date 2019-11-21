@@ -13,22 +13,17 @@ namespace RoeiJeRot.Test
         public List<User> GetUsers()
         {
             List<User> list = new List<User>();
+
             list.Add(new User()
             {
-                FirstName = "Paul",
-                LastName = "Hiemstra",
-                City = "Zwolle",
-                Country = "Nederland",
-                HouseNumber = "2",
                 Password = Hasher.Hash("abc"),
                 Username = "abc",
-                SailingLevel = 1,
-                StreetName = "Duckweg"
             });
 
             return list;
         }
     }
+
     class LoginTests
     {
         [TestCase("abc", "abc")]
