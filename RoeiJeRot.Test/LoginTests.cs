@@ -32,7 +32,7 @@ namespace RoeiJeRot.Test
     class LoginTests
     {
         [TestCase("abc", "abc")]
-        public void LoginUserPaul(string username, string password)
+        public void LoginUserPaulCorrect(string username, string password)
         {
             //Arrange
             LoginLogic logic = new LoginLogic(new TestUserService());
@@ -42,6 +42,19 @@ namespace RoeiJeRot.Test
 
             //Assert
             Assert.AreEqual(value, true);
+        }
+
+        [TestCase("abc", "abd")]
+        public void LoginUserPaulIncorrect(string username, string password)
+        {
+            //Arrange
+            LoginLogic logic = new LoginLogic(new TestUserService());
+
+            //Act
+            bool value = logic.AuthenticateUser(username, password);
+
+            //Assert
+            Assert.AreEqual(value, false);
         }
     }
 }
