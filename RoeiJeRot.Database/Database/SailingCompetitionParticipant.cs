@@ -14,6 +14,6 @@ namespace RoeiJeRot.Database.Database
         public int ParticipantId { get; set; }
 
         public virtual SailingCompetition SailingCompetition { get; set; }
-        public virtual SailingBoat SailingParticipant { get; set; }
+        public virtual User SailingParticipant { get; set; }
     }
 }
