@@ -49,6 +49,8 @@ namespace RoeiJeRot.Database.Database
         /// A list with sailing boat competition participants from the database.
         /// </summary>
         public DbSet<SailingCompetitionParticipant> SailingCompetitionParticipants { get; set; }
+        
+        public DbSet<BoatType> SailingBoatTypes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

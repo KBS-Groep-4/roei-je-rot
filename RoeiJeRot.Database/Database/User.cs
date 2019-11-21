@@ -7,6 +7,12 @@ namespace RoeiJeRot.Database.Database
     [Table("users")]
     public class User 
     {
+        public User()
+        {
+            Reservations = new HashSet<SailingReservation>();
+            DamageReports = new HashSet<SailingBoatDamageReport>();
+        }
+
         [Key]
         public int Id { get; set; }
 

@@ -121,18 +121,17 @@ namespace RoeiJeRot.Database.Migrations
                     Date = table.Column<DateTime>(nullable: false),
                     Duration = table.Column<byte>(nullable: false),
                     ReservedByUserId = table.Column<int>(nullable: false),
-                    ReservedSailingBoatId = table.Column<int>(nullable: false),
-                    ReservedById = table.Column<int>(nullable: true)
+                    ReservedSailingBoatId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_sailing_reservations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_sailing_reservations_users_ReservedById",
-                        column: x => x.ReservedById,
+                        name: "FK_sailing_reservations_users_ReservedByUserId",
+                        column: x => x.ReservedByUserId,
                         principalTable: "users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_sailing_reservations_sailing_boats_ReservedSailingBoatId",
                         column: x => x.ReservedSailingBoatId,
@@ -162,9 +161,9 @@ namespace RoeiJeRot.Database.Migrations
                 column: "SailingCompetitionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_sailing_reservations_ReservedById",
+                name: "IX_sailing_reservations_ReservedByUserId",
                 table: "sailing_reservations",
-                column: "ReservedById");
+                column: "ReservedByUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_sailing_reservations_ReservedSailingBoatId",
