@@ -22,7 +22,14 @@ namespace RoeiJeRot.View.Wpf
 
             rs.Activate();
             rs.Show();
+        }
 
+        private void NaarInloggen(object sender, RoutedEventArgs e)
+        {
+            LoginWindow lw = new LoginWindow(_userService);
+
+            lw.Activate();
+            lw.Show();
         }
 
         private void btnGetUsers_Click(object sender, RoutedEventArgs e)

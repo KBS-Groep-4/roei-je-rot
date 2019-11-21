@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore.Internal;
 using RoeiJeRot.Database.Database;
+using RoeiJeRot.Logic;
 
 namespace RoeiJeRot.View.Wpf
 {
@@ -34,15 +35,13 @@ namespace RoeiJeRot.View.Wpf
         {
             _context.Users.Add(new User()
             {
-                Id = 1,
                 FirstName = "Paul", LastName = "Hiemstra", City = "Zwolle", Country = "Nederland", HouseNumber = "2",
-                Password = "abc", Username = "abc", SailingLevel = 1, StreetName = "Duckweg"
+                Password = Hasher.Hash("abc"), Username = "abc", SailingLevel = 1, StreetName = "Duckweg"
             });
             _context.Users.Add(new User()
             {
-                Id = 2,
-                FirstName = "Frank", LastName = "de Milt", City = "Zwolle", Country = "Nederland", HouseNumber = "2",
-                Password = "abc", Username = "abc", SailingLevel = 1, StreetName = "Duckweg"
+                FirstName = "Frank", LastName = "Demilt", City = "Zwolle", Country = "Nederland", HouseNumber = "2",
+                Password = Hasher.Hash("abc"), Username = "abc", SailingLevel = 1, StreetName = "Duckweg"
             });
             _context.SaveChanges();
         }
