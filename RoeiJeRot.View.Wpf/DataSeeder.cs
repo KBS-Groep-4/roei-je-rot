@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using RoeiJeRot.Database.Database;
 
@@ -26,7 +27,23 @@ namespace RoeiJeRot.View.Wpf
         {
             if (!_context.Users.Any())
             {
-                SeedUsers();
+                try
+                {
+                    _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT users ON");
+                    _context.SaveChanges();
+
+                    SeedUsers();
+                    SeedBoatTypes();
+                    SeedBoats();
+                    SeedReservations();
+
+                    _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT users OFF");
+                    _context.SaveChanges();
+                }
+                catch(Exception ex)
+                {
+
+                }
             }
         }
 
@@ -34,13 +51,11 @@ namespace RoeiJeRot.View.Wpf
         {
             _context.Users.Add(new User()
             {
-                Id = 1,
                 FirstName = "Paul", LastName = "Hiemstra", City = "Zwolle", Country = "Nederland", HouseNumber = "2",
                 Password = "abc", Username = "abc", SailingLevel = 1, StreetName = "Duckweg"
             });
             _context.Users.Add(new User()
             {
-                Id = 2,
                 FirstName = "Frank", LastName = "de Milt", City = "Zwolle", Country = "Nederland", HouseNumber = "2",
                 Password = "abc", Username = "abc", SailingLevel = 1, StreetName = "Duckweg"
             });
@@ -49,15 +64,21 @@ namespace RoeiJeRot.View.Wpf
 
         private void SeedBoats()
         {
-            _context.SailingBoats.Add(new SailingBoat() { Name = "Sailing Boat 01", InService = true });
-            _context.SailingBoats.Add(new SailingBoat() { Name = "Sailing Boat 01", InService = false });
+            _context.SailingBoats.Add(new SailingBoat() { Name = "Sailing Boat 01", InService = true, BoatTypeId = 1});
+            _context.SailingBoats.Add(new SailingBoat() { Name = "Sailing Boat 01", InService = false, BoatTypeId = 1 });
             _context.SaveChanges();
+        }
+
+        private void SeedBoatTypes()
+        {
+            _context.SailingBoatTypes.Add(new BoatType() {  PossiblePassengers = 3, RequiredLevel = 2 });
         }
 
         private void SeedReservations()
         {
-            _context.Reservations.Add(new SailingReservation() { Date = DateTime.Now, Duration = 50, ReservedByUserId = 1 });
+            _context.Reservations.Add(new SailingReservation() { Date = DateTime.Now, Duration = 50, ReservedByUserId = 1, });
             _context.Reservations.Add(new SailingReservation() { Date = DateTime.Now, Duration = 50, ReservedByUserId = 2 });
+            _context.SaveChanges();
         }
     }
 }

@@ -124,9 +124,6 @@ namespace RoeiJeRot.Database.Migrations
                     b.Property<byte>("Duration")
                         .HasColumnType("tinyint");
 
-                    b.Property<int?>("ReservedById")
-                        .HasColumnType("int");
-
                     b.Property<int>("ReservedByUserId")
                         .HasColumnType("int");
 
@@ -135,7 +132,7 @@ namespace RoeiJeRot.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ReservedById");
+                    b.HasIndex("ReservedByUserId");
 
                     b.HasIndex("ReservedSailingBoatId");
 
@@ -215,7 +212,9 @@ namespace RoeiJeRot.Database.Migrations
                 {
                     b.HasOne("RoeiJeRot.Database.Database.User", "ReservedBy")
                         .WithMany("Reservations")
-                        .HasForeignKey("ReservedById");
+                        .HasForeignKey("ReservedByUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("RoeiJeRot.Database.Database.SailingBoat", "ReservedSailingBoat")
                         .WithMany("SailingReservations")
