@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Text;
 using RoeiJeRot.Database.Database;
 using System.Linq;
+using System.Reflection.Metadata;
+using System.Runtime.InteropServices;
 
 namespace RoeiJeRot.Logic.Services
 {
@@ -12,13 +15,15 @@ namespace RoeiJeRot.Logic.Services
         void CancelBoatReservation(int reservationId);
     }
 
-    class ReservationService : IReservationService
-    {
+    public class ReservationService : IReservationService
+    { 
         private readonly RoeiJeRotDbContext _context;
+        private readonly IBoatService _boatService;
 
-        public ReservationService(RoeiJeRotDbContext context)
+        public ReservationService(RoeiJeRotDbContext context, IBoatService boatService)
         {
             _context = context;
+            _boatService = boatService;
         }
 
         /// <summary>
@@ -34,9 +39,28 @@ namespace RoeiJeRot.Logic.Services
             return false;
         }
 
-        public List<SailingBoat> GetAvailableBoats(DateTime reservationDate, TimeSpan duration)
+        public List<SailingBoat> GetAvailableBoats(DateTime reservationDate, TimeSpan duration, int typeId)
         {
-            return null;
+            List<SailingBoat> boats = _boatService.GetAllBoats(typeId);
+            List<SailingBoat> availableBoats = new List<SailingBoat>();
+
+            foreach (SailingBoat boat in boats)
+            {
+                bool overlap = false;
+                foreach (SailingReservation reservation in boat.SailingReservations)
+                {
+                    var startReservation = reservation.Date;
+                    var endReservation = startReservation + TimeSpan.FromSeconds(reservation.Duration);
+
+                    var startPlanned = reservationDate;
+                    var endPlanned = startPlanned + duration;
+
+                    if(startReservation < endPlanned && startPlanned < endReservation) overlap = true;
+                }
+                if (!overlap) availableBoats.Add(boat);
+            }
+
+            return availableBoats;
         }
 
         /// <summary>

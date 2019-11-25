@@ -9,8 +9,9 @@ namespace RoeiJeRot.Logic.Services
     public interface IBoatService
     {
         List<SailingBoat> GetAllBoats();
+        List<SailingBoat> GetAllBoats(int typeId);
     }
-    class BoatService : IBoatService
+    public class BoatService : IBoatService
     {
         private readonly RoeiJeRotDbContext _context;
         public BoatService(RoeiJeRotDbContext context)
@@ -33,7 +34,7 @@ namespace RoeiJeRot.Logic.Services
         /// <returns>Returns all boats of given typeId</returns>
         public List<SailingBoat> GetAllBoats(int typeId)
         {
-            return GetAllBoats().Where(boat => boat.typeId).ToList();
+            return GetAllBoats().Where(boat => boat.BoatTypeId == typeId).ToList();
         }
     }
 }
