@@ -13,13 +13,14 @@ namespace RoeiJeRot.View.CustomConsole
             RoeiJeRotDbContext context = new RoeiJeRotDbContext();
 
             IBoatService boatService = new BoatService(context);
-            IReservationService reservationService = new ReservationService(context, boatService);
+            ReservationService   reservationService = new ReservationService(context, boatService);
 
-            List<SailingBoat> boats = boatService.GetAllBoats();
+            List<SailingBoat> boats = boatService.GetAllBoats(5);
+            List<SailingBoat> avail = reservationService.GetAvailableBoats(new DateTime(2020, 3, 9, 13, 15, 0), TimeSpan.FromMinutes(120), 5);
 
             foreach(SailingBoat boat in boats)
             {
-                Console.WriteLine(boat.BoatType);
+                Console.WriteLine(boat.Id);
             }
         }
     }
