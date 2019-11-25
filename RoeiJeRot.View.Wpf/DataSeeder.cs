@@ -65,8 +65,8 @@ namespace RoeiJeRot.View.Wpf
 
         private void SeedBoats()
         {
-            _context.SailingBoats.Add(new SailingBoat() { Name = "Sailing Boat 01", InService = true, BoatTypeId = 1});
-            _context.SailingBoats.Add(new SailingBoat() { Name = "Sailing Boat 01", InService = false, BoatTypeId = 1 });
+            _context.SailingBoats.Add(new SailingBoat() { Id = 1, Status = 0, BoatTypeId = 1});
+            _context.SailingBoats.Add(new SailingBoat() { Id = 1, Status = 0, BoatTypeId = 1 });
             _context.SaveChanges();
         }
 

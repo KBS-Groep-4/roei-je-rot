@@ -8,8 +8,8 @@ namespace RoeiJeRot.Database.Database
     {
         [Key]
         public int Id { get; set; }
-        [ForeignKey(nameof(SailingCompetition))]
-        public int SailingCompetitionId { get; set; }
+        //[ForeignKey(nameof(SailingCompetition))]
+        //public int SailingCompetitionId { get; set; }
         [ForeignKey(nameof(SailingParticipant))]
         public int ParticipantId { get; set; }
 
