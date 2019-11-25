@@ -24,6 +24,14 @@ namespace RoeiJeRot.View.Wpf
             rs.Show();
 
         }
+        private void OverviewReservations(object sender, RoutedEventArgs e)
+        {
+            OverzichtReservering rs = new OverzichtReservering();
+
+            rs.Activate();
+            rs.Show();
+
+        }
 
         private void btnGetUsers_Click(object sender, RoutedEventArgs e)
         {

@@ -17,5 +17,6 @@
         <Button HorizontalAlignment="Left" Margin="279,47,0,0" VerticalAlignment="Top"/>
         <Button x:Name="btnGetUsers" Content="Get Users" Margin="21,10,638,340" Click="btnGetUsers_Click"/>
         <ListBox x:Name="lstUserList" Margin="21,81,638,116"/>
+        <Button Content="Overzicht Reserveringen" HorizontalAlignment="Left" Margin="282,178,0,0" VerticalAlignment="Top" Click="OverviewReservations" Height="17"/>
     </Grid>
 </Window>
