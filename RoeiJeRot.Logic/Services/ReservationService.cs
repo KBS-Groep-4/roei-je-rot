@@ -42,23 +42,18 @@ namespace RoeiJeRot.Logic.Services
         public List<SailingBoat> GetAvailableBoats(DateTime reservationDate, TimeSpan duration, int typeId)
         {
             List<SailingBoat> boats = _boatService.GetAllBoats(typeId);
-            List<SailingBoat> availableBoats = new List<SailingBoat>();
 
+            Console.WriteLine("--=All Boats=--");
             foreach (SailingBoat boat in boats)
-            {
-                bool overlap = false;
-                foreach (SailingReservation reservation in boat.SailingReservations)
-                {
-                    var startReservation = reservation.Date;
-                    var endReservation = startReservation + TimeSpan.FromSeconds(reservation.Duration);
+                Console.WriteLine($"Boat {boat.Id} from type {boat.BoatTypeId}");
 
-                    var startPlanned = reservationDate;
-                    var endPlanned = startPlanned + duration;
+            List<SailingBoat> availableBoats = new List<SailingBoat>();
+            foreach (SailingBoat boat in boats)
+                if(boat.AvailableOn(reservationDate, duration)) availableBoats.Add(boat);
 
-                    if(startReservation < endPlanned && startPlanned < endReservation) overlap = true;
-                }
-                if (!overlap) availableBoats.Add(boat);
-            }
+            Console.WriteLine("--=Available Boats=--");
+            foreach (SailingBoat boat in availableBoats)
+                Console.WriteLine($"Boat {boat.Id} from type {boat.BoatTypeId}");
 
             return availableBoats;
         }

@@ -80,7 +80,7 @@ namespace RoeiJeRot.View.Wpf
         private void SeedReservations()
         {
             _context.Reservations.Add(new SailingReservation() { Date = DateTime.Now, Duration = 50, ReservedByUserId = _context.Users.ToList()[0].Id, });
-            _context.Reservations.Add(new SailingReservation() { Date = DateTime.Now, Duration = 50, ReservedByUserId = _context.Users.ToList()[1].Id });
+            _context.Reservations.Add(new SailingReservation() { Date = new DateTime(2020, 4, 9, 13, 30, 0), Duration = 50, ReservedByUserId = _context.Users.ToList()[1].Id });
             _context.SaveChanges();
         }
     }

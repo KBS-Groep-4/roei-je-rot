@@ -16,9 +16,9 @@ namespace RoeiJeRot.View.CustomConsole
             ReservationService   reservationService = new ReservationService(context, boatService);
 
             List<SailingBoat> boats = boatService.GetAllBoats(5);
-            List<SailingBoat> avail = reservationService.GetAvailableBoats(new DateTime(2020, 3, 9, 13, 15, 0), TimeSpan.FromMinutes(120), 5);
+            List<SailingBoat> avail = reservationService.GetAvailableBoats(new DateTime(2020, 4, 9, 13, 15, 0), TimeSpan.FromMinutes(120), 5);
 
-            foreach(SailingBoat boat in boats)
+            foreach(SailingBoat boat in avail)
             {
                 Console.WriteLine(boat.Id);
             }

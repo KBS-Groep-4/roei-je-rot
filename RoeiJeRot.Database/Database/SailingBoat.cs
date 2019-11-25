@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System;
 
 namespace RoeiJeRot.Database.Database
 {
@@ -13,6 +14,21 @@ namespace RoeiJeRot.Database.Database
             SailingReservations = new HashSet<SailingReservation>();
             DamageReports = new HashSet<SailingBoatDamageReport>();
             SailingCompetitionParticipants = new HashSet<SailingCompetitionParticipant>();
+        }
+
+        public bool AvailableOn(DateTime start, TimeSpan duration)
+        {
+            bool available = true;
+            foreach(var reservation in SailingReservations)
+            {
+                if (!reservation.availableOn(start, duration))
+                {
+                    available = false;
+                    break;
+                }
+            }
+
+            return available;
         }
 
         [Key]
