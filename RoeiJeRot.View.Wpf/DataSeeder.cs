@@ -79,8 +79,8 @@ namespace RoeiJeRot.View.Wpf
 
         private void SeedReservations()
         {
-            _context.Reservations.Add(new SailingReservation() { Date = DateTime.Now, Duration = 50, ReservedByUserId = 1, });
-            _context.Reservations.Add(new SailingReservation() { Date = DateTime.Now, Duration = 50, ReservedByUserId = 2 });
+            _context.Reservations.Add(new SailingReservation() { Date = DateTime.Now, Duration = 50, ReservedByUserId = _context.Users.ToList()[0].Id, });
+            _context.Reservations.Add(new SailingReservation() { Date = DateTime.Now, Duration = 50, ReservedByUserId = _context.Users.ToList()[1].Id });
             _context.SaveChanges();
         }
     }
