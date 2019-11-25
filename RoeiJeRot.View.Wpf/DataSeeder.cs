@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using RoeiJeRot.Database.Database;
+using RoeiJeRot.Logic;
 
 namespace RoeiJeRot.View.Wpf
 {
@@ -52,20 +53,20 @@ namespace RoeiJeRot.View.Wpf
             _context.Users.Add(new User()
             {
                 FirstName = "Paul", LastName = "Hiemstra", City = "Zwolle", Country = "Nederland", HouseNumber = "2",
-                Password = "abc", Username = "abc", SailingLevel = 1, StreetName = "Duckweg"
+                Password = Hasher.Hash("abc"), Username = "abc", SailingLevel = 1, StreetName = "Duckweg"
             });
             _context.Users.Add(new User()
             {
-                FirstName = "Frank", LastName = "de Milt", City = "Zwolle", Country = "Nederland", HouseNumber = "2",
-                Password = "abc", Username = "abc", SailingLevel = 1, StreetName = "Duckweg"
+                FirstName = "Frank", LastName = "Demilt", City = "Zwolle", Country = "Nederland", HouseNumber = "2",
+                Password = Hasher.Hash("abc"), Username = "abc", SailingLevel = 1, StreetName = "Duckweg"
             });
             _context.SaveChanges();
         }
 
         private void SeedBoats()
         {
-            _context.SailingBoats.Add(new SailingBoat() { BoatTypeId = 1 });
-            _context.SailingBoats.Add(new SailingBoat() { BoatTypeId = 1 });
+            _context.SailingBoats.Add(new SailingBoat() { Id = 1, Status = 0, BoatTypeId = 1});
+            _context.SailingBoats.Add(new SailingBoat() { Id = 1, Status = 0, BoatTypeId = 1 });
             _context.SaveChanges();
         }
 

@@ -1,15 +1,31 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Text;
-using RoeiJeRot.Database.Database;
+﻿using RoeiJeRot.Database.Database;
 using System.Linq;
 
 namespace RoeiJeRot.Logic.Services
 {
+    /// <summary>
+    /// Interface for logic that retrieves and updates boats from database.
+    /// </summary>
+    public enum BoatStatus
+    {
+        InStock = 0,
+        InUse = 1,
+        InService = 2
+    }
+
     public interface IBoatService
     {
         List<SailingBoat> GetAllBoats();
         List<SailingBoat> GetAllBoats(int typeId);
+
+        /// <summary>
+        /// Updates the boat stock status.
+        /// </summary>
+        /// <param name="boatId">The boat identifier.</param>
+        /// <param name="status"></param>
+        void UpdateBoatStatus(int boatId, BoatStatus status);
     }
     public class BoatService : IBoatService
     {
@@ -35,6 +51,18 @@ namespace RoeiJeRot.Logic.Services
         public List<SailingBoat> GetAllBoats(int typeId)
         {
             return GetAllBoats().Where(boat => boat.BoatTypeId == typeId).ToList();
+        }
+
+        public void UpdateBoatStatus(int boatId, BoatStatus status)
+        {
+            var boat = _context.SailingBoats.FirstOrDefault(b => b.Id == boatId);
+
+            if (boat != null)
+            {
+                boat.Status = (int)status;
+            }
+
+            _context.SaveChanges();
         }
     }
 }

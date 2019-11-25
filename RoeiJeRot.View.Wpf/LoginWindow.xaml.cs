@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using RoeiJeRot.Logic;
+using RoeiJeRot.Logic.Services;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace RoeiJeRot.View.Wpf
 {
@@ -17,9 +10,29 @@ namespace RoeiJeRot.View.Wpf
     /// </summary>
     public partial class LoginWindow : Window
     {
-        public LoginWindow()
+        private LoginLogic _loginLogic;
+
+        public LoginWindow(IUserService userService)
         {
+            _loginLogic = new LoginLogic(userService);
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// Called when clicked on "Inloggen" button. Checks if given input is correct.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void OnInloggenClick(object sender, RoutedEventArgs e)
+        {
+            if (_loginLogic.AuthenticateUser(UsernameTextbox.Text, PasswordTextbox.Password))
+            {
+                MessageBox.Show("Invoer incorrect.", "Invoer correct");
+            }
+            else
+            {
+                MessageBox.Show("Gebruikersnaam of wachtwoord incorrect.", "Invoer incorrect");
+            }
         }
     }
 }
