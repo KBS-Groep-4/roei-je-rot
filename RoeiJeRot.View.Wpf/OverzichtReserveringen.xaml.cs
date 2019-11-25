@@ -17,11 +17,16 @@ namespace RoeiJeRot.View.Wpf
     /// <summary>
     /// Interaction logic for OverzichtReservering.xaml
     /// </summary>
-    public partial class OverzichtReservering : Window
+    public partial class OverzichtReserveringen : Window
     {
-        public OverzichtReservering()
+        public OverzichtReserveringen()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
     }

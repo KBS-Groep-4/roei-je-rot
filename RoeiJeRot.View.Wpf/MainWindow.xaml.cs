@@ -16,17 +16,24 @@ namespace RoeiJeRot.View.Wpf
             InitializeComponent();
         }
 
-        private void NaarReserveren(object sender, RoutedEventArgs e)
+        private void OnReserveWindowClick(object sender, RoutedEventArgs e)
         {
             ReserveerScherm rs = new ReserveerScherm();
 
             rs.Activate();
             rs.Show();
+        }
 
+        private void OnLoginWindowClick(object sender, RoutedEventArgs e)
+        {
+            LoginWindow lw = new LoginWindow(_userService);
+
+            lw.Activate();
+            lw.Show();
         }
         private void OverviewReservations(object sender, RoutedEventArgs e)
         {
-            OverzichtReservering rs = new OverzichtReservering();
+            OverzichtReserveringen rs = new OverzichtReserveringen();
 
             rs.Activate();
             rs.Show();
