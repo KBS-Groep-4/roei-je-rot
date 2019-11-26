@@ -1,5 +1,8 @@
+using System;
+using System.Collections.Generic;
 ﻿using RoeiJeRot.Database.Database;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace RoeiJeRot.Logic.Services
 {
@@ -15,6 +18,9 @@ namespace RoeiJeRot.Logic.Services
 
     public interface IBoatService
     {
+        List<SailingBoat> GetAllBoats();
+        List<SailingBoat> GetAllBoats(int typeId);
+
         /// <summary>
         /// Updates the boat stock status.
         /// </summary>
@@ -22,18 +28,32 @@ namespace RoeiJeRot.Logic.Services
         /// <param name="status"></param>
         void UpdateBoatStatus(int boatId, BoatStatus status);
     }
-
-    class BoatService : IBoatService
+    public class BoatService : IBoatService
     {
         private readonly RoeiJeRotDbContext _context;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BoatService"/> class.
-        /// </summary>
-        /// <param name="context">The context.</param>
         public BoatService(RoeiJeRotDbContext context)
         {
             _context = context;
+        }
+        /// <summary>
+        /// Gives all the boats no matter of status
+        /// </summary>
+        /// <returns>All boats</returns>
+        public List<SailingBoat> GetAllBoats()
+        {
+            return _context.SailingBoats.Include(x => x.SailingReservations).ToList();
+        }
+
+        /// <summary>
+        /// Get all sailboats with by given typeId regardless of status
+        /// </summary>
+        /// <param name="typeId"></param>
+        /// <returns>Returns all boats of given typeId</returns>
+        public List<SailingBoat> GetAllBoats(int typeId)
+        {
+            return GetAllBoats()
+                .Where(boat => boat.BoatTypeId == typeId)
+                .ToList();
         }
 
         public void UpdateBoatStatus(int boatId, BoatStatus status)

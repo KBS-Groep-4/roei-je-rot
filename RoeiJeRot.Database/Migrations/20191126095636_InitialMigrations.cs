@@ -97,7 +97,7 @@ namespace RoeiJeRot.Database.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Date = table.Column<DateTime>(nullable: false),
-                    Duration = table.Column<byte>(nullable: false),
+                    Duration = table.Column<TimeSpan>(nullable: false),
                     ReservedByUserId = table.Column<int>(nullable: false),
                     ReservedSailingBoatId = table.Column<int>(nullable: false)
                 },
