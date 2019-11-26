@@ -148,8 +148,8 @@ namespace RoeiJeRot.Database.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<byte>("Duration")
-                        .HasColumnType("tinyint");
+                    b.Property<TimeSpan>("Duration")
+                        .HasColumnType("time");
 
                     b.Property<int>("ReservedByUserId")
                         .HasColumnType("int");

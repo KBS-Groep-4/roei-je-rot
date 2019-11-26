@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 ﻿using RoeiJeRot.Database.Database;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace RoeiJeRot.Logic.Services
 {
@@ -40,7 +41,7 @@ namespace RoeiJeRot.Logic.Services
         /// <returns>All boats</returns>
         public List<SailingBoat> GetAllBoats()
         {
-            return _context.SailingBoats.ToList();
+            return _context.SailingBoats.Include(x => x.SailingReservations).ToList();
         }
 
         /// <summary>
@@ -50,7 +51,9 @@ namespace RoeiJeRot.Logic.Services
         /// <returns>Returns all boats of given typeId</returns>
         public List<SailingBoat> GetAllBoats(int typeId)
         {
-            return GetAllBoats().Where(boat => boat.BoatTypeId == typeId).ToList();
+            return GetAllBoats()
+                .Where(boat => boat.BoatTypeId == typeId)
+                .ToList();
         }
 
         public void UpdateBoatStatus(int boatId, BoatStatus status)

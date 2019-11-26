@@ -9,8 +9,21 @@ using System.Runtime.InteropServices;
 
 namespace RoeiJeRot.Logic.Services
 {
+    public static class DateChecker
+    {
+        public static bool AvailableOn(DateTime a_start, TimeSpan a_duration, DateTime b_start, TimeSpan b_duration)
+        {
+            DateTime a_end = a_start + a_duration;
+            DateTime b_end = b_start + b_duration;
+
+            return a_end <= b_start || a_start >= b_end;
+        }
+    }
+
+
     public interface IReservationService
     {
+        List<SailingBoat> GetAvailableBoats(DateTime reservationDate, TimeSpan duration, int typeId);
         bool PlaceReservation(int boatType, int memberId, DateTime reservationDate, TimeSpan duration);
         void CancelBoatReservation(int reservationId);
     }
@@ -36,24 +49,49 @@ namespace RoeiJeRot.Logic.Services
         /// <returns>Wanneer een reservatie is geplaatst true, als een reservatie niet geplaatst kan worden false</returns>
         public bool PlaceReservation(int boatType, int memberid, DateTime reservationDate, TimeSpan duration)
         {
-            return false;
+            var availableBoats = GetAvailableBoats(reservationDate, duration, boatType);
+
+            if (availableBoats.Count < 0)
+                return false;
+
+            SailingBoat boatToReserve = null;
+
+            int min = int.MaxValue;
+            foreach(var boat in availableBoats)
+                if (boat.SailingReservations.Count < min) boatToReserve = boat;
+
+            _context.Reservations.Add(new SailingReservation()
+            {
+                Date = reservationDate,
+                Duration = duration,
+                ReservedByUserId = memberid,
+                ReservedSailingBoatId = boatToReserve.Id
+            });
+
+            _context.SaveChanges();
+            return true;
         }
 
         public List<SailingBoat> GetAvailableBoats(DateTime reservationDate, TimeSpan duration, int typeId)
         {
-            List<SailingBoat> boats = _boatService.GetAllBoats(typeId);
-
-            Console.WriteLine("--=All Boats=--");
-            foreach (SailingBoat boat in boats)
-                Console.WriteLine($"Boat {boat.Id} from type {boat.BoatTypeId}");
-
+            var boats = _boatService.GetAllBoats(typeId);
             List<SailingBoat> availableBoats = new List<SailingBoat>();
-            foreach (SailingBoat boat in boats)
-                if(boat.AvailableOn(reservationDate, duration)) availableBoats.Add(boat);
+            
+            foreach(var boat in boats)
+            {
+                bool available = true;
+                foreach(var reserv in boat.SailingReservations)
+                {
+                    Console.WriteLine($"Checking {reserv.Date} - {reserv.Duration} on {reservationDate} - {duration} --> {DateChecker.AvailableOn(reserv.Date, reserv.Duration, reservationDate, duration)}");
+                    if (!DateChecker.AvailableOn(reserv.Date, reserv.Duration, reservationDate, duration))
+                    {
+                        available = false;
+                    }
+                }
 
-            Console.WriteLine("--=Available Boats=--");
-            foreach (SailingBoat boat in availableBoats)
-                Console.WriteLine($"Boat {boat.Id} from type {boat.BoatTypeId}");
+                if (available) availableBoats.Add(boat);
+
+            }
 
             return availableBoats;
         }
