@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
@@ -26,7 +27,7 @@ namespace RoeiJeRot.View.Wpf
         /// </summary>
         public void Seed()
         {
-            if (!_context.Users.Any())
+            if (!EnumerableExtensions.Any(_context.Users))
             {
                 try
                 {
@@ -65,20 +66,21 @@ namespace RoeiJeRot.View.Wpf
 
         private void SeedBoats()
         {
-            _context.SailingBoats.Add(new SailingBoat() { Id = 1, Status = 0, BoatTypeId = 1});
-            _context.SailingBoats.Add(new SailingBoat() { Id = 1, Status = 0, BoatTypeId = 1 });
+            _context.SailingBoats.Add(new SailingBoat() { Status = 0, BoatTypeId = _context.SailingBoatTypes.First().Id });
+            _context.SailingBoats.Add(new SailingBoat() { Status = 0, BoatTypeId = _context.SailingBoatTypes.First().Id });
             _context.SaveChanges();
         }
 
         private void SeedBoatTypes()
         {
             _context.SailingBoatTypes.Add(new BoatType() {  PossiblePassengers = 3, RequiredLevel = 2 });
+            _context.SaveChanges();
         }
 
         private void SeedReservations()
         {
-            _context.Reservations.Add(new SailingReservation() { Date = DateTime.Now, Duration = 50, ReservedByUserId = 1, });
-            _context.Reservations.Add(new SailingReservation() { Date = DateTime.Now, Duration = 50, ReservedByUserId = 2 });
+            _context.Reservations.Add(new SailingReservation() { Date = DateTime.Now, Duration = 50, ReservedByUserId = _context.Users.First().Id });
+            _context.Reservations.Add(new SailingReservation() { Date = DateTime.Now, Duration = 50, ReservedByUserId = _context.Users.ToList()[1].Id });
             _context.SaveChanges();
         }
     }
