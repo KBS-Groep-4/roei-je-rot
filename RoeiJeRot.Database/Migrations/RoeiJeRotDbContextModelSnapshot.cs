@@ -47,11 +47,8 @@ namespace RoeiJeRot.Database.Migrations
                     b.Property<int>("BoatTypeId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("InService")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -127,7 +124,7 @@ namespace RoeiJeRot.Database.Migrations
                     b.Property<int?>("SailingBoatId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SailingCompetitionId")
+                    b.Property<int?>("SailingCompetitionId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -255,9 +252,7 @@ namespace RoeiJeRot.Database.Migrations
 
                     b.HasOne("RoeiJeRot.Database.Database.SailingCompetition", "SailingCompetition")
                         .WithMany("SailingCompetitionParticipants")
-                        .HasForeignKey("SailingCompetitionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SailingCompetitionId");
                 });
 
             modelBuilder.Entity("RoeiJeRot.Database.Database.SailingReservation", b =>
