@@ -19,6 +19,24 @@ namespace RoeiJeRot.Database.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("RoeiJeRot.Database.Database.BoatType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("PossiblePassengers")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RequiredLevel")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("boat_types");
+                });
+
             modelBuilder.Entity("RoeiJeRot.Database.Database.SailingBoat", b =>
                 {
                     b.Property<int>("Id")
@@ -26,16 +44,18 @@ namespace RoeiJeRot.Database.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("BoatTypeId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("InService")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RequiredLevel")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("BoatTypeId");
 
                     b.ToTable("sailing_boats");
                 });
@@ -84,7 +104,12 @@ namespace RoeiJeRot.Database.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ReservationId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ReservationId");
 
                     b.ToTable("sailing_competitions");
                 });
@@ -99,12 +124,17 @@ namespace RoeiJeRot.Database.Migrations
                     b.Property<int>("ParticipantId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("SailingBoatId")
+                        .HasColumnType("int");
+
                     b.Property<int>("SailingCompetitionId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ParticipantId");
+
+                    b.HasIndex("SailingBoatId");
 
                     b.HasIndex("SailingCompetitionId");
 
@@ -178,6 +208,15 @@ namespace RoeiJeRot.Database.Migrations
                     b.ToTable("users");
                 });
 
+            modelBuilder.Entity("RoeiJeRot.Database.Database.SailingBoat", b =>
+                {
+                    b.HasOne("RoeiJeRot.Database.Database.BoatType", "BoatType")
+                        .WithMany()
+                        .HasForeignKey("BoatTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("RoeiJeRot.Database.Database.SailingBoatDamageReport", b =>
                 {
                     b.HasOne("RoeiJeRot.Database.Database.User", "DamagedBy")
@@ -193,13 +232,26 @@ namespace RoeiJeRot.Database.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("RoeiJeRot.Database.Database.SailingCompetition", b =>
+                {
+                    b.HasOne("RoeiJeRot.Database.Database.SailingReservation", "SailingReservation")
+                        .WithMany()
+                        .HasForeignKey("ReservationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("RoeiJeRot.Database.Database.SailingCompetitionParticipant", b =>
                 {
-                    b.HasOne("RoeiJeRot.Database.Database.SailingBoat", "SailingParticipant")
-                        .WithMany("SailingCompetitionParticipants")
+                    b.HasOne("RoeiJeRot.Database.Database.User", "SailingParticipant")
+                        .WithMany()
                         .HasForeignKey("ParticipantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("RoeiJeRot.Database.Database.SailingBoat", null)
+                        .WithMany("SailingCompetitionParticipants")
+                        .HasForeignKey("SailingBoatId");
 
                     b.HasOne("RoeiJeRot.Database.Database.SailingCompetition", "SailingCompetition")
                         .WithMany("SailingCompetitionParticipants")

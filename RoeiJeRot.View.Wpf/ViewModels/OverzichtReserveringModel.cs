@@ -1,5 +1,6 @@
 ﻿using RoeiJeRot.View.Wpf;
 using RoeiJeRot.View.Wpf.Models;
+using RoeiJeRot.Database.Database;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,12 +12,12 @@ namespace RoeiJeRot.View.Wpf
 {
     public class OverzichtReserveringModel
     {
-        public ObservableCollection<BotenModel> _Boten { get; set; }
+        public ObservableCollection<SailingReservation> Boten { get; set; }
 
         public OverzichtReserveringModel()
         {
             DataAccess da = new DataAccess();
-            _Boten = new ObservableCollection<BotenModel>(da.GetBoten());
+            Boten = new ObservableCollection<SailingReservation>();
         }
     }
 }

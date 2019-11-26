@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RoeiJeRot.View.Wpf"
         mc:Ignorable="d" 
-        Title="MainWindow" Height="900" Width="1600" MinWidth="1500" MinHeight="800" Background="#EEEEEEEE">
+        Title="MainWindow" Height="900" Width="1600" MinWidth="200" MinHeight="100" Background="#EEEEEEEE">
 
 
     <Grid Margin="42,20,42,20">
@@ -31,13 +31,14 @@
                 <ColumnDefinition Width="400"/>
             </Grid.ColumnDefinitions>
             <Grid Background="#FFF9F9F9">
-                <DataGrid x:Name="Boten">
+                <DataGrid>
                     
                 </DataGrid>
             </Grid>
             <StackPanel Grid.Column="1" Orientation="Vertical" Margin="10, 0, 0, 0" Background="#FFF9F9F9">
-                <StackPanel Height="auto">
-                </StackPanel>
+                <Viewbox Height="430">
+                    <Calendar Height="175"/>
+                </Viewbox>
             </StackPanel>
 
               
