@@ -15,9 +15,9 @@ namespace RoeiJeRot.View.CustomConsole
             IBoatService boatService = new BoatService(context);
             ReservationService reservationService = new ReservationService(context, boatService);
 
-            bool geplaatst = reservationService.PlaceReservation(4, 7, new DateTime(2020, 4, 9, 13, 20, 0), TimeSpan.FromMinutes(90));
+            bool placed = reservationService.PlaceReservation(4, 7, new DateTime(2020, 4, 9, 13, 20, 0), TimeSpan.FromMinutes(90));
 
-            if (geplaatst) Console.WriteLine("Geplaatst");
+            if (placed) Console.WriteLine("Geplaatst");
             else Console.WriteLine("Geen bestelling gelpaatst");
         }
     }

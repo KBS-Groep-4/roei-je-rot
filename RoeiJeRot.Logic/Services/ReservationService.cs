@@ -9,18 +9,6 @@ using System.Runtime.InteropServices;
 
 namespace RoeiJeRot.Logic.Services
 {
-    public static class DateChecker
-    {
-        public static bool AvailableOn(DateTime a_start, TimeSpan a_duration, DateTime b_start, TimeSpan b_duration)
-        {
-            DateTime a_end = a_start + a_duration;
-            DateTime b_end = b_start + b_duration;
-
-            return a_end <= b_start || a_start >= b_end;
-        }
-    }
-
-
     public interface IReservationService
     {
         List<SailingBoat> GetAvailableBoats(DateTime reservationDate, TimeSpan duration, int typeId);
@@ -51,25 +39,26 @@ namespace RoeiJeRot.Logic.Services
         {
             var availableBoats = GetAvailableBoats(reservationDate, duration, boatType);
 
-            if (availableBoats.Count < 0)
-                return false;
-
-            SailingBoat boatToReserve = null;
-
-            int min = int.MaxValue;
-            foreach(var boat in availableBoats)
-                if (boat.SailingReservations.Count < min) boatToReserve = boat;
-
-            _context.Reservations.Add(new SailingReservation()
+            if (availableBoats.Count > 0)
             {
-                Date = reservationDate,
-                Duration = duration,
-                ReservedByUserId = memberid,
-                ReservedSailingBoatId = boatToReserve.Id
-            });
+                SailingBoat boatToReserve = null;
 
-            _context.SaveChanges();
-            return true;
+                int min = int.MaxValue;
+                foreach (var boat in availableBoats)
+                    if (boat.SailingReservations.Count < min) boatToReserve = boat;
+
+                _context.Reservations.Add(new SailingReservation()
+                {
+                    Date = reservationDate,
+                    Duration = duration,
+                    ReservedByUserId = memberid,
+                    ReservedSailingBoatId = boatToReserve.Id
+                });
+
+                _context.SaveChanges();
+                return true;
+            }
+            else return false;
         }
 
         public List<SailingBoat> GetAvailableBoats(DateTime reservationDate, TimeSpan duration, int typeId)
