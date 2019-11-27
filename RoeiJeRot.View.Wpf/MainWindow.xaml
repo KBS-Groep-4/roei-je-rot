@@ -8,15 +8,16 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="9*" />
-            <RowDefinition Height="1*" />
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-        <Button Content="Reserveer Scherm" HorizontalAlignment="Left" Margin="299,134,0,0" VerticalAlignment="Top" Click="OnReserveWindowClick"/>
-        <Label Name="Label" HorizontalAlignment="Center" VerticalAlignment="Center"
+        <local:LogoutButton Width="120" Height="70" VerticalAlignment="Top" HorizontalAlignment="Right" Loaded="LogoutButton_Loaded"/>
+        <Button Grid.Row="0" Content="Reserveer Scherm" HorizontalAlignment="Left" Margin="299,134,0,0" VerticalAlignment="Top" Click="OnReserveWindowClick"/>
+        <Label Grid.Row="1" Name="Label" HorizontalAlignment="Center" VerticalAlignment="Center"
                FontSize="40" />
-        <Button HorizontalAlignment="Left" Margin="279,47,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="btnGetUsers" Content="Get Users" Margin="21,10,638,340" Click="btnGetUsers_Click"/>
-        <ListBox x:Name="lstUserList" Margin="21,81,638,116"/>
-        <Button Content="Inlog Scherm" HorizontalAlignment="Left" Margin="299,159,0,0" VerticalAlignment="Top" Click="OnLoginWindowClick"/>
+        <Button Grid.Row="0" HorizontalAlignment="Left" Margin="279,47,0,0" VerticalAlignment="Top"/>
+        <Button Grid.Row="0" x:Name="btnGetUsers" Content="Get Users" Margin="21,10,657,316" Click="btnGetUsers_Click"/>
+        <ListBox Grid.Row="0" x:Name="lstUserList" Margin="10,159,556,31"/>
+        <Button Grid.Row="0" Content="Inlog Scherm" HorizontalAlignment="Left" Margin="299,159,0,0" VerticalAlignment="Top" Click="OnLoginWindowClick"/>
     </Grid>
 </Window>
