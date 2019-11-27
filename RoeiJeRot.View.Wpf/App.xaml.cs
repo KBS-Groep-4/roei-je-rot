@@ -57,7 +57,7 @@ namespace RoeiJeRot.View.Wpf
         {
             await Host.StartAsync();
 
-            var loginWindow = _host.Services.GetService<LoginWindow>();
+            var loginWindow = Host.Services.GetService<LoginWindow>();
             loginWindow.Show();
         }
 
