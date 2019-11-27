@@ -9,10 +9,12 @@ namespace RoeiJeRot.View.Wpf
     public partial class MainWindow : Window
     {
         private readonly IUserService _userService;
+        private readonly IBoatService boatService;
 
-        public MainWindow(IUserService userService)
+        public MainWindow(IUserService userService,IBoatService boatService)
         {
             _userService = userService;
+            this.boatService = boatService;
             InitializeComponent();
         }
 
@@ -33,7 +35,7 @@ namespace RoeiJeRot.View.Wpf
         }
         private void OverviewReservations(object sender, RoutedEventArgs e)
         {
-            OverzichtReserveringen rs = new OverzichtReserveringen();
+            OverzichtReserveringen rs = new OverzichtReserveringen(boatService);
 
             rs.Activate();
             rs.Show();

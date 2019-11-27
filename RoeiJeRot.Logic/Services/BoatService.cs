@@ -1,4 +1,5 @@
 ﻿using RoeiJeRot.Database.Database;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace RoeiJeRot.Logic.Services
@@ -21,9 +22,11 @@ namespace RoeiJeRot.Logic.Services
         /// <param name="boatId">The boat identifier.</param>
         /// <param name="status"></param>
         void UpdateBoatStatus(int boatId, BoatStatus status);
+
+        List<SailingBoat> GetBoats();
     }
 
-    class BoatService : IBoatService
+    public class BoatService : IBoatService
     {
         private readonly RoeiJeRotDbContext _context;
 
@@ -47,5 +50,9 @@ namespace RoeiJeRot.Logic.Services
 
             _context.SaveChanges();
         }
+
+        public List<SailingBoat> GetBoats() => _context.SailingBoats.ToList();
+
+        
     }
 }

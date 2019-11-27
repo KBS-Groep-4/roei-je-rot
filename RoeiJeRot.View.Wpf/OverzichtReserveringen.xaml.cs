@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RoeiJeRot.Logic.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,15 +20,27 @@ namespace RoeiJeRot.View.Wpf
     /// </summary>
     public partial class OverzichtReserveringen : Window
     {
-        public OverzichtReserveringen()
+        public OverzichtReserveringen(IBoatService boatService)
         {
             InitializeComponent();
+            Boten.ItemsSource = boatService.GetBoats();
         }
+
+
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
+        private void Boten_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void Boden_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

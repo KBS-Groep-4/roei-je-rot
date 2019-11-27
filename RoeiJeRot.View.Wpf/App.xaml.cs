@@ -40,6 +40,7 @@ namespace RoeiJeRot.View.Wpf
                                 o => o.MigrationsAssembly("LocatieNu.Web.Api"));
                         })
                         .AddSingleton<IUserService, UserService>()
+                        .AddSingleton<IBoatService, BoatService>()
                         .AddSingleton<MainWindow>()
                         .AddSingleton<DataSeeder>();
                 })

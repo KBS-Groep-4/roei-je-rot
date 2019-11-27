@@ -31,8 +31,13 @@
                 <ColumnDefinition Width="400"/>
             </Grid.ColumnDefinitions>
             <Grid Background="#FFF9F9F9">
-                <DataGrid>
-                    
+                <DataGrid Name="Boten" AutoGenerateColumns="False" SelectionChanged="Boden_SelectionChanged">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID" Width="0.25*" Binding="{Binding Id}"/>
+                        <DataGridTextColumn Header="Status" Width="0.25*" Binding="{Binding Status}"/>
+                        <DataGridTextColumn Header="Boot Type" Width="0.25*" Binding="{Binding BoatType}"/>
+                        <DataGridTextColumn Header="Reserveringen" Width="0.25*" Binding="{Binding SailingReservation}"/>
+                    </DataGrid.Columns>
                 </DataGrid>
             </Grid>
             <StackPanel Grid.Column="1" Orientation="Vertical" Margin="10, 0, 0, 0" Background="#FFF9F9F9">
@@ -41,9 +46,9 @@
                 </Viewbox>
             </StackPanel>
 
-              
 
-            
+
+
         </Grid>
     </Grid>
 </Window>

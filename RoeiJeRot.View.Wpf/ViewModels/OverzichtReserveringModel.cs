@@ -7,17 +7,19 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RoeiJeRot.Logic.Services;
+
 
 namespace RoeiJeRot.View.Wpf
 {
     public class OverzichtReserveringModel
     {
-        public ObservableCollection<SailingReservation> Boten { get; set; }
 
-        public OverzichtReserveringModel()
+        public ObservableCollection<SailingBoat> Boten { get; set; }
+
+        public OverzichtReserveringModel(IBoatService boatService)
         {
-            DataAccess da = new DataAccess();
-            Boten = new ObservableCollection<SailingReservation>();
+            Boten = new ObservableCollection<SailingBoat>(boatService.GetBoats());
         }
     }
 }
