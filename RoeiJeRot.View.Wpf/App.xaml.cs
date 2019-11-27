@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.IO;
@@ -19,11 +20,11 @@ namespace RoeiJeRot.View.Wpf
 {
     public partial class App : Application
     {
-        private readonly IHost _host;
+        internal static IHost Host { get; set; }
 
         public App()
         {
-            _host = new HostBuilder()
+            Host = new HostBuilder()
                 .ConfigureAppConfiguration((context, configurationBuilder) =>
                 {
                     configurationBuilder.SetBasePath(context.HostingEnvironment.ContentRootPath)
@@ -47,23 +48,23 @@ namespace RoeiJeRot.View.Wpf
                 .ConfigureLogging(logging => { logging.AddConsole(); })
                 .Build();
 
-            var seeder = _host.Services.GetService<DataSeeder>();
+            var seeder = Host.Services.GetService<DataSeeder>();
             seeder.Seed();
         }
 
         private async void Application_Startup(object sender, StartupEventArgs e)
         {
-            await _host.StartAsync();
+            await Host.StartAsync();
 
-            var mainWindow = _host.Services.GetService<MainWindow>();
+            var mainWindow = Host.Services.GetService<MainWindow>();
             mainWindow.Show();
         }
 
         private async void Application_Exit(object sender, ExitEventArgs e)
         {
-            using (_host)
+            using (Host)
             {
-                await _host.StopAsync(TimeSpan.FromSeconds(5));
+                await Host.StopAsync(TimeSpan.FromSeconds(5));
             }
         }
     }
