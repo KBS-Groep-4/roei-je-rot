@@ -30,5 +30,7 @@
         <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" Content="Roeivereniging Roei Je Rot" FontSize="50" HorizontalAlignment="Center" Margin="0,51,0,0" VerticalAlignment="Top" Height="77" Width="596"/>
         <Label Grid.Row="1" Grid.Column="1" Content="Gebruikersnaam:" Height="30" Grid.ColumnSpan="2" Margin="0,282,243,238"/>
         <Label Grid.Row="1" Grid.Column="1" Content="Wachtwoord:" Height="30" Grid.ColumnSpan="2" Margin="19,306,243,214"/>
+        <Button Content="Reserveeren" HorizontalAlignment="Center" Margin="0,390,0,0" Grid.Row="1" VerticalAlignment="Top" Height="20" Width="150" Click="Button_Click"/>
+        <Button Content="Reserveer overzicht" HorizontalAlignment="Left" Margin="15,415,0,0" Grid.Row="1" VerticalAlignment="Top" Height="20" Width="150" Click="Button_Click_1"/>
     </Grid>
 </Window>

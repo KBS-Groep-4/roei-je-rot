@@ -40,7 +40,9 @@ namespace RoeiJeRot.View.Wpf
                                 o => o.MigrationsAssembly("LocatieNu.Web.Api"));
                         })
                         .AddSingleton<IUserService, UserService>()
-                        .AddSingleton<MainWindow>()
+                        .AddSingleton<IBoatService, BoatService>()
+                        .AddSingleton<IReservationService, ReservationService>()
+                        .AddSingleton<LoginWindow>()
                         .AddSingleton<DataSeeder>();
                 })
                 .ConfigureLogging(logging => { logging.AddConsole(); })
@@ -54,8 +56,8 @@ namespace RoeiJeRot.View.Wpf
         {
             await _host.StartAsync();
 
-            var mainWindow = _host.Services.GetService<MainWindow>();
-            mainWindow.Show();
+            var loginWindow = _host.Services.GetService<LoginWindow>();
+            loginWindow.Show();
         }
 
         private async void Application_Exit(object sender, ExitEventArgs e)
