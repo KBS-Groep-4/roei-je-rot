@@ -10,7 +10,7 @@ using RoeiJeRot.Database.Database;
 namespace RoeiJeRot.Database.Migrations
 {
     [DbContext(typeof(RoeiJeRotDbContext))]
-    [Migration("20191123131154_InitialMigrations")]
+    [Migration("20191127094653_InitialMigrations")]
     partial class InitialMigrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -126,7 +126,7 @@ namespace RoeiJeRot.Database.Migrations
                     b.Property<int?>("SailingBoatId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SailingCompetitionId")
+                    b.Property<int>("SailingCompetitionId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -254,7 +254,9 @@ namespace RoeiJeRot.Database.Migrations
 
                     b.HasOne("RoeiJeRot.Database.Database.SailingCompetition", "SailingCompetition")
                         .WithMany("SailingCompetitionParticipants")
-                        .HasForeignKey("SailingCompetitionId");
+                        .HasForeignKey("SailingCompetitionId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("RoeiJeRot.Database.Database.SailingReservation", b =>

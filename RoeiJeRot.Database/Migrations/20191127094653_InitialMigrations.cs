@@ -146,8 +146,8 @@ namespace RoeiJeRot.Database.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    SailingCompetitionId = table.Column<int>(nullable: false),
                     ParticipantId = table.Column<int>(nullable: false),
-                    SailingCompetitionId = table.Column<int>(nullable: true),
                     SailingBoatId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>

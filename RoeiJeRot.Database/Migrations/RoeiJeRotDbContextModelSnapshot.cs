@@ -124,7 +124,7 @@ namespace RoeiJeRot.Database.Migrations
                     b.Property<int?>("SailingBoatId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SailingCompetitionId")
+                    b.Property<int>("SailingCompetitionId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -252,7 +252,9 @@ namespace RoeiJeRot.Database.Migrations
 
                     b.HasOne("RoeiJeRot.Database.Database.SailingCompetition", "SailingCompetition")
                         .WithMany("SailingCompetitionParticipants")
-                        .HasForeignKey("SailingCompetitionId");
+                        .HasForeignKey("SailingCompetitionId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("RoeiJeRot.Database.Database.SailingReservation", b =>
