@@ -7,7 +7,7 @@ namespace RoeiJeRot.Logic.Services
     public static class DateChecker
     {
         /// <summary>
-        /// Function to check if 2 dates overlap
+        /// Checks if two dates overlap.
         /// </summary>
         /// <param name="a_start">Start date of A</param>
         /// <param name="a_duration">Duration of A</param>
