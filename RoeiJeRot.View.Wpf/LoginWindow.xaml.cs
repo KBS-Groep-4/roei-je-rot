@@ -34,5 +34,18 @@ namespace RoeiJeRot.View.Wpf
                 MessageBox.Show("Gebruikersnaam of wachtwoord incorrect.", "Invoer incorrect");
             }
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ReserveerScherm rs = new ReserveerScherm();
+
+            rs.Activate();
+            rs.Show();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            // reserveer overzicht
+        }
     }
 }
