@@ -11,7 +11,7 @@ namespace RoeiJeRot.Database.Database
         public int Id { get; set; }
 
         public DateTime Date { get; set; }
-        public byte Duration { get; set; }
+        public TimeSpan Duration { get; set; }
 
         [ForeignKey(nameof(ReservedBy))]
         public int ReservedByUserId { get; set; }
