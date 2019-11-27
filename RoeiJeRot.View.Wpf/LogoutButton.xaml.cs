@@ -19,12 +19,11 @@ namespace RoeiJeRot.View.Wpf
     /// </summary>
     public partial class LogoutButton : UserControl
     {
-        private readonly InstanceCreator _instanceCreator = new InstanceCreator();
         private readonly IUserService _userService;
 
         public LogoutButton()
         {
-            _userService = _instanceCreator.CreateInstance<IUserService>();
+            _userService = InstanceCreator.Instance.CreateInstance<IUserService>();
             InitializeComponent();
         }
 
