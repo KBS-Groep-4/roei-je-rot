@@ -39,5 +39,10 @@ namespace RoeiJeRot.View.Wpf
                 lstUserList.Items.Add(user.FirstName);
             }
         }
+
+        private void LogoutButton_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
