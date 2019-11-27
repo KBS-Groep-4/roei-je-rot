@@ -61,8 +61,6 @@ namespace RoeiJeRot.Database.Database
                 .Build();
             
             optionsBuilder.UseSqlServer(configuration["connectionString"]);
-
-
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
