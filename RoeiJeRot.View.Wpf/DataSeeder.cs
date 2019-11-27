@@ -31,7 +31,7 @@ namespace RoeiJeRot.View.Wpf
             {
                 try
                 {
-                    _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT users ON");
+                    _context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT users ON");
                     _context.SaveChanges();
 
                     SeedUsers();
@@ -39,12 +39,12 @@ namespace RoeiJeRot.View.Wpf
                     SeedBoats();
                     SeedReservations();
 
-                    _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT users OFF");
+                    _context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT users OFF");
                     _context.SaveChanges();
                 }
                 catch(Exception ex)
                 {
-
+                    Console.WriteLine(ex);
                 }
             }
         }
@@ -79,8 +79,18 @@ namespace RoeiJeRot.View.Wpf
 
         private void SeedReservations()
         {
-            _context.Reservations.Add(new SailingReservation() { Date = DateTime.Now, Duration = 50, ReservedByUserId = _context.Users.First().Id });
-            _context.Reservations.Add(new SailingReservation() { Date = DateTime.Now, Duration = 50, ReservedByUserId = _context.Users.ToList()[1].Id });
+            _context.Reservations.Add(new SailingReservation() { 
+                Date = DateTime.Now, 
+                Duration = TimeSpan.FromMinutes(50), 
+                ReservedByUserId = _context.Users.ToList()[0].Id, 
+                ReservedSailingBoatId = _context.SailingBoats.ToList()[0].Id,
+            });
+            _context.Reservations.Add(new SailingReservation() { 
+                Date = new DateTime(2020, 4, 9, 13, 30, 0), 
+                Duration = TimeSpan.FromMinutes(50), 
+                ReservedByUserId = _context.Users.ToList()[1].Id,
+                ReservedSailingBoatId = _context.SailingBoats.ToList()[1].Id
+            });
             _context.SaveChanges();
         }
     }
