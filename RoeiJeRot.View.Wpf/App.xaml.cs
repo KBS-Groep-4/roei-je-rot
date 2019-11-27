@@ -42,7 +42,8 @@ namespace RoeiJeRot.View.Wpf
                         })
                         .AddSingleton<IUserService, UserService>()
                         .AddSingleton<IBoatService, BoatService>()
-                        .AddSingleton<MainWindow>()
+                        .AddSingleton<IReservationService, ReservationService>()
+                        .AddSingleton<LoginWindow>()
                         .AddSingleton<DataSeeder>();
                 })
                 .ConfigureLogging(logging => { logging.AddConsole(); })
@@ -56,8 +57,8 @@ namespace RoeiJeRot.View.Wpf
         {
             await Host.StartAsync();
 
-            var mainWindow = Host.Services.GetService<MainWindow>();
-            mainWindow.Show();
+            var loginWindow = Host.Services.GetService<LoginWindow>();
+            loginWindow.Show();
         }
 
         private async void Application_Exit(object sender, ExitEventArgs e)
