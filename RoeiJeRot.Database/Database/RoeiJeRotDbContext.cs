@@ -62,5 +62,13 @@ namespace RoeiJeRot.Database.Database
             
             optionsBuilder.UseSqlServer(configuration["connectionString"]);
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<SailingCompetition>()
+                .HasMany(x => x.SailingCompetitionParticipants)
+                .WithOne(x => x.SailingCompetition)
+                .OnDelete(DeleteBehavior.ClientCascade);
+        }
     }
 }
