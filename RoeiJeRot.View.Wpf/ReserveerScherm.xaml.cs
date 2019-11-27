@@ -20,16 +20,11 @@ namespace RoeiJeRot.View.Wpf
         public ReserveerScherm()
         {
             InitializeComponent();
-        }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
+            When.SelectedDate = DateTime.Today;
 
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-
+            TimeSpan time = new TimeSpan(0, 0, DateTime.Now.Minute, DateTime.Now.Second);
+            TimeSpan duration = TimeSpan.FromMinutes(90);
         }
     }
 }
