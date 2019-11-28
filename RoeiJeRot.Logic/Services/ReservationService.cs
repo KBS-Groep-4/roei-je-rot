@@ -93,7 +93,7 @@ namespace RoeiJeRot.Logic.Services
         /// <returns>All sailingReservations</returns>
         public List<SailingReservation> GetReservations()
         {
-            return _context.Reservations.Where(x => x.Date >= DateTime.Now).ToList();
+            return _context.Reservations.Where(x => x.Date >= DateTime.Now.Date).ToList();
         }
 
         public void CancelBoatReservation(int reservationId)
