@@ -9,6 +9,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Microsoft.EntityFrameworkCore.Internal;
+using RoeiJeRot.Database.Database;
+using RoeiJeRot.Logic.Services;
 
 namespace RoeiJeRot.View.Wpf
 {
@@ -23,8 +26,22 @@ namespace RoeiJeRot.View.Wpf
 
             When.SelectedDate = DateTime.Today;
 
-            TimeSpan time = new TimeSpan(0, 0, DateTime.Now.Minute, DateTime.Now.Second);
-            TimeSpan duration = TimeSpan.FromMinutes(90);
+            RoeiJeRotDbContext context = new RoeiJeRotDbContext();
+
+            IBoatService boatService = new BoatService(context);
+            IReservationService reservationService = new ReservationService(context, boatService);
+
+            List<SailingBoat> boats = reservationService.GetAvailableBoats(When.SelectedDate.Value, TimeSpan.FromHours(2), 1);
+            List<BoatType> availableTypes = new List<BoatType>();
+
+            foreach (var boat in boats)
+            {
+                availableTypes.Add(boat.BoatType);
+            }
+
+            availableTypes.Distinct((type, boatType) => type == boatType);
+
+            AvailableBoats.ItemsSource = availableTypes;
         }
     }
 }

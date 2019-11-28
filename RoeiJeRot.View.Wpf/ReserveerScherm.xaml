@@ -79,9 +79,15 @@
                     </StackPanel>
                 </Grid>
                 <StackPanel Grid.Row="1" Orientation="Vertical" Margin="10">
-                    <Label Content="Beschikbare Boten:" FontSize="32"/>
-                    <ListView>
-                        
+                    <Label Content="Beschikbare Boottypen:" FontSize="32"/>
+                    <ListView Margin="5" Name="AvailableBoats">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Niveau" Width="70" DisplayMemberBinding="{Binding RequiredLevel}"/>
+                                <GridViewColumn Header="Naam" Width="200" DisplayMemberBinding="{Binding Name}"/>
+                                <GridViewColumn Header="Plaatsen" Width="70" DisplayMemberBinding="{Binding PossiblePassengers}"></GridViewColumn>
+                            </GridView>
+                        </ListView.View>
                     </ListView>
                 </StackPanel>
             </Grid>
