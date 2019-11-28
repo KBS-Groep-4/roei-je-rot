@@ -1,20 +1,20 @@
-﻿using System;
-using RoeiJeRot.Logic;
+﻿using System.Windows;
 using RoeiJeRot.Logic.Services;
-using System.Windows;
 
-namespace RoeiJeRot.View.Wpf
+namespace RoeiJeRot.View.Wpf.Views
 {
     /// <summary>
     /// Interaction logic for Login.xaml
     /// </summary>
     public partial class LoginWindow : Window
     {
-        private IAuthenticationService _authenticationService;
+        private readonly IAuthenticationService _authenticationService;
+        private readonly IReservationService _reservationService;
 
-        public LoginWindow(IAuthenticationService authenticationService)
+        public LoginWindow(IAuthenticationService authenticationService, IReservationService reservationService)
         {
             _authenticationService = authenticationService;
+            _reservationService = reservationService;
             InitializeComponent();
         }
 
@@ -27,7 +27,7 @@ namespace RoeiJeRot.View.Wpf
         {
             if (_authenticationService.AuthenticateUser(UsernameTextbox.Text, PasswordTextbox.Password))
             {
-                MessageBox.Show("Invoer incorrect.", "Invoer correct");
+                MessageBox.Show("Invoer correct.", "Invoer correct");
             }
             else
             {
@@ -45,7 +45,10 @@ namespace RoeiJeRot.View.Wpf
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            // reserveer overzicht
+            ReservationOverviewWindow rs = new ReservationOverviewWindow(_reservationService);
+
+            rs.Activate();
+            rs.Show();
         }
     }
 }

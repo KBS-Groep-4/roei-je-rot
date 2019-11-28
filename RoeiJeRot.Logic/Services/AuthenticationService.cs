@@ -50,6 +50,7 @@ namespace RoeiJeRot.Logic.Services
             _userService = userService;
         }
 
+        /// <inheritdoc />
         public bool AuthenticateUser(string username, string password)
         {
             return _userService
@@ -57,16 +58,19 @@ namespace RoeiJeRot.Logic.Services
                         .Any(u => u.Username == username && Hasher.Compare(u.Password, password));
         }
 
+        /// <inheritdoc />
         public void CreateAccount(string username, string password)
         {
             throw new System.NotImplementedException();
         }
 
+        /// <inheritdoc />
         public void RemoveAccount(string username)
         {
             throw new System.NotImplementedException();
         }
 
+        /// <inheritdoc />
         public void UpdateAccount(string username, string password, string firstname, string lastname, string streedName, string houseNmr, string postalCode)
         {
             throw new System.NotImplementedException();

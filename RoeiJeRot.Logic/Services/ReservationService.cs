@@ -1,31 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.Contracts;
+using System.Text;
 using RoeiJeRot.Database.Database;
+using System.Linq;
+using System.Reflection.Metadata;
+using System.Runtime.InteropServices;
 
 namespace RoeiJeRot.Logic.Services
 {
-    /// <summary>
-    /// Interface for logic that retrieves, creates, cancels reservations.
-    /// </summary>
     public interface IReservationService
     {
         /// <summary>
-        /// Places an boat reservation on a particular date.
+        /// Returns a list of boats which can be reserved on the given date. 
         /// </summary>
-        /// <param name="boatType"></param>
-        /// <param name="memberId"></param>
         /// <param name="reservationDate"></param>
         /// <param name="duration"></param>
+        /// <param name="typeId"></param>
         /// <returns></returns>
-        bool PlaceReservation(int boatType, int memberId, DateTime reservationDate, TimeSpan duration);
-        
+        List<SailingBoat> GetAvailableBoats(DateTime reservationDate, TimeSpan duration, int typeId);
         /// <summary>
-        /// Cancels an boat reservation.
+        /// Places an new boat reservation on the given date with duration.
+        /// </summary>
+        bool PlaceReservation(int boatType, int memberId, DateTime reservationDate, TimeSpan duration);
+        /// <summary>
+        /// Returns all reservations from the current data 
         /// </summary>
         /// <returns>All sailingReservations</returns>
-        void CancelReservation(int reservationId);
+        List<SailingReservation> GetReservations();
+
+        /// <summary>
+        /// Cancels a boat reservation.
+        /// </summary>
+        /// <param name="reservationId"></param>
+        void CancelBoatReservation(int reservationId);
     }
 
     public class ReservationService : IReservationService
@@ -39,10 +47,11 @@ namespace RoeiJeRot.Logic.Services
             _boatService = boatService;
         }
 
-      
-        public bool PlaceReservation(int boatType, int memberid, DateTime reservationDate, TimeSpan duration)
+
+        /// <inheritdoc />
+        public bool PlaceReservation(int boatType, int memberId, DateTime reservationDate, TimeSpan duration)
         {
-            var availableBoats = _boatService.GetAvailableBoats(reservationDate, duration, boatType);
+            var availableBoats = GetAvailableBoats(reservationDate, duration, boatType);
 
             if (availableBoats.Count > 0)
             {
@@ -56,23 +65,49 @@ namespace RoeiJeRot.Logic.Services
                 {
                     Date = reservationDate,
                     Duration = duration,
-                    ReservedByUserId = memberid,
+                    ReservedByUserId = memberId,
                     ReservedSailingBoatId = boatToReserve.Id
                 });
 
                 _context.SaveChanges();
                 return true;
             }
-            
-            return false;
+            else return false;
         }
 
+        /// <inheritdoc />
+        public List<SailingBoat> GetAvailableBoats(DateTime reservationDate, TimeSpan duration, int typeId)
+        {
+            var boats = _boatService.GetAllBoats(typeId);
+            var availableBoats = new List<SailingBoat>();
+            
+            foreach(var boat in boats)
+            {
+                bool available = true;
+                foreach(var reservation in boat.SailingReservations)
+                {
+                    Console.WriteLine($"Checking {reservation.Date} - {reservation.Duration} on {reservationDate} - {duration} --> {DateChecker.AvailableOn(reservation.Date, reservation.Duration, reservationDate, duration)}");
+                    if (!DateChecker.AvailableOn(reservation.Date, reservation.Duration, reservationDate, duration))
+                    {
+                        available = false;
+                    }
+                }
+
+                if (available) availableBoats.Add(boat);
+
+            }
+
+            return availableBoats;
+        }
+        
+        /// <inheritdoc />
         public List<SailingReservation> GetReservations()
         {
-            return _context.Reservations.ToList();
+            return _context.Reservations.Where(x => x.Date >= DateTime.Now.Date).ToList();
         }
 
-        public void CancelReservation(int reservationId)
+        /// <inheritdoc />
+        public void CancelBoatReservation(int reservationId)
         {
             throw new NotImplementedException();
         }

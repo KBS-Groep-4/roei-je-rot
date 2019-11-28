@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using RoeiJeRot.Database.Database;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using System.Collections;
 
 namespace RoeiJeRot.Logic.Services
 {
@@ -32,7 +33,7 @@ namespace RoeiJeRot.Logic.Services
         void UpdateBoatStatus(int boatId, BoatState status);
 
         /// <summary>
-        /// Returns all availible boats of a certain type for the given reservation date and duration.
+        /// Returns all available boats of a certain type for the given reservation date and duration.
         /// </summary>
         /// <param name="reservationDate"></param>
         /// <param name="duration"></param>
@@ -47,12 +48,14 @@ namespace RoeiJeRot.Logic.Services
         {
             _context = context;
         }
-       
+
+        /// <inheritdoc />
         public List<SailingBoat> GetAllBoats()
         {
             return _context.SailingBoats.Include(x => x.SailingReservations).ToList();
         }
 
+        /// <inheritdoc />
         public List<SailingBoat> GetAllBoats(int typeId)
         {
             return GetAllBoats()
@@ -60,6 +63,7 @@ namespace RoeiJeRot.Logic.Services
                 .ToList();
         }
 
+        /// <inheritdoc />
         public List<SailingBoat> GetAvailableBoats(DateTime reservationDate, TimeSpan duration, int typeId)
         {
             var boats = GetAllBoats(typeId);
@@ -68,10 +72,10 @@ namespace RoeiJeRot.Logic.Services
             foreach (var boat in boats)
             {
                 bool available = true;
-                foreach (var reserv in boat.SailingReservations)
+                foreach (var reservation in boat.SailingReservations)
                 {
-                    Console.WriteLine($"Checking {reserv.Date} - {reserv.Duration} on {reservationDate} - {duration} --> {DateChecker.AvailableOn(reserv.Date, reserv.Duration, reservationDate, duration)}");
-                    if (!DateChecker.AvailableOn(reserv.Date, reserv.Duration, reservationDate, duration))
+                    Console.WriteLine($"Checking {reservation.Date} - {reservation.Duration} on {reservationDate} - {duration} --> {DateChecker.AvailableOn(reservation.Date, reservation.Duration, reservationDate, duration)}");
+                    if (!DateChecker.AvailableOn(reservation.Date, reservation.Duration, reservationDate, duration))
                     {
                         available = false;
                     }
@@ -84,6 +88,7 @@ namespace RoeiJeRot.Logic.Services
             return availableBoats;
         }
 
+        /// <inheritdoc />
         public void UpdateBoatStatus(int boatId, BoatState status)
         {
             var boat = _context.SailingBoats.FirstOrDefault(b => b.Id == boatId);
@@ -95,5 +100,8 @@ namespace RoeiJeRot.Logic.Services
 
             _context.SaveChanges();
         }
+
+        /// <inheritdoc />
+        public List<SailingBoat> GetBoats() => _context.SailingBoats.Include(x => x.BoatType).ToList();
     }
 }

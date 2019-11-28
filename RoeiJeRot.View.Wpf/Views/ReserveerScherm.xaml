@@ -1,11 +1,11 @@
-﻿<Window x:Class="RoeiJeRot.View.Wpf.ReserveerScherm"
+﻿<Window x:Class="RoeiJeRot.View.Wpf.Views.ReserveerScherm"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RoeiJeRot.View.Wpf"
         mc:Ignorable="d"
-        Title="ReserveerScherm" Height="900" Width="1600" MinWidth="1500" MinHeight="800" Background="#EEEEEEEE">
+        Title="Reserveer Scherm" Height="900" Width="1600" MinWidth="1500" MinHeight="800" Background="#EEEEEEEE">
     <Grid Margin="42,20,42,20">
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
@@ -18,7 +18,7 @@
             </Grid.ColumnDefinitions>
             <Button Content="Log Uit" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button_Click" Height="48" Width="142"/>
             <StackPanel Orientation="Horizontal">
-                <Image Height="100" Width="250" Source="rsc/logo.png"/>
+                <Image Height="100" Width="250" Source="/Resources/logo.png"/>
                 <Label Content="Goedemiddag, &lt;VOORNAAM&gt;" FontSize="46
                        " VerticalAlignment="Center"/>
             </StackPanel>

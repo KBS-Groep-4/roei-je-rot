@@ -28,6 +28,7 @@ namespace RoeiJeRot.Logic.Services
             _context = context;
         }
 
+        /// <inheritdoc />
         public List<User> GetUsers()
         {
             return _context.Users.ToList();

@@ -15,6 +15,7 @@ using Microsoft.Extensions.Logging;
 using RoeiJeRot.Database.Database;
 using RoeiJeRot.Logic.Config;
 using RoeiJeRot.Logic.Services;
+using RoeiJeRot.View.Wpf.Views;
 
 namespace RoeiJeRot.View.Wpf
 {
@@ -43,6 +44,7 @@ namespace RoeiJeRot.View.Wpf
                         .AddSingleton<IUserService, UserService>()
                         .AddSingleton<IBoatService, BoatService>()
                         .AddSingleton<IReservationService, ReservationService>()
+                        .AddSingleton<IAuthenticationService, AuthenticationService>()
                         .AddSingleton<LoginWindow>()
                         .AddSingleton<DataSeeder>();
                 })
