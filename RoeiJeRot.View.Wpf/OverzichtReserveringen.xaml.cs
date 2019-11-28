@@ -36,12 +36,12 @@ namespace RoeiJeRot.View.Wpf
         //Data uit de Database ophalen
         public void HaalDataOp(IBoatService boatService, IReservationService reservationService)
         {
-            var reservationDB = reservationService.GetReservations().Select(date => new ReserveringOverzichtViewMod {
-                Id = date.Id,
-                ReservationDate = date.Date.ToString("g"),
-                Duration = date.Duration.ToString(@"hh\:mm"),
-                ReserverdByUserId = date.ReservedByUserId,
-                ReserverdBoatId = date.ReservedSailingBoatId
+            var reservationDB = reservationService.GetReservations().Select(r => new ReserveringOverzichtViewMod {
+                Id = r.Id,
+                ReservationDate = r.Date.ToString("g"),
+                Duration = r.Duration.ToString(@"hh\:mm"),
+                ReserverdByUserId = r.ReservedByUserId,
+                ReserverdBoatId = r.ReservedSailingBoatId
             }).ToList();
             foreach (var item in reservationDB)
             {
