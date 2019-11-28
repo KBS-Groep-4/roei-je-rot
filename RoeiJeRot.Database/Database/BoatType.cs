@@ -13,6 +13,8 @@ namespace RoeiJeRot.Database.Database
 
         public int RequiredLevel { get; set; }
 
+        public string Name { get; set; }
+
         protected bool HasCommanderSeat { get; set; }
     }
 }

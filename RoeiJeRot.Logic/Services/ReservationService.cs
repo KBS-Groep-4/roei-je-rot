@@ -75,7 +75,30 @@ namespace RoeiJeRot.Logic.Services
             else return false;
         }
 
-        /// <inheritdoc />
+        public List<SailingBoat> GetAvailableBoats(DateTime reservationDate, TimeSpan duration)
+        {
+            var boats = _boatService.GetAllBoats();
+            List<SailingBoat> availableBoats = new List<SailingBoat>();
+
+            foreach (var boat in boats)
+            {
+                bool available = true;
+                foreach (var reserv in boat.SailingReservations)
+                {
+                    Console.WriteLine($"Checking {reserv.Date} - {reserv.Duration} on {reservationDate} - {duration} --> {DateChecker.AvailableOn(reserv.Date, reserv.Duration, reservationDate, duration)}");
+                    if (!DateChecker.AvailableOn(reserv.Date, reserv.Duration, reservationDate, duration))
+                    {
+                        available = false;
+                    }
+                }
+
+                if (available) availableBoats.Add(boat);
+
+            }
+
+            return availableBoats;
+        }
+
         public List<SailingBoat> GetAvailableBoats(DateTime reservationDate, TimeSpan duration, int typeId)
         {
             var boats = _boatService.GetAllBoats(typeId);
