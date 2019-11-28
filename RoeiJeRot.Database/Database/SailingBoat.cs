@@ -13,7 +13,6 @@ namespace RoeiJeRot.Database.Database
         {
             SailingReservations = new HashSet<SailingReservation>();
             DamageReports = new HashSet<SailingBoatDamageReport>();
-            SailingCompetitionParticipants = new HashSet<SailingCompetitionParticipant>();
         }
 
         [Key]
@@ -27,6 +26,5 @@ namespace RoeiJeRot.Database.Database
 
         public virtual ICollection<SailingReservation> SailingReservations { get; set; }
         public virtual ICollection<SailingBoatDamageReport> DamageReports { get; set; }
-        public virtual ICollection<SailingCompetitionParticipant> SailingCompetitionParticipants { get; set; }
     }
 }

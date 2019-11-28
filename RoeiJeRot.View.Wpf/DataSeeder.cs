@@ -87,7 +87,21 @@ namespace RoeiJeRot.View.Wpf
             });
             _context.Reservations.Add(new SailingReservation() { 
                 Date = new DateTime(2020, 4, 9, 13, 30, 0), 
-                Duration = TimeSpan.FromMinutes(50), 
+                Duration = TimeSpan.FromMinutes(40), 
+                ReservedByUserId = _context.Users.ToList()[1].Id,
+                ReservedSailingBoatId = _context.SailingBoats.ToList()[1].Id
+            });
+            _context.Reservations.Add(new SailingReservation()
+            {
+                Date = new DateTime(2020, 4, 10, 13, 30, 0),
+                Duration = TimeSpan.FromMinutes(90),
+                ReservedByUserId = _context.Users.ToList()[1].Id,
+                ReservedSailingBoatId = _context.SailingBoats.ToList()[1].Id
+            });
+            _context.Reservations.Add(new SailingReservation()
+            {
+                Date = new DateTime(2020, 4, 9, 11, 30, 0),
+                Duration = TimeSpan.FromMinutes(90),
                 ReservedByUserId = _context.Users.ToList()[1].Id,
                 ReservedSailingBoatId = _context.SailingBoats.ToList()[1].Id
             });

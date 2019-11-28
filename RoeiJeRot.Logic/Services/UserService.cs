@@ -8,12 +8,12 @@ using RoeiJeRot.Database.Database;
 namespace RoeiJeRot.Logic.Services
 {
     /// <summary>
-    /// Interface for logic that retrieves user data from database.
+    /// Interface for logic that retrieves user data.
     /// </summary>
     public interface IUserService
     {
         /// <summary>
-        ///  Returns a list of users from the database.
+        ///  Returns a list of users.
         /// </summary>
         /// <returns></returns>
         List<User> GetUsers();

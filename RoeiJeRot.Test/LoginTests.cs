@@ -30,7 +30,7 @@ namespace RoeiJeRot.Test
         public void LoginUserPaulCorrect(string username, string password)
         {
             //Arrange
-            LoginLogic logic = new LoginLogic(new TestUserService());
+            AuthenticationService logic = new AuthenticationService(new TestUserService());
 
             //Act
             bool value = logic.AuthenticateUser(username, password);
@@ -43,7 +43,7 @@ namespace RoeiJeRot.Test
         public void LoginUserPaulIncorrect(string username, string password)
         {
             //Arrange
-            LoginLogic logic = new LoginLogic(new TestUserService());
+            AuthenticationService logic = new AuthenticationService(new TestUserService());
 
             //Act
             bool value = logic.AuthenticateUser(username, password);

@@ -10,11 +10,11 @@ namespace RoeiJeRot.View.Wpf
     /// </summary>
     public partial class LoginWindow : Window
     {
-        private LoginLogic _loginLogic;
+        private IAuthenticationService _authenticationService;
 
-        public LoginWindow(IUserService userService)
+        public LoginWindow(IAuthenticationService authenticationService)
         {
-            _loginLogic = new LoginLogic(userService);
+            _authenticationService = authenticationService;
             InitializeComponent();
         }
 
@@ -25,7 +25,7 @@ namespace RoeiJeRot.View.Wpf
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void OnInloggenClick(object sender, RoutedEventArgs e)
         {
-            if (_loginLogic.AuthenticateUser(UsernameTextbox.Text, PasswordTextbox.Password))
+            if (_authenticationService.AuthenticateUser(UsernameTextbox.Text, PasswordTextbox.Password))
             {
                 MessageBox.Show("Invoer incorrect.", "Invoer correct");
             }
