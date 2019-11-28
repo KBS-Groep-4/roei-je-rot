@@ -73,7 +73,8 @@ namespace RoeiJeRot.View.Wpf
 
         private void SeedBoatTypes()
         {
-            _context.SailingBoatTypes.Add(new BoatType() {  PossiblePassengers = 3, RequiredLevel = 2 });
+            _context.SailingBoatTypes.Add(new BoatType() { PossiblePassengers = 3, RequiredLevel = 2, Name = "Grote kano" });
+            _context.SailingBoatTypes.Add(new BoatType() { PossiblePassengers = 1, RequiredLevel = 1, Name = "Kleine kano" });
             _context.SaveChanges();
         }
 

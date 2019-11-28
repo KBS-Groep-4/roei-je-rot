@@ -16,7 +16,7 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="200"/>
             </Grid.ColumnDefinitions>
-            <Button Content="Log Uit" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button_Click" Height="48" Width="142"/>
+            <Button Content="Log Uit" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="48" Width="142"/>
             <StackPanel Orientation="Horizontal">
                 <Image Height="100" Width="250" Source="rsc/logo.png"/>
                 <Label Content="Goedemiddag, &lt;VOORNAAM&gt;" FontSize="46
@@ -44,7 +44,7 @@
                             <Label Content="Wanneer:" FontSize="32" Width="auto"/>
                             <Button Content="Vandaag" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="20"/>
                         </StackPanel>
-                        <Calendar Foreground="#FF333333" >
+                        <Calendar Foreground="#FF333333" SelectionMode="SingleDate" Name="When" SelectedDatesChanged="OnReservationDetailChange">
                             <Calendar.BorderBrush>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                     <GradientStop Color="#FFA3AEB9"/>
@@ -66,20 +66,30 @@
                         <Label Content="Reserveerbare tijden:" FontSize="32" Width="auto" Padding="5,5,5,0"/>
                         <Label Content="10:32 tot 19:30" FontSize="20" Padding="5 0 5 5"/>
                         <StackPanel Orientation="Horizontal">
-                            <Label Content="Vanaf (H:MM)" FontSize="18" Padding="5 5 5 0"/>
+                            <Label Content="Vanaf (HH:MM)" FontSize="18" Padding="5 5 5 0"/>
                             <Button Content="Nu" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="20"/>
                         </StackPanel>
-                        <TextBox Text="13:20" TextWrapping="Wrap" VerticalAlignment="Top" Margin="15 0 15 0"/>
+                        <TextBox Name="Time" Text="13:20" TextWrapping="Wrap" VerticalAlignment="Top" Margin="15 0 15 0" TextChanged="OnReservationDetailChange"/>
 
                         <Label Content="Aantal minuten (Max: 120):" FontSize="18" Padding="5 5 5 0"/>
-                        <TextBox Text="120" TextWrapping="Wrap" VerticalAlignment="Top" Margin="15 0 15 0"/>
+                        <TextBox Text="120" TextWrapping="Wrap" VerticalAlignment="Top" Margin="15 0 15 0" Name="Duration" TextChanged="OnReservationDetailChange"/>
                     </StackPanel>
                     <StackPanel Grid.Column="2" Orientation="Vertical" Margin="10">
                         <Label Content="Filter:" FontSize="32"></Label>
                     </StackPanel>
                 </Grid>
                 <StackPanel Grid.Row="1" Orientation="Vertical" Margin="10">
-                    <Label Content="Beschikbare Boten:" FontSize="32"/>
+                    <Label Content="Beschikbare Boottypen:" FontSize="32"/>
+                    <ListView Margin="5" Name="AvailableBoats">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Niveau" Width="70" DisplayMemberBinding="{Binding RequiredLevel}"/>
+                                <GridViewColumn Header="Naam" Width="200" DisplayMemberBinding="{Binding Name}"/>
+                                <GridViewColumn Header="Plaatsen" Width="70" DisplayMemberBinding="{Binding PossiblePassengers}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Button Name="ReserveerButton" Click="ReservButtonOnClick">Reservering plaatsen</Button>
                 </StackPanel>
             </Grid>
             <StackPanel Grid.Column="1" Orientation="Vertical" Margin="10, 0, 0, 0" Background="#FFF9F9F9">
