@@ -11,10 +11,13 @@ namespace RoeiJeRot.View.Wpf
     public partial class LoginWindow : Window
     {
         private LoginLogic _loginLogic;
-
-        public LoginWindow(IUserService userService)
+        private IBoatService _boatSerivce;
+        private IReservationService _reservationService;
+        public LoginWindow(IUserService userService, IBoatService boatService, IReservationService reservationService)
         {
             _loginLogic = new LoginLogic(userService);
+            _boatSerivce = boatService;
+            _reservationService = reservationService;
             InitializeComponent();
         }
 
@@ -33,6 +36,22 @@ namespace RoeiJeRot.View.Wpf
             {
                 MessageBox.Show("Gebruikersnaam of wachtwoord incorrect.", "Invoer incorrect");
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ReserveerScherm rs = new ReserveerScherm();
+
+            rs.Activate();
+            rs.Show();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            OverzichtReserveringen rs = new OverzichtReserveringen(_boatSerivce, _reservationService);
+
+            rs.Activate();
+            rs.Show();
         }
     }
 }

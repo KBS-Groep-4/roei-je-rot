@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
-﻿using RoeiJeRot.Database.Database;
+using RoeiJeRot.Database.Database;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using System.Collections;
 
 namespace RoeiJeRot.Logic.Services
 {
@@ -27,6 +28,7 @@ namespace RoeiJeRot.Logic.Services
         /// <param name="boatId">The boat identifier.</param>
         /// <param name="status"></param>
         void UpdateBoatStatus(int boatId, BoatStatus status);
+        public List<SailingBoat> GetBoats();
     }
     public class BoatService : IBoatService
     {
@@ -67,5 +69,7 @@ namespace RoeiJeRot.Logic.Services
 
             _context.SaveChanges();
         }
+
+        public List<SailingBoat> GetBoats() => _context.SailingBoats.Include(x => x.BoatType).ToList();
     }
 }

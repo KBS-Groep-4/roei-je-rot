@@ -37,4 +37,14 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Page Update="OverzichtReserveringen.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+
 </Project>
