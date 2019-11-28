@@ -14,6 +14,8 @@ namespace RoeiJeRot.Logic.Services
         List<SailingBoat> GetAvailableBoats(DateTime reservationDate, TimeSpan duration, int typeId);
         bool PlaceReservation(int boatType, int memberId, DateTime reservationDate, TimeSpan duration);
         void CancelBoatReservation(int reservationId);
+
+        public List<SailingReservation> GetReservations();
     }
 
     public class ReservationService : IReservationService
@@ -91,7 +93,7 @@ namespace RoeiJeRot.Logic.Services
         /// <returns>All sailingReservations</returns>
         public List<SailingReservation> GetReservations()
         {
-            return _context.Reservations.ToList();
+            return _context.Reservations.Where(x => x.Date >= DateTime.Now).ToList();
         }
 
         public void CancelBoatReservation(int reservationId)

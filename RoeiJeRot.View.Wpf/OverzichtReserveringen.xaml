@@ -31,12 +31,13 @@
                 <ColumnDefinition Width="400"/>
             </Grid.ColumnDefinitions>
             <Grid Background="#FFF9F9F9">
-                <DataGrid Name="Boten" AutoGenerateColumns="False" SelectionChanged="Boden_SelectionChanged">
+                <DataGrid ItemsSource="{Binding Items}" x:Name="DeviceDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="ID" Width="0.25*" Binding="{Binding Id}"/>
-                        <DataGridTextColumn Header="Status" Width="0.25*" Binding="{Binding Status}"/>
-                        <DataGridTextColumn Header="Boot Type" Width="0.25*" Binding="{Binding BoatType}"/>
-                        <DataGridTextColumn Header="Reserveringen" Width="0.25*" Binding="{Binding SailingReservation}"/>
+                        <DataGridTextColumn x:Name="Id" Binding="{Binding Id}" Header="Reserveernummer" Width="Auto"/>
+                        <DataGridTextColumn x:Name="Gereserveerd" Binding="{Binding ReserverdByUserId}" Header="Gereserveerd door" Width="*"/>
+                        <DataGridTextColumn x:Name="Gereserveerdeboot" Binding="{Binding ReserverdBoatId}" Header="Gereserveerde boot" Width="*"/>
+                        <DataGridTextColumn x:Name="ReservatieDatum" Binding="{Binding ReservationDate}" Header="Reservatie Datum" Width="*"/>
+                        <DataGridTextColumn x:Name="ReservatieDuratie" Binding="{Binding Duration}" Header="Reservatie Duratie" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>

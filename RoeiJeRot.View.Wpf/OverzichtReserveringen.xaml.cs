@@ -1,6 +1,8 @@
-﻿using RoeiJeRot.Logic.Services;
+﻿using RoeiJeRot.Database.Database;
+using RoeiJeRot.Logic.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,14 +22,32 @@ namespace RoeiJeRot.View.Wpf
     /// </summary>
     public partial class OverzichtReserveringen : Window
     {
-        public OverzichtReserveringen(IBoatService boatService)
+        public ObservableCollection<ReserveringOverzichtViewMod> Items { get; set; } = new ObservableCollection<ReserveringOverzichtViewMod>();
+
+        public List<SailingBoat> BotenDatabase;
+
+        public OverzichtReserveringen(IBoatService boatService, IReservationService reservationService)
         {
             InitializeComponent();
-            Boten.ItemsSource = boatService.GetBoats();
+            //BotenDatabase = boatService.GetBoats();
+            HaalDataOp(boatService, reservationService);
+            DeviceDataGrid.ItemsSource = Items;
         }
-
-
-
+        //Data uit de Database ophalen
+        public void HaalDataOp(IBoatService boatService, IReservationService reservationService)
+        {
+            var reservationDB = reservationService.GetReservations().Select(date => new ReserveringOverzichtViewMod {
+                Id = date.Id,
+                ReservationDate = date.Date.ToString("g"),
+                Duration = date.Duration.ToString(@"hh\:mm"),
+                ReserverdByUserId = date.ReservedByUserId,
+                ReserverdBoatId = date.ReservedSailingBoatId
+            }).ToList();
+            foreach (var item in reservationDB)
+            {
+                Items.Add(item);
+            }
+        }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 
@@ -42,5 +62,19 @@ namespace RoeiJeRot.View.Wpf
         {
 
         }
-    }
+    
+        public class ReserveringOverzichtViewMod
+        {
+            public int Id { get; set; }
+            public int BoatTypeName { get; set; }
+            public int Status { get; set; }
+            public bool Reserved { get; set; }
+            public string ReservationDate { get; set; }
+            public string Duration { get; set; }
+            public int ReserverdByUserId { get; set; }
+            public int ReserverdBoatId { get; set; }
+                
+        }
+    }    
 }
+

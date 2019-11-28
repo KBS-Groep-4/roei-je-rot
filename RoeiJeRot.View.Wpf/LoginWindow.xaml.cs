@@ -11,10 +11,13 @@ namespace RoeiJeRot.View.Wpf
     public partial class LoginWindow : Window
     {
         private LoginLogic _loginLogic;
-
-        public LoginWindow(IUserService userService)
+        private IBoatService _boatSerivce;
+        private IReservationService _reservationService;
+        public LoginWindow(IUserService userService, IBoatService boatService, IReservationService reservationService)
         {
             _loginLogic = new LoginLogic(userService);
+            _boatSerivce = boatService;
+            _reservationService = reservationService;
             InitializeComponent();
         }
 
@@ -45,7 +48,10 @@ namespace RoeiJeRot.View.Wpf
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            // reserveer overzicht
+            OverzichtReserveringen rs = new OverzichtReserveringen(_boatSerivce, _reservationService);
+
+            rs.Activate();
+            rs.Show();
         }
     }
 }

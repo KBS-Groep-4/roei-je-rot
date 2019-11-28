@@ -1,5 +1,4 @@
 ﻿using RoeiJeRot.View.Wpf;
-using RoeiJeRot.View.Wpf.Models;
 using RoeiJeRot.Database.Database;
 using System;
 using System.Collections.Generic;
