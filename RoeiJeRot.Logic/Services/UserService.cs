@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using RoeiJeRot.Database.Database;
 
 namespace RoeiJeRot.Logic.Services
 {
     /// <summary>
-    /// Interface for logic that retrieves user data.
+    ///     Interface for logic that retrieves user data.
     /// </summary>
     public interface IUserService
     {
         /// <summary>
-        ///  Returns a list of users.
+        ///     Returns a list of users.
         /// </summary>
         /// <returns></returns>
         List<User> GetUsers();

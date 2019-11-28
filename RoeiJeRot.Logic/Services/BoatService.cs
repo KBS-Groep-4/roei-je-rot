@@ -1,49 +1,50 @@
 using System;
 using System.Collections.Generic;
-using RoeiJeRot.Database.Database;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using System.Collections;
+using RoeiJeRot.Database.Database;
 
 namespace RoeiJeRot.Logic.Services
 {
     /// <summary>
-    /// Interface for logic that retrieves and updates boats from database.
+    ///     Interface for logic that retrieves and updates boats from database.
     /// </summary>
     public interface IBoatService
     {
         /// <summary>
-        /// Returns a list of all boats.
+        ///     Returns a list of all boats.
         /// </summary>
         /// <returns>All boats</returns>
         List<SailingBoat> GetAllBoats();
 
         /// <summary>
-        /// Returns a list of all boats with the given typeId.
+        ///     Returns a list of all boats with the given typeId.
         /// </summary>
         /// <param name="typeId"></param>
         /// <returns>Returns all boats of given typeId</returns>
         List<SailingBoat> GetAllBoats(int typeId);
 
         /// <summary>
-        /// Updates the boat stock status.
+        ///     Updates the boat stock status.
         /// </summary>
         /// <param name="boatId">The boat identifier.</param>
         /// <param name="status"></param>
         void UpdateBoatStatus(int boatId, BoatState status);
 
         /// <summary>
-        /// Returns all available boats of a certain type for the given reservation date and duration.
+        ///     Returns a list of boats which can be reserved on the given date.
         /// </summary>
         /// <param name="reservationDate"></param>
         /// <param name="duration"></param>
         /// <param name="typeId"></param>
         /// <returns></returns>
-        List<SailingBoat> GetAvailableBoats(DateTime reservationDate, TimeSpan duration, int typeId);
+        List<SailingBoat> GetAvailableBoats(DateTime reservationDate, TimeSpan duration);
     }
+
     public class BoatService : IBoatService
     {
         private readonly RoeiJeRotDbContext _context;
+
         public BoatService(RoeiJeRotDbContext context)
         {
             _context = context;
@@ -64,44 +65,41 @@ namespace RoeiJeRot.Logic.Services
         }
 
         /// <inheritdoc />
-        public List<SailingBoat> GetAvailableBoats(DateTime reservationDate, TimeSpan duration, int typeId)
+        public void UpdateBoatStatus(int boatId, BoatState status)
         {
-            var boats = GetAllBoats(typeId);
-            List<SailingBoat> availableBoats = new List<SailingBoat>();
+            var boat = _context.SailingBoats.FirstOrDefault(b => b.Id == boatId);
+
+            if (boat != null) boat.Status = (int) status;
+
+            _context.SaveChanges();
+        }
+
+        public List<SailingBoat> GetAvailableBoats(DateTime reservationDate, TimeSpan duration)
+        {
+            var boats = GetAllBoats();
+            var availableBoats = new List<SailingBoat>();
 
             foreach (var boat in boats)
             {
-                bool available = true;
-                foreach (var reservation in boat.SailingReservations)
+                var available = true;
+                foreach (var reserv in boat.SailingReservations)
                 {
-                    Console.WriteLine($"Checking {reservation.Date} - {reservation.Duration} on {reservationDate} - {duration} --> {DateChecker.AvailableOn(reservation.Date, reservation.Duration, reservationDate, duration)}");
-                    if (!DateChecker.AvailableOn(reservation.Date, reservation.Duration, reservationDate, duration))
-                    {
+                    Console.WriteLine(
+                        $"Checking {reserv.Date} - {reserv.Duration} on {reservationDate} - {duration} --> {DateChecker.AvailableOn(reserv.Date, reserv.Duration, reservationDate, duration)}");
+                    if (!DateChecker.AvailableOn(reserv.Date, reserv.Duration, reservationDate, duration))
                         available = false;
-                    }
                 }
 
                 if (available) availableBoats.Add(boat);
-
             }
 
             return availableBoats;
         }
 
         /// <inheritdoc />
-        public void UpdateBoatStatus(int boatId, BoatState status)
+        public List<SailingBoat> GetBoats()
         {
-            var boat = _context.SailingBoats.FirstOrDefault(b => b.Id == boatId);
-
-            if (boat != null)
-            {
-                boat.Status = (int)status;
-            }
-
-            _context.SaveChanges();
+            return _context.SailingBoats.Include(x => x.BoatType).ToList();
         }
-
-        /// <inheritdoc />
-        public List<SailingBoat> GetBoats() => _context.SailingBoats.Include(x => x.BoatType).ToList();
     }
 }

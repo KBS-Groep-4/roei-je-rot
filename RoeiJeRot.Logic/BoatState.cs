@@ -1,7 +1,7 @@
 ﻿namespace RoeiJeRot.Logic
 {
     /// <summary>
-    /// Different states a boat can be in.
+    ///     Different states a boat can be in.
     /// </summary>
     public enum BoatState
     {

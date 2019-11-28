@@ -7,14 +7,13 @@ namespace RoeiJeRot.Database.Database
     [Table("sailing_reservations")]
     public class SailingReservation
     {
-        [Key]
-        public int Id { get; set; }
+        [Key] public int Id { get; set; }
 
         public DateTime Date { get; set; }
         public TimeSpan Duration { get; set; }
 
-        [ForeignKey(nameof(ReservedBy))]
-        public int ReservedByUserId { get; set; }
+        [ForeignKey(nameof(ReservedBy))] public int ReservedByUserId { get; set; }
+
         [ForeignKey(nameof(ReservedSailingBoat))]
         public int ReservedSailingBoatId { get; set; }
 

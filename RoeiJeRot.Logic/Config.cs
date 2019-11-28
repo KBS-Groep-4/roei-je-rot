@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 
 namespace RoeiJeRot.Logic.Config
 {
     public interface IConfig
     {
         /// <summary>
-        /// Connection string to the database endpoint.
+        ///     Connection string to the database endpoint.
         /// </summary>
         string ConnectionString { get; }
     }

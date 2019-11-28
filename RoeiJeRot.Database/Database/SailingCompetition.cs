@@ -13,8 +13,7 @@ namespace RoeiJeRot.Database.Database
             SailingCompetitionParticipants = new HashSet<SailingCompetitionParticipant>();
         }
 
-        [Key]
-        public int Id { get; set; }
+        [Key] public int Id { get; set; }
 
         public DateTime Date { get; set; }
         public string Name { get; set; }

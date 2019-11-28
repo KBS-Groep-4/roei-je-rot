@@ -1,35 +1,36 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace RoeiJeRot.Logic.Services
 {
     public interface IAuthenticationService
     {
         /// <summary>
-        /// Returns if the given username and password is a valid user.
+        ///     Returns if the given username and password is a valid user.
         /// </summary>
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns>
-        /// Returns true if record with same username and password is found, else returns false.
+        ///     Returns true if record with same username and password is found, else returns false.
         /// </returns>
         bool AuthenticateUser(string username, string password);
 
         /// <summary>
-        /// Creates an account with the given username and password.
+        ///     Creates an account with the given username and password.
         /// </summary>
         /// <param name="username"></param>
         /// <param name="password"></param>
         void CreateAccount(string username, string password);
 
         /// <summary>
-        /// Removes an account by the given username.
+        ///     Removes an account by the given username.
         /// </summary>
         /// <param name="username"></param>
         /// <param name="password"></param>
         void RemoveAccount(string username);
 
         /// <summary>
-        /// Updates an account with the given information.
+        ///     Updates an account with the given information.
         /// </summary>
         /// <param name="username"></param>
         /// <param name="password"></param>
@@ -38,12 +39,13 @@ namespace RoeiJeRot.Logic.Services
         /// <param name="streedName"></param>
         /// <param name="houseNmr"></param>
         /// <param name="postalCode"></param>
-        void UpdateAccount(string username, string password, string firstname, string lastname, string streedName, string houseNmr, string postalCode);
+        void UpdateAccount(string username, string password, string firstname, string lastname, string streedName,
+            string houseNmr, string postalCode);
     }
 
     public class AuthenticationService : IAuthenticationService
     {
-        private IUserService _userService;
+        private readonly IUserService _userService;
 
         public AuthenticationService(IUserService userService)
         {
@@ -54,26 +56,27 @@ namespace RoeiJeRot.Logic.Services
         public bool AuthenticateUser(string username, string password)
         {
             return _userService
-                        .GetUsers()
-                        .Any(u => u.Username == username && Hasher.Compare(u.Password, password));
+                .GetUsers()
+                .Any(u => u.Username == username && Hasher.Compare(u.Password, password));
         }
 
         /// <inheritdoc />
         public void CreateAccount(string username, string password)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc />
         public void RemoveAccount(string username)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc />
-        public void UpdateAccount(string username, string password, string firstname, string lastname, string streedName, string houseNmr, string postalCode)
+        public void UpdateAccount(string username, string password, string firstname, string lastname,
+            string streedName, string houseNmr, string postalCode)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

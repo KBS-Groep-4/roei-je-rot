@@ -4,7 +4,7 @@ using System.Windows.Controls;
 namespace RoeiJeRot.View.Wpf.Views
 {
     /// <summary>
-    /// Interaction logic for LogoutButton.xaml
+    ///     Interaction logic for LogoutButton.xaml
     /// </summary>
     public partial class LogoutButton : UserControl
     {
@@ -16,7 +16,7 @@ namespace RoeiJeRot.View.Wpf.Views
             InitializeComponent();
         }
 
-        public void OnLogoutClick(Object sender, EventArgs e)
+        public void OnLogoutClick(object sender, EventArgs e)
         {
             _loginWindow.Activate();
             _loginWindow.Show();

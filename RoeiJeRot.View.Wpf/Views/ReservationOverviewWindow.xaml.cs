@@ -8,18 +8,19 @@ using RoeiJeRot.View.Wpf.ViewModels;
 namespace RoeiJeRot.View.Wpf.Views
 {
     /// <summary>
-    /// Interaction logic for ReservationOverviewWindow.xaml
+    ///     Interaction logic for ReservationOverviewWindow.xaml
     /// </summary>
     public partial class ReservationOverviewWindow : Window
     {
-        public ObservableCollection<ReservationViewModel> Items { get; set; } = new ObservableCollection<ReservationViewModel>();
-        
         public ReservationOverviewWindow(IReservationService reservationService)
         {
             InitializeComponent();
             SetReservationData(reservationService);
             DeviceDataGrid.ItemsSource = Items;
         }
+
+        public ObservableCollection<ReservationViewModel> Items { get; set; } =
+            new ObservableCollection<ReservationViewModel>();
 
         // Set data for the reservations view.
         public void SetReservationData(IReservationService reservationService)
@@ -34,26 +35,19 @@ namespace RoeiJeRot.View.Wpf.Views
                     ReservedBoatId = r.ReservedSailingBoatId
                 }).ToList();
 
-            foreach (var reservation in reservations)
-            {
-                Items.Add(reservation);
-            }
+            foreach (var reservation in reservations) Items.Add(reservation);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
         }
 
         private void Boten_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
         }
 
         private void Boden_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
         }
     }
 }
-

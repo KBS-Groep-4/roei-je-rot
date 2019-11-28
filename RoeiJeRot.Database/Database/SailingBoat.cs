@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System;
 
 namespace RoeiJeRot.Database.Database
 {
@@ -15,12 +13,11 @@ namespace RoeiJeRot.Database.Database
             DamageReports = new HashSet<SailingBoatDamageReport>();
         }
 
-        [Key]
-        public int Id { get; set; }
+        [Key] public int Id { get; set; }
+
         public int Status { get; set; }
 
-        [ForeignKey(nameof(BoatType))]
-        public int BoatTypeId { get; set; }
+        [ForeignKey(nameof(BoatType))] public int BoatTypeId { get; set; }
 
         public virtual BoatType BoatType { get; set; }
 
