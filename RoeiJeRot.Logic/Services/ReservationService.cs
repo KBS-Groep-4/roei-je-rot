@@ -10,19 +10,19 @@ namespace RoeiJeRot.Logic.Services
     /// Interface for logic that retrieves, creates, cancels reservations.
     /// </summary>
     public interface IReservationService
-    {        
+    {
         /// <summary>
-        /// Places an boat reservation on a particulary date.
+        /// Places an boat reservation on a particular date.
         /// </summary>
-        /// <param name="boatType">Type van de boot die je wilt reserveren</param>
-        /// <param name="memberid">Id van het lid</param>
-        /// <param name="reservationDate">Wanneer is de boot gereserveerd</param>
-        /// <param name="duration">Hoelang duurt deze reservatie</param>
-        /// <returns>Wanneer een reservatie is geplaatst true, als een reservatie niet geplaatst kan worden false</returns>
+        /// <param name="boatType"></param>
+        /// <param name="memberId"></param>
+        /// <param name="reservationDate"></param>
+        /// <param name="duration"></param>
+        /// <returns></returns>
         bool PlaceReservation(int boatType, int memberId, DateTime reservationDate, TimeSpan duration);
         
         /// <summary>
-        /// Cancel a boat reservation.
+        /// Cancels an boat reservation.
         /// </summary>
         /// <returns>All sailingReservations</returns>
         void CancelReservation(int reservationId);
