@@ -44,7 +44,7 @@
                             <Label Content="Wanneer:" FontSize="32" Width="auto"/>
                             <Button Content="Vandaag" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="20"/>
                         </StackPanel>
-                        <Calendar Foreground="#FF333333" SelectionMode="SingleDate" Name="When">
+                        <Calendar Foreground="#FF333333" SelectionMode="SingleDate" Name="When" SelectedDatesChanged="OnReservationDetailChange">
                             <Calendar.BorderBrush>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                     <GradientStop Color="#FFA3AEB9"/>
@@ -69,10 +69,10 @@
                             <Label Content="Vanaf (HH:MM)" FontSize="18" Padding="5 5 5 0"/>
                             <Button Content="Nu" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="20"/>
                         </StackPanel>
-                        <TextBox Name="Time" Text="13:20" TextWrapping="Wrap" VerticalAlignment="Top" Margin="15 0 15 0"/>
+                        <TextBox Name="Time" Text="13:20" TextWrapping="Wrap" VerticalAlignment="Top" Margin="15 0 15 0" TextChanged="OnReservationDetailChange"/>
 
                         <Label Content="Aantal minuten (Max: 120):" FontSize="18" Padding="5 5 5 0"/>
-                        <TextBox Text="120" TextWrapping="Wrap" VerticalAlignment="Top" Margin="15 0 15 0" Name="Duration"/>
+                        <TextBox Text="120" TextWrapping="Wrap" VerticalAlignment="Top" Margin="15 0 15 0" Name="Duration" TextChanged="OnReservationDetailChange"/>
                     </StackPanel>
                     <StackPanel Grid.Column="2" Orientation="Vertical" Margin="10">
                         <Label Content="Filter:" FontSize="32"></Label>
