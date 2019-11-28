@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System;
 
 namespace RoeiJeRot.Database.Database
 {
@@ -13,20 +11,17 @@ namespace RoeiJeRot.Database.Database
         {
             SailingReservations = new HashSet<SailingReservation>();
             DamageReports = new HashSet<SailingBoatDamageReport>();
-            SailingCompetitionParticipants = new HashSet<SailingCompetitionParticipant>();
         }
 
-        [Key]
-        public int Id { get; set; }
+        [Key] public int Id { get; set; }
+
         public int Status { get; set; }
 
-        [ForeignKey(nameof(BoatType))]
-        public int BoatTypeId { get; set; }
+        [ForeignKey(nameof(BoatType))] public int BoatTypeId { get; set; }
 
         public virtual BoatType BoatType { get; set; }
 
         public virtual ICollection<SailingReservation> SailingReservations { get; set; }
         public virtual ICollection<SailingBoatDamageReport> DamageReports { get; set; }
-        public virtual ICollection<SailingCompetitionParticipant> SailingCompetitionParticipants { get; set; }
     }
 }

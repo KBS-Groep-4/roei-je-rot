@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="RoeiJeRot.View.Wpf.Views.LogoutButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:RoeiJeRot.View.Wpf.Views"
+             mc:Ignorable="d"
+             d:DesignHeight="70" d:DesignWidth="120">
+    <Grid>
+        <Border Width="100" Height="50" Margin="10, 10, 10, 10" Background="#3300EE" CornerRadius="10"
+                BorderBrush="#3300EE" BorderThickness="0" />
+        <Button Width="100" Height="50" Margin="10, 10, 10, 10" Content="Log uit" Foreground="White"
+                Background="Transparent" BorderThickness="0" Name="LogOutButton" Click="OnLogoutClick" />
+    </Grid>
+</UserControl>

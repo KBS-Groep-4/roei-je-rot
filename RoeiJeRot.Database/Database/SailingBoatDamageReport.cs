@@ -7,13 +7,12 @@ namespace RoeiJeRot.Database.Database
     [Table("sailing_boat_damage_reports")]
     public class SailingBoatDamageReport
     {
-        [Key]
-        public int Id { get; set; }
+        [Key] public int Id { get; set; }
 
         [ForeignKey(nameof(DamagedSailingBoat))]
         public int DamagedSailingBoatId { get; set; }
-        [ForeignKey(nameof(DamagedBy))]
-        public int DamagedById { get; set; }
+
+        [ForeignKey(nameof(DamagedBy))] public int DamagedById { get; set; }
 
         public DateTime DamagedAtDate { get; set; }
         public DateTime? DamageFixedDate { get; set; }

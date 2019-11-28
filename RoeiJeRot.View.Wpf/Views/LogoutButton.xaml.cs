@@ -1,21 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using RoeiJeRot.Logic.Services;
 
-namespace RoeiJeRot.View.Wpf
+namespace RoeiJeRot.View.Wpf.Views
 {
     /// <summary>
-    /// Interaction logic for LogoutButton.xaml
+    ///     Interaction logic for LogoutButton.xaml
     /// </summary>
     public partial class LogoutButton : UserControl
     {
@@ -27,7 +16,7 @@ namespace RoeiJeRot.View.Wpf
             InitializeComponent();
         }
 
-        public void OnLogoutClick(Object sender, EventArgs e)
+        public void OnLogoutClick(object sender, EventArgs e)
         {
             _loginWindow.Activate();
             _loginWindow.Show();

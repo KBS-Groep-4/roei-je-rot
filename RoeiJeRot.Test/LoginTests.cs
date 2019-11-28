@@ -1,39 +1,37 @@
-﻿using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using NUnit.Framework;
 using RoeiJeRot.Database.Database;
 using RoeiJeRot.Logic;
 using RoeiJeRot.Logic.Services;
 
 namespace RoeiJeRot.Test
 {
-    class TestUserService : IUserService
+    internal class TestUserService : IUserService
     {
         public List<User> GetUsers()
         {
-            List<User> list = new List<User>();
+            var list = new List<User>();
 
-            list.Add(new User()
+            list.Add(new User
             {
                 Password = Hasher.Hash("abc"),
-                Username = "abc",
+                Username = "abc"
             });
 
             return list;
         }
     }
 
-    class LoginTests
+    internal class LoginTests
     {
         [TestCase("abc", "abc")]
         public void LoginUserPaulCorrect(string username, string password)
         {
             //Arrange
-            LoginLogic logic = new LoginLogic(new TestUserService());
+            var logic = new AuthenticationService(new TestUserService());
 
             //Act
-            bool value = logic.AuthenticateUser(username, password);
+            var value = logic.AuthenticateUser(username, password);
 
             //Assert
             Assert.AreEqual(value, true);
@@ -43,10 +41,10 @@ namespace RoeiJeRot.Test
         public void LoginUserPaulIncorrect(string username, string password)
         {
             //Arrange
-            LoginLogic logic = new LoginLogic(new TestUserService());
+            var logic = new AuthenticationService(new TestUserService());
 
             //Act
-            bool value = logic.AuthenticateUser(username, password);
+            var value = logic.AuthenticateUser(username, password);
 
             //Assert
             Assert.AreEqual(value, false);

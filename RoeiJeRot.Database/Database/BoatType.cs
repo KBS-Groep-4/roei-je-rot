@@ -6,8 +6,7 @@ namespace RoeiJeRot.Database.Database
     [Table("boat_types")]
     public class BoatType
     {
-        [Key]
-        public int Id { get; set; }
+        [Key] public int Id { get; set; }
 
         public int PossiblePassengers { get; set; }
 

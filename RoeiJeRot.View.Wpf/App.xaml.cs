@@ -1,34 +1,26 @@
-﻿using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
-using System.Data;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RoeiJeRot.Database.Database;
 using RoeiJeRot.Logic.Config;
 using RoeiJeRot.Logic.Services;
+using RoeiJeRot.View.Wpf.Views;
 
 namespace RoeiJeRot.View.Wpf
 {
     public partial class App : Application
     {
-        internal static IHost Host { get; set; }
-
         public App()
         {
             Host = new HostBuilder()
                 .ConfigureAppConfiguration((context, configurationBuilder) =>
                 {
                     configurationBuilder.SetBasePath(context.HostingEnvironment.ContentRootPath)
-                        .AddJsonFile("appsettings.json", optional: false)
+                        .AddJsonFile("appsettings.json", false)
                         .AddJsonFile($"appsettings.{Environment.MachineName}.json", true);
                 })
                 .ConfigureServices((context, services) =>
@@ -43,6 +35,7 @@ namespace RoeiJeRot.View.Wpf
                         .AddSingleton<IUserService, UserService>()
                         .AddSingleton<IBoatService, BoatService>()
                         .AddSingleton<IReservationService, ReservationService>()
+                        .AddSingleton<IAuthenticationService, AuthenticationService>()
                         .AddSingleton<LoginWindow>()
                         .AddSingleton<DataSeeder>();
                 })
@@ -52,6 +45,8 @@ namespace RoeiJeRot.View.Wpf
             var seeder = Host.Services.GetService<DataSeeder>();
             seeder.Seed();
         }
+
+        internal static IHost Host { get; set; }
 
         private async void Application_Startup(object sender, StartupEventArgs e)
         {

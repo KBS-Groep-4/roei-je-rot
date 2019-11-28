@@ -7,7 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-        <None Remove="rsc\logo.png" />
+    <Compile Remove="Models\**" />
+    <EmbeddedResource Remove="Models\**" />
+    <None Remove="Models\**" />
+    <Page Remove="Models\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+        <None Remove="Resources\logo.png" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -23,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="rsc\logo.png">
+    <Resource Include="Resources\logo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
@@ -38,13 +45,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="OverzichtReserveringen.xaml">
+    <Page Update="Views\ReservationOverviewWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Models\" />
   </ItemGroup>
 
 </Project>
