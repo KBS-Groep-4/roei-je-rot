@@ -41,7 +41,7 @@ namespace RoeiJeRot.Logic.Services
         /// <returns>All boats</returns>
         public List<SailingBoat> GetAllBoats()
         {
-            return _context.SailingBoats.Include(x => x.SailingReservations).ToList();
+            return _context.SailingBoats.Include(x => x.SailingReservations).Include(x => x.BoatType).ToList();
         }
 
         /// <summary>

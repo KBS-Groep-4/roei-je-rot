@@ -66,13 +66,13 @@
                         <Label Content="Reserveerbare tijden:" FontSize="32" Width="auto" Padding="5,5,5,0"/>
                         <Label Content="10:32 tot 19:30" FontSize="20" Padding="5 0 5 5"/>
                         <StackPanel Orientation="Horizontal">
-                            <Label Content="Vanaf (H:MM)" FontSize="18" Padding="5 5 5 0"/>
+                            <Label Content="Vanaf (HH:MM)" FontSize="18" Padding="5 5 5 0"/>
                             <Button Content="Nu" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="20"/>
                         </StackPanel>
-                        <TextBox Text="13:20" TextWrapping="Wrap" VerticalAlignment="Top" Margin="15 0 15 0"/>
+                        <TextBox Name="Time" Text="13:20" TextWrapping="Wrap" VerticalAlignment="Top" Margin="15 0 15 0"/>
 
                         <Label Content="Aantal minuten (Max: 120):" FontSize="18" Padding="5 5 5 0"/>
-                        <TextBox Text="120" TextWrapping="Wrap" VerticalAlignment="Top" Margin="15 0 15 0"/>
+                        <TextBox Text="120" TextWrapping="Wrap" VerticalAlignment="Top" Margin="15 0 15 0" Name="Duration"/>
                     </StackPanel>
                     <StackPanel Grid.Column="2" Orientation="Vertical" Margin="10">
                         <Label Content="Filter:" FontSize="32"></Label>
@@ -85,10 +85,11 @@
                             <GridView>
                                 <GridViewColumn Header="Niveau" Width="70" DisplayMemberBinding="{Binding RequiredLevel}"/>
                                 <GridViewColumn Header="Naam" Width="200" DisplayMemberBinding="{Binding Name}"/>
-                                <GridViewColumn Header="Plaatsen" Width="70" DisplayMemberBinding="{Binding PossiblePassengers}"></GridViewColumn>
+                                <GridViewColumn Header="Plaatsen" Width="70" DisplayMemberBinding="{Binding PossiblePassengers}"/>
                             </GridView>
                         </ListView.View>
                     </ListView>
+                    <Button Name="ReserveerButton" Click="ReservButtonOnClick">Reservering plaatsen</Button>
                 </StackPanel>
             </Grid>
             <StackPanel Grid.Column="1" Orientation="Vertical" Margin="10, 0, 0, 0" Background="#FFF9F9F9">

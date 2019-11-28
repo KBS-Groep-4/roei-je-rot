@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Globalization;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,33 +18,88 @@ using RoeiJeRot.Logic.Services;
 
 namespace RoeiJeRot.View.Wpf
 {
+    public class BoatTypeViewModel
+    {
+        public int Id { get; set; }
+        public int PossiblePassengers { get; set; }
+        public int RequiredLevel { get; set; }
+        public string Name { get; set; }
+        protected bool HasCommanderSeat { get; set; }
+    }
+
     /// <summary>
     /// Interaction logic for ReserveerScherm.xaml
     /// </summary>
     public partial class ReserveerScherm : Window
     {
+        public ObservableCollection<BoatTypeViewModel> ObservableAvailableTypes { get; set; }
+
+        private RoeiJeRotDbContext context;
+        private IBoatService boatService;
+        private IReservationService reservationService;
+
+        public void ReservButtonOnClick(object sender, RoutedEventArgs args)
+        {
+            TimeSpan time;
+            if (TimeSpan.TryParse(Time.Text, out time))
+            {
+                if (time.TotalHours > 24)
+                    return;
+
+                int durationInt;
+                if (int.TryParse(Duration.Text, out durationInt))
+                {
+                    TimeSpan duration = TimeSpan.FromMinutes(durationInt);
+
+                    Object selectedItemObject = AvailableBoats.SelectedItem;
+                    if (selectedItemObject == null)
+                        return;
+
+                    BoatTypeViewModel selectedType = (BoatTypeViewModel)selectedItemObject;
+
+                    if (When.SelectedDate.HasValue)
+                    {
+                        reservationService.PlaceReservation(selectedType.Id, 3, When.SelectedDate.Value + time, duration);
+                    }
+                }
+            }
+        }
+
         public ReserveerScherm()
         {
             InitializeComponent();
 
             When.SelectedDate = DateTime.Today;
 
-            RoeiJeRotDbContext context = new RoeiJeRotDbContext();
+            context = new RoeiJeRotDbContext();
+            boatService = new BoatService(context);
+            reservationService = new ReservationService(context, boatService);
 
-            IBoatService boatService = new BoatService(context);
-            IReservationService reservationService = new ReservationService(context, boatService);
-
-            List<SailingBoat> boats = reservationService.GetAvailableBoats(When.SelectedDate.Value, TimeSpan.FromHours(2), 1);
+            List<SailingBoat> boats = reservationService.GetAvailableBoats(When.SelectedDate.Value, TimeSpan.FromHours(2));
             List<BoatType> availableTypes = new List<BoatType>();
 
             foreach (var boat in boats)
             {
-                availableTypes.Add(boat.BoatType);
+                bool alreadyIn = false;
+                foreach (var type in availableTypes)
+                {
+                    if (type.Id == boat.BoatTypeId)
+                        alreadyIn = true;
+                }
+                if(!alreadyIn) availableTypes.Add(boat.BoatType);
             }
 
-            availableTypes.Distinct((type, boatType) => type == boatType);
+            ObservableAvailableTypes = new ObservableCollection<BoatTypeViewModel>(availableTypes
+                .Select(type => new BoatTypeViewModel()
+                {
+                    Id = type.Id,
+                    Name = type.Name,
+                    PossiblePassengers = type.PossiblePassengers,
+                    RequiredLevel = type.RequiredLevel
+                })
+                .ToList());
 
-            AvailableBoats.ItemsSource = availableTypes;
+            AvailableBoats.ItemsSource = ObservableAvailableTypes;
         }
     }
 }

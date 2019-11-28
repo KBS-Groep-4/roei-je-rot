@@ -11,6 +11,7 @@ namespace RoeiJeRot.Logic.Services
 {
     public interface IReservationService
     {
+        List<SailingBoat> GetAvailableBoats(DateTime reservationDate, TimeSpan duration);
         List<SailingBoat> GetAvailableBoats(DateTime reservationDate, TimeSpan duration, int typeId);
         bool PlaceReservation(int boatType, int memberId, DateTime reservationDate, TimeSpan duration);
         void CancelBoatReservation(int reservationId);
@@ -59,6 +60,30 @@ namespace RoeiJeRot.Logic.Services
                 return true;
             }
             else return false;
+        }
+
+        public List<SailingBoat> GetAvailableBoats(DateTime reservationDate, TimeSpan duration)
+        {
+            var boats = _boatService.GetAllBoats();
+            List<SailingBoat> availableBoats = new List<SailingBoat>();
+
+            foreach (var boat in boats)
+            {
+                bool available = true;
+                foreach (var reserv in boat.SailingReservations)
+                {
+                    Console.WriteLine($"Checking {reserv.Date} - {reserv.Duration} on {reservationDate} - {duration} --> {DateChecker.AvailableOn(reserv.Date, reserv.Duration, reservationDate, duration)}");
+                    if (!DateChecker.AvailableOn(reserv.Date, reserv.Duration, reservationDate, duration))
+                    {
+                        available = false;
+                    }
+                }
+
+                if (available) availableBoats.Add(boat);
+
+            }
+
+            return availableBoats;
         }
 
         public List<SailingBoat> GetAvailableBoats(DateTime reservationDate, TimeSpan duration, int typeId)
