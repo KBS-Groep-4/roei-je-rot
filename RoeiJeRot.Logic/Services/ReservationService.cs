@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Text;
-using RoeiJeRot.Database.Database;
 using System.Linq;
-using System.Reflection.Metadata;
-using System.Runtime.InteropServices;
+using Microsoft.EntityFrameworkCore;
+using RoeiJeRot.Database.Database;
 
 namespace RoeiJeRot.Logic.Services
 {
