@@ -24,7 +24,7 @@ namespace RoeiJeRot.View.Wpf.Views
         private void OnInloggenClick(object sender, RoutedEventArgs e)
         {
             if (_authenticationService.AuthenticateUser(UsernameTextbox.Text, PasswordTextbox.Password))
-                MessageBox.Show("Invoer correct.", "Invoer correct");
+                ShowReservationOverviewWindow();
             else
                 MessageBox.Show("Gebruikersnaam of wachtwoord incorrect.", "Invoer incorrect");
         }
@@ -37,6 +37,11 @@ namespace RoeiJeRot.View.Wpf.Views
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            ShowReservationOverviewWindow();
+        }
+
+        private void ShowReservationOverviewWindow()
         {
             var rs = InstanceCreator.Instance.CreateInstance<ReservationOverviewWindow>();
 

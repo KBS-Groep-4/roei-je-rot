@@ -18,14 +18,13 @@
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="200" />
             </Grid.ColumnDefinitions>
-            <Button Content="Log Uit" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"
-                    Click="Button_Click" Height="48" Width="142" />
             <StackPanel Orientation="Horizontal">
                 <Image Height="100" Width="250" Source="../Resources/logo.png" />
                 <Label Content="Goedemiddag, &lt;VOORNAAM&gt;" FontSize="46
                        "
                        VerticalAlignment="Center" />
             </StackPanel>
+            <local:LogoutButton HorizontalAlignment="Left" Height="100" Margin="33,0,0,0" VerticalAlignment="Center" Width="167" Grid.Column="1"/>
         </Grid>
         <Grid Grid.Row="1" Margin="0,10,0,10">
             <Grid.ColumnDefinitions>

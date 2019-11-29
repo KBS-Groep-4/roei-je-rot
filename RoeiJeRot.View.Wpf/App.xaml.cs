@@ -37,6 +37,8 @@ namespace RoeiJeRot.View.Wpf
                         .AddSingleton<IReservationService, ReservationService>()
                         .AddSingleton<IAuthenticationService, AuthenticationService>()
                         .AddSingleton<LoginWindow>()
+                        .AddSingleton<ReservationWindow>()
+                        .AddSingleton<ReservationOverviewWindow>()
                         .AddSingleton<DataSeeder>();
                 })
                 .ConfigureLogging(logging => { logging.AddConsole(); })
