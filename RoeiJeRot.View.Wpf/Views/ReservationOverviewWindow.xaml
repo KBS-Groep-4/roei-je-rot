@@ -20,7 +20,7 @@
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Horizontal">
                 <Image Height="100" Width="250" Source="../Resources/logo.png" />
-                <Label Content="Goedemiddag, &lt;VOORNAAM&gt;" FontSize="46
+                <Label Content="Goedemiddag, Jan" FontSize="46
                        "
                        VerticalAlignment="Center" />
             </StackPanel>
@@ -48,9 +48,7 @@
                 </DataGrid>
             </Grid>
             <StackPanel Grid.Column="1" Orientation="Vertical" Margin="10, 0, 0, 0" Background="#FFF9F9F9">
-                <Viewbox Height="430">
-                    <Calendar Height="175" />
-                </Viewbox>
+                <Viewbox Height="430"/>
             </StackPanel>
 
 
