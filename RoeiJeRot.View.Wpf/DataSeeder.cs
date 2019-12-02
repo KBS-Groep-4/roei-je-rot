@@ -61,8 +61,11 @@ namespace RoeiJeRot.View.Wpf
 
         private void SeedBoats()
         {
-            _context.SailingBoats.Add(new SailingBoat {Status = 0, BoatTypeId = _context.SailingBoatTypes.First().Id});
-            _context.SailingBoats.Add(new SailingBoat {Status = 0, BoatTypeId = _context.SailingBoatTypes.First().Id});
+            //Make for every boat type 5 boats
+            foreach (BoatType type in _context.SailingBoatTypes)
+                for (int i = 0; i < 5; i++)
+                    _context.SailingBoats.Add(new SailingBoat { Status = 0, BoatTypeId = type.Id });
+
             _context.SaveChanges();
         }
 
@@ -72,6 +75,24 @@ namespace RoeiJeRot.View.Wpf
                 {PossiblePassengers = 3, RequiredLevel = 2, Name = "Grote kano"});
             _context.SailingBoatTypes.Add(
                 new BoatType {PossiblePassengers = 1, RequiredLevel = 1, Name = "Kleine kano"});
+            _context.SailingBoatTypes.Add(new BoatType()
+            {
+                PossiblePassengers = 5,
+                Name = "Zeilboot",
+                RequiredLevel = 5
+            });
+            _context.SailingBoatTypes.Add(new BoatType()
+            {
+                PossiblePassengers = 4,
+                Name = "Zwaartboot",
+                RequiredLevel = 6
+            });
+            _context.SailingBoatTypes.Add(new BoatType()
+            {
+                Name = "Flying Dutchman",
+                PossiblePassengers = 5,
+                RequiredLevel = 2
+            });
             _context.SaveChanges();
         }
 
