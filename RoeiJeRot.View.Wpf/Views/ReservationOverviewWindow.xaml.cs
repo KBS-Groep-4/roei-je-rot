@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using RoeiJeRot.Logic.Services;
 using RoeiJeRot.View.Wpf.ViewModels;
 
@@ -17,6 +18,14 @@ namespace RoeiJeRot.View.Wpf.Views
             InitializeComponent();
             SetReservationData(reservationService);
             DeviceDataGrid.ItemsSource = Items;
+            btnLogout.OnClick += OnLogoutButtonClick;
+        }
+
+        private void OnLogoutButtonClick(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            var rs = InstanceCreator.Instance.CreateInstance<LoginWindow>();
+            rs.Show();
         }
 
         public ObservableCollection<ReservationViewModel> Items { get; set; } =
@@ -36,18 +45,6 @@ namespace RoeiJeRot.View.Wpf.Views
                 }).ToList();
 
             foreach (var reservation in reservations) Items.Add(reservation);
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-        }
-
-        private void Boten_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-        }
-
-        private void Boden_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
         }
     }
 }

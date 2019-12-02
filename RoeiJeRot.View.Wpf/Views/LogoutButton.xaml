@@ -10,6 +10,6 @@
         <Border Width="100" Height="50" Margin="10, 10, 10, 10" Background="#3300EE" CornerRadius="10"
                 BorderBrush="#3300EE" BorderThickness="0" />
         <Button Width="100" Height="50" Margin="10, 10, 10, 10" Content="Log uit" Foreground="White"
-                Background="Transparent" BorderThickness="0" Name="LogOutButton" Click="OnLogoutClick" />
+                Background="Transparent" BorderThickness="0" Name="LogOutButton" Click="LogOutButton_Click" />
     </Grid>
 </UserControl>

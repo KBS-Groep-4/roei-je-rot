@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 using RoeiJeRot.Database.Database;
 using RoeiJeRot.Logic.Services;
 using RoeiJeRot.View.Wpf.ViewModels;
@@ -27,6 +28,15 @@ namespace RoeiJeRot.View.Wpf.Views
             When.SelectedDate = DateTime.Today;
 
             UpdateAvailableList();
+
+            btnLogout.OnClick += OnLogoutButtonClick;
+        }
+
+        private void OnLogoutButtonClick(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            var rs = InstanceCreator.Instance.CreateInstance<LoginWindow>();
+            rs.Show();
         }
 
         public ObservableCollection<BoatTypeViewModel> ObservableAvailableTypes { get; set; }

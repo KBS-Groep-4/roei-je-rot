@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace RoeiJeRot.View.Wpf.Views
 {
@@ -10,16 +12,17 @@ namespace RoeiJeRot.View.Wpf.Views
     {
         private readonly LoginWindow _loginWindow;
 
+        public event EventHandler<RoutedEventArgs> OnClick;
+
         public LogoutButton()
         {
             _loginWindow = InstanceCreator.Instance.CreateInstance<LoginWindow>();
             InitializeComponent();
         }
-
-        public void OnLogoutClick(object sender, EventArgs e)
+        
+        private void LogOutButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            _loginWindow.Activate();
-            _loginWindow.Show();
+            OnClick?.Invoke(this, e);
         }
     }
 }

@@ -24,7 +24,7 @@
                        "
                        VerticalAlignment="Center" />
             </StackPanel>
-            <local:LogoutButton HorizontalAlignment="Left" Height="100" Margin="33,0,0,0" VerticalAlignment="Center" Width="167" Grid.Column="1"/>
+            <local:LogoutButton x:Name="btnLogout" HorizontalAlignment="Left" Height="100" Margin="33,0,0,0" VerticalAlignment="Center" Width="167" Grid.Column="1"/>
         </Grid>
         <Grid Grid.Row="1" Margin="0,10,0,10">
             <Grid.ColumnDefinitions>

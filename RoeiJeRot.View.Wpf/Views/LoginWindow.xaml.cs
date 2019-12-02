@@ -31,8 +31,8 @@ namespace RoeiJeRot.View.Wpf.Views
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            this.Hide();
             var rs = InstanceCreator.Instance.CreateInstance<ReservationWindow>();
-            rs.Activate();
             rs.Show();
         }
 
@@ -44,8 +44,7 @@ namespace RoeiJeRot.View.Wpf.Views
         private void ShowReservationOverviewWindow()
         {
             var rs = InstanceCreator.Instance.CreateInstance<ReservationOverviewWindow>();
-
-            rs.Activate();
+            this.Hide();
             rs.Show();
         }
     }
