@@ -42,15 +42,20 @@ namespace RoeiJeRot.Logic.Services
         {
             var availableBoats = _boatService.GetAvailableBoats(reservationDate, duration);
 
+            // Check if there is an available boat
             if (availableBoats.Count > 0)
             {
                 SailingBoat boatToReserve = null;
 
-                var min = int.MaxValue;
+                // Take the boat with most reservations
+                var max = int.MinValue;
                 foreach (var boat in availableBoats)
-                    if (boat.SailingReservations.Count < min)
+                {
+                    if (boat.SailingReservations.Count >= max)
                         boatToReserve = boat;
+                }
 
+                //Create a reservation for this boat
                 _context.Reservations.Add(new SailingReservation
                 {
                     Date = reservationDate,
