@@ -13,7 +13,6 @@ namespace RoeiJeRot.Logic.Helper
     {
         public bool IsValid { get; private set; }
         public string Reason { get; private set; }
-
         public ReservationConstraintsMessage(bool isValid, string reason)
         {
             IsValid = isValid;

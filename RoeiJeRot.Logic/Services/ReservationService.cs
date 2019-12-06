@@ -60,7 +60,10 @@ namespace RoeiJeRot.Logic.Services
                 foreach (var boat in availableBoats)
                 {
                     if (boat.SailingReservations.Count >= max)
+                    {
                         boatToReserve = boat;
+                        max = boat.SailingReservations.Count;
+                    }
                 }
 
                 //Create a reservation for this boat
