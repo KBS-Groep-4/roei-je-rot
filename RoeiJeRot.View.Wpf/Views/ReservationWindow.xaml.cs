@@ -65,9 +65,11 @@ namespace RoeiJeRot.View.Wpf.Views
 
                     if (When.SelectedDate.HasValue)
                     {
-                        _reservationService.PlaceReservation(selectedType.Id, 3, When.SelectedDate.Value + time,
+                        bool result = _reservationService.PlaceReservation(selectedType.Id, 1, When.SelectedDate.Value + time,
                             duration);
-                        MessageBox.Show("Reservering geplaatst :D");
+                        if (result) MessageBox.Show("Reservering geplaatst :D");
+                        else MessageBox.Show("Reservatie niet geplaatst :(");
+
                         UpdateAvailableList();
                     }
                 }
