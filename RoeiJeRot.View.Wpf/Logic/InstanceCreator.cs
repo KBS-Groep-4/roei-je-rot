@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace RoeiJeRot.View.Wpf
+namespace RoeiJeRot.View.Wpf.Logic
 {
     /// <summary>
     ///     Get access to the dependency injection system which can create instances of types.

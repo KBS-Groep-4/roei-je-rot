@@ -92,7 +92,7 @@ namespace RoeiJeRot.Logic.Services
         public List<SailingReservation> GetFutureReservations(int memberId)
         {
             var user = _context.Users.Where(user => user.Id == memberId).ToList()[0];
-            return user.Reservations.Where(reserv => (reserv.Date + reserv.Duration) >= DateTime.Now).ToList();
+            return user.Reservations.Where(reserv => (reserv.Date + reserv.Duration) >= DateTime.Now && reserv.ReservedByUserId == memberId).ToList();
         }
 
         /// <inheritdoc />

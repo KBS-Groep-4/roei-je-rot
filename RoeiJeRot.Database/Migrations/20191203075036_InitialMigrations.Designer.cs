@@ -10,7 +10,7 @@ using RoeiJeRot.Database.Database;
 namespace RoeiJeRot.Database.Migrations
 {
     [DbContext(typeof(RoeiJeRotDbContext))]
-    [Migration("20191129105156_InitialMigrations")]
+    [Migration("20191203075036_InitialMigrations")]
     partial class InitialMigrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

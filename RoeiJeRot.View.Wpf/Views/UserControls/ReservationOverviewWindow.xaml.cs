@@ -2,30 +2,26 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using RoeiJeRot.Logic.Services;
+using RoeiJeRot.View.Wpf.Logic;
 using RoeiJeRot.View.Wpf.ViewModels;
+using RoeiJeRot.View.Wpf.Views.Windows;
 
-namespace RoeiJeRot.View.Wpf.Views
+namespace RoeiJeRot.View.Wpf.Views.UserControls
 {
     /// <summary>
-    ///     Interaction logic for ReservationOverviewWindow.xaml
+    ///     Interaction logic for ReservationOverviewScreen.xaml
     /// </summary>
-    public partial class ReservationOverviewWindow : Window
+    public partial class ReservationOverviewScreen : CustomUserControl
     {
-        public ReservationOverviewWindow(IReservationService reservationService)
+        private readonly WindowManager _windowManager;
+
+        public ReservationOverviewScreen(IReservationService reservationService, WindowManager windowManager)
         {
+            _windowManager = windowManager;
             InitializeComponent();
             SetReservationData(reservationService);
             DeviceDataGrid.ItemsSource = Items;
-            btnLogout.OnClick += OnLogoutButtonClick;
-        }
-
-        private void OnLogoutButtonClick(object sender, RoutedEventArgs e)
-        {
-            this.Hide();
-            var rs = InstanceCreator.Instance.CreateInstance<LoginWindow>();
-            rs.Show();
         }
 
         public ObservableCollection<ReservationViewModel> Items { get; set; } =
@@ -40,11 +36,15 @@ namespace RoeiJeRot.View.Wpf.Views
                     Id = r.Id,
                     ReservationDate = r.Date.ToString("g"),
                     Duration = r.Duration.ToString(@"hh\:mm"),
-                    ReservedByUserId = r.ReservedByUserId,
+                    ReservedByUserId = r.ReservedBy.Username,
                     ReservedBoatId = r.ReservedSailingBoatId
                 }).ToList();
 
             foreach (var reservation in reservations) Items.Add(reservation);
+        }
+
+        public void OnClose()
+        {
         }
     }
 }

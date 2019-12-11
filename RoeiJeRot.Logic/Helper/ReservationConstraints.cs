@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using Innovative.SolarCalculator;
 using RoeiJeRot.Logic.Services;
-using static Innovative.SolarCalculator.SolarTimes;
 
 namespace RoeiJeRot.Logic.Helper
 {
@@ -35,7 +33,6 @@ namespace RoeiJeRot.Logic.Helper
             if (date < DateTime.Now || date + duration < DateTime.Now) return new ReservationConstraintsMessage(false, "Reservatie is in het verleden");
             if (duration > TimeSpan.FromHours(2)) return new ReservationConstraintsMessage(false, "Reservatie is te lang (max 2 uur)");
             if (reservationService.GetFutureReservations(accountId).Count >= 2) return new ReservationConstraintsMessage(false, "U heeft al teveel reservaties geplaatst voor de toekomst");
-
             if (!DayChecker.IsDay(date, duration)) return new ReservationConstraintsMessage(false, "Reservaties kunnen alleen tijdens de dag geplaatst worden");
 
             return new ReservationConstraintsMessage(true, "All is fine");

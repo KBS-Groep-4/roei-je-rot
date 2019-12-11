@@ -14,7 +14,13 @@
   </ItemGroup>
 
   <ItemGroup>
+        <None Remove="Resources\close.png" />
+        <None Remove="Resources\close_white.png" />
         <None Remove="Resources\logo.png" />
+        <None Remove="Resources\min.png" />
+        <None Remove="Resources\min_white.png" />
+        <PackageReference Include="MaterialDesignColors" Version="1.2.1" />
+        <PackageReference Include="MaterialDesignThemes" Version="3.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -30,9 +36,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\close.png" />
+    <Resource Include="Resources\close_white.png" />
     <Resource Include="Resources\logo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resources\min.png" />
+    <Resource Include="Resources\min_white.png" />
   </ItemGroup>
 
   <ItemGroup>

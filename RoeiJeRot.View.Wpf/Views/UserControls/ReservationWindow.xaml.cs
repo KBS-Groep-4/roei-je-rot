@@ -3,22 +3,24 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
-using System.Windows.Input;
+using System.Windows.Controls;
 using RoeiJeRot.Database.Database;
 using RoeiJeRot.Logic.Services;
+using RoeiJeRot.View.Wpf.Logic;
 using RoeiJeRot.View.Wpf.ViewModels;
+using RoeiJeRot.View.Wpf.Views.Windows;
 
-namespace RoeiJeRot.View.Wpf.Views
+namespace RoeiJeRot.View.Wpf.Views.UserControls
 {
     /// <summary>
-    ///     Interaction logic for ReservationWindow.xaml
+    ///     Interaction logic for ReservationScreen.xaml
     /// </summary>
-    public partial class ReservationWindow : Window
+    public partial class ReservationScreen : CustomUserControl
     {
         private readonly IBoatService _boatService;
         private readonly IReservationService _reservationService;
 
-        public ReservationWindow(IBoatService boatService, IReservationService reservationService)
+        public ReservationScreen(IBoatService boatService, IReservationService reservationService)
         {
             _boatService = boatService;
             _reservationService = reservationService;
@@ -28,15 +30,6 @@ namespace RoeiJeRot.View.Wpf.Views
             When.SelectedDate = DateTime.Today;
 
             UpdateAvailableList();
-
-            btnLogout.OnClick += OnLogoutButtonClick;
-        }
-
-        private void OnLogoutButtonClick(object sender, RoutedEventArgs e)
-        {
-            this.Hide();
-            var rs = InstanceCreator.Instance.CreateInstance<LoginWindow>();
-            rs.Show();
         }
 
         public ObservableCollection<BoatTypeViewModel> ObservableAvailableTypes { get; set; }
@@ -57,7 +50,7 @@ namespace RoeiJeRot.View.Wpf.Views
                     var selectedItemObject = AvailableBoats.SelectedItem;
                     if (selectedItemObject == null)
                     {
-                        MessageBox.Show("Geen boot geselecteerd :(");
+                        MessageBox.Show("Geen boot geselecteerd");
                         return;
                     }
 
@@ -67,8 +60,8 @@ namespace RoeiJeRot.View.Wpf.Views
                     {
                         bool result = _reservationService.PlaceReservation(selectedType.Id, 1, When.SelectedDate.Value + time,
                             duration);
-                        if (result) MessageBox.Show("Reservering geplaatst :D");
-                        else MessageBox.Show("Reservatie niet geplaatst :(");
+                        if (result) MessageBox.Show("Reservering geplaatst");
+                        else MessageBox.Show("Reservatie niet geplaatst");
 
                         UpdateAvailableList();
                     }
@@ -120,6 +113,10 @@ namespace RoeiJeRot.View.Wpf.Views
             {
                 AvailableBoats.ItemsSource = null;
             }
+        }
+
+        public void OnClose()
+        {
         }
     }
 }

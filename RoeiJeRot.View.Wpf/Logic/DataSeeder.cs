@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Internal;
 using RoeiJeRot.Database.Database;
 using RoeiJeRot.Logic;
 
-namespace RoeiJeRot.View.Wpf
+namespace RoeiJeRot.View.Wpf.Logic
 {
     /// <summary>
     ///     Data seeder that inserts test data into the database.
@@ -49,12 +49,12 @@ namespace RoeiJeRot.View.Wpf
             _context.Users.Add(new User
             {
                 FirstName = "Paul", LastName = "Hiemstra", City = "Zwolle", Country = "Nederland", HouseNumber = "2",
-                Password = Hasher.Hash("abc"), Username = "abc", SailingLevel = 1, StreetName = "Duckweg"
+                Password = Hasher.Hash("123"), Username = "paul", SailingLevel = 1, StreetName = "Duckweg"
             });
             _context.Users.Add(new User
             {
                 FirstName = "Frank", LastName = "Demilt", City = "Zwolle", Country = "Nederland", HouseNumber = "2",
-                Password = Hasher.Hash("abc"), Username = "abc", SailingLevel = 1, StreetName = "Duckweg"
+                Password = Hasher.Hash("123"), Username = "frank", SailingLevel = 1, StreetName = "Duckweg"
             });
             _context.SaveChanges();
         }
