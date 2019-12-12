@@ -6,20 +6,13 @@ using RoeiJeRot.View.Wpf.Views.Windows;
 
 namespace RoeiJeRot.View.Wpf.Logic
 {
-    public class CustomUserControl : UserControl, IEmbeddedScreen
-    {
-        public void OnClose()
-        {
-        }
-    }
-
     /// <summary>
     /// Wrapper over `Window`.
     /// </summary>
     public class CustomWindow<T> where T: UserControl, IEmbeddedScreen
     {
         private System.Windows.Window _window;
-        private Stack<T> _embeddedScreens;
+        private readonly Stack<T> _embeddedScreens;
 
         public CustomWindow()
         {

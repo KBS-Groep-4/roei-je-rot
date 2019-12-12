@@ -1,7 +1,12 @@
-﻿Get-ChildItem "../RoeiJeRot.Database/Migrations/*" -Filter *.cs | 
+﻿Write-Host "removing migraion"
+
+dotnet ef migrations remove --project ../RoeiJeRot.Database/RoeiJeRot.Database.csproj --startup-project .\RoeiJeRot.View.Wpf.csproj
+
+Get-ChildItem "../RoeiJeRot.Database/Migrations/*" -Filter *.cs | 
 Foreach-Object {
     Remove-Item $_.FullName
 }
+
 
 Write-Host "creating migraion"
 

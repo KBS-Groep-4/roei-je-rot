@@ -20,6 +20,11 @@ namespace RoeiJeRot.Test
 
             return list;
         }
+
+        public User GetUserByUserName(string username)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 
     internal class LoginTests

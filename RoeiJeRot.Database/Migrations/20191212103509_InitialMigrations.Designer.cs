@@ -10,7 +10,7 @@ using RoeiJeRot.Database.Database;
 namespace RoeiJeRot.Database.Migrations
 {
     [DbContext(typeof(RoeiJeRotDbContext))]
-    [Migration("20191203075036_InitialMigrations")]
+    [Migration("20191212103509_InitialMigrations")]
     partial class InitialMigrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -177,6 +177,9 @@ namespace RoeiJeRot.Database.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Country")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")

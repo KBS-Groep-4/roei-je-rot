@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -34,7 +35,13 @@ namespace RoeiJeRot.View.Wpf
                         .AddSingleton<IConfig, Config>(_ => new Config(context.Configuration))
                         .AddDbContext<RoeiJeRotDbContext>(opts =>
                         {
-                            opts.UseSqlServer(context.Configuration["connectionString"],
+                            var configuration = new ConfigurationBuilder()
+                                .SetBasePath(Directory.GetCurrentDirectory())
+                                .AddJsonFile("appsettings.json")
+                                .AddJsonFile($"appsettings.{Environment.MachineName}.json", true)
+                                .Build();
+                            
+                            opts.UseSqlServer(configuration["connectionString"],
                                 o => o.MigrationsAssembly("LocatieNu.Web.Api"));
                         })
                         .AddSingleton<Window>()

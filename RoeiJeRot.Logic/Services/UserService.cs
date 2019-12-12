@@ -14,6 +14,8 @@ namespace RoeiJeRot.Logic.Services
         /// </summary>
         /// <returns></returns>
         List<User> GetUsers();
+
+        User GetUserByUserName(string username);
     }
 
     public class UserService : IUserService
@@ -29,6 +31,11 @@ namespace RoeiJeRot.Logic.Services
         public List<User> GetUsers()
         {
             return _context.Users.ToList();
+        }
+
+        public User GetUserByUserName(string username)
+        {
+           return  _context.Users.FirstOrDefault(x => x.Username == username);
         }
     }
 }

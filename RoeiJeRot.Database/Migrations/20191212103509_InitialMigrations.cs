@@ -36,7 +36,8 @@ namespace RoeiJeRot.Database.Migrations
                     Country = table.Column<string>(nullable: true),
                     SailingLevel = table.Column<int>(nullable: false),
                     Username = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(nullable: true)
+                    Password = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

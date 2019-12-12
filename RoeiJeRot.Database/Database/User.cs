@@ -25,6 +25,7 @@ namespace RoeiJeRot.Database.Database
         public int SailingLevel { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
+        public string  Email { get; set; }  
 
         public virtual ICollection<SailingReservation> Reservations { get; set; }
         public virtual ICollection<SailingBoatDamageReport> DamageReports { get; set; }
