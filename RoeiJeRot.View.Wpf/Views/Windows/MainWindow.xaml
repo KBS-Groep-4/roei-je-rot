@@ -30,13 +30,13 @@
         </StackPanel>
         <Grid x:Name="screenGrid" DockPanel.Dock="Right">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="70*"/>
-                <ColumnDefinition Width="705*"/>
-                <ColumnDefinition Width="70*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="15*"/>
+                <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="57*"/>
-                <RowDefinition Height="487*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="12*"/>
             </Grid.RowDefinitions>
         </Grid>
     </DockPanel>
