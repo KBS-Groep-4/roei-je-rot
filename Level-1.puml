@@ -1,0 +1,25 @@
+@startuml naam
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0/C4_Container.puml
+
+LAYOUT_LEFT_RIGHT
+
+Person(lid, "Lid")
+Person(medewerker, "Medewerker")
+Person(beheerder, "Beheerder")
+Person(wedstrijdCom, "Wedstrijdcommisaris")
+Person(matCom, "Materiaalcommisaris")
+
+System(app, "Reserveer Systeem")
+
+System_Ext(mail, "Gmail API")
+Rel(app, mail, "Vraagt om bericht te sturen")
+Rel(mail, lid, "Stuur mails naar")
+
+Rel(lid, app, "Maakt reserveringen met")
+Rel(medewerker, app, "Boten innemen en uitnemen en schade melden")
+Rel(beheerder, app, "Nieuwe boten en leden aanmaken en beheren")
+Rel(wedstrijdCom, app, "Wedstrijden organiseren en beheren")
+Rel(matCom, app, "Handeld schade af")
+
+
+@enduml

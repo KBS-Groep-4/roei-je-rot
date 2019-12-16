@@ -1,0 +1,77 @@
+@startuml LAYOUT_WITH_LEGEND naam
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0/C4_Container.puml
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0/C4_Component.puml
+
+Person(lid, "Lid")
+Person(medewerker, "Medewerker")
+Person(beheerder, "Beheerder")
+Person(wedstrijdCom, "Wedstrijdcommisaris")
+Person(matCom, "Materiaalcommisaris")
+
+LAYOUT_LEFT_RIGHT
+
+System_Boundary(reserveerSysteem, "Reserveer Systeem"){
+    Container_Boundary(app, "Roei-Je-Rot Desktop App"){
+        Container_Boundary(view, "Views"){
+            Component(inlogView, "Inloggen", "C#, .NET Core, WPF")
+            Component(reserveerView, "Reserveren", "C#, .NET Core, WPF")
+            Component(reserveerOverzicht, "Reserveer Overzicht", "C#, .NET Core, WPF")
+            Component(bootOverzicht, "Boot Overzicht", "C#, .NET Core, WPF")
+            Component(ledenOverzicht, "Leden Overzicht", "C#, .NET Core, WPF")
+            Component(wedstrijdBeheer, "Wedstrijd Beheren", "C#, .NET Core, WPF")   
+            Component(schadeBeheer, "Schade Beheren", "C#, .NET Core, WPF")      
+        }
+        Container_Boundary(logic, "Logic"){            
+            Component(inlogLogic, "Authentication Service", "C#, .NET Core")
+            Component(boatLogic, "Boot Service", "C#, .Net Core")
+            Component(reservLogic, "Reservatie Service", "C#, .Net Core")
+            Component(userLogic, "Gebruiker Service", "C#, .Net Core")
+            Component(emailLogic, "Email Service", "C#, .Net Core")
+
+            Rel(lid, inlogView, "Logt in")
+            Rel(medewerker, inlogView, "Logt in")
+            Rel(beheerder, inlogView, "Logt in")
+            Rel(wedstrijdCom, inlogView, "Logt in")
+            Rel(matCom, inlogView, "Logic in")
+
+            Rel(inlogLogic, userLogic, "Haal gebruikers op")
+            Rel(reservLogic, boatLogic, "Haal boten op")
+            Rel(reservLogic, emailLogic, "Verstuur reservatie bericht, Meld boot uitval")
+        }
+
+        'Connecties naar ORM
+        Container(orm, "ORM", "C#, .NET Core, Entitiy Framework")
+        Rel(reservLogic, orm, "Reservatie data ophalen en bewerken")
+        Rel(boatLogic, orm, "Boot data ophalen en bewerken")
+        Rel(userLogic, orm, "Gebruiker data ophalen")
+
+        'Connecties van view naar logic
+        Rel(reserveerView, reservLogic, "Ophalen en plaatsen reserveringen")
+        Rel(inlogView, inlogLogic, "Gebruiker Inloggen")
+        Rel(ledenOverzicht, userLogic, "Gebruikers ophalen")
+        Rel(bootOverzicht, boatLogic, "Boot informatie ophalen en bewerken")
+        Rel(reserveerOverzicht, reservLogic, "Reserveringen ophalen en annuleren")
+        Rel(emailLogic, userLogic, "Gebruiker email address ophalen")
+        Rel(schadeBeheer, userLogic, "Status boot bewerken")
+        
+    }
+    
+    ContainerDb(db, "Roei-Je-Rot Database", "MS-SQL")
+
+    Rel(orm, db, "Stuurt aan")
+}
+
+System_Ext(mail, "Gmail API")
+Rel(emailLogic, mail, "Vraagt om bericht te sturen")
+Rel(mail, lid, "Stuur mails naar")
+
+
+Rel(lid, reserveerView, "Maakt reserveringen met")
+Rel(medewerker, bootOverzicht, "Boten innemen en uitnemen en schade melden")
+Rel(medewerker, reserveerOverzicht, "Reserveringen Inzien")
+Rel(beheerder, bootOverzicht, "Nieuwe boten aanmaken en verwijderen")
+Rel(beheerder, ledenOverzicht, "Nieuwe leden aanmaken, aanpassen, en verwijderen")
+Rel(wedstrijdCom, wedstrijdBeheer, "Wedstrijden organiseren en beheren")
+Rel(matCom, schadeBeheer, "Handelt schade af")
+
+@enduml
