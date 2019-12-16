@@ -51,6 +51,8 @@ namespace RoeiJeRot.View.Wpf
                         .AddSingleton<IBoatService, BoatService>()
                         .AddSingleton<IReservationService, ReservationService>()
                         .AddSingleton<IAuthenticationService, AuthenticationService>()
+                        .AddScoped<IMailService, MailService>()
+
 
                         .AddTransient<MainWindow>()
                         .AddTransient<LoginWindow>()

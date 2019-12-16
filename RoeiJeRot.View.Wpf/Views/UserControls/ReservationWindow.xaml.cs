@@ -19,16 +19,20 @@ namespace RoeiJeRot.View.Wpf.Views.UserControls
     {
         private readonly IBoatService _boatService;
         private readonly IReservationService _reservationService;
+        private readonly IMailService _mailService;
+        private readonly WindowManager _windowManager;
 
-        public ReservationScreen(IBoatService boatService, IReservationService reservationService)
+
+
+        public ReservationScreen(IBoatService boatService, IReservationService reservationService, IMailService mailService, WindowManager windowManager)
         {
             _boatService = boatService;
             _reservationService = reservationService;
-
+            _mailService = mailService;
+            _windowManager = windowManager;
             InitializeComponent();
-
             When.SelectedDate = DateTime.Today;
-
+            
             UpdateAvailableList();
         }
 
@@ -60,7 +64,11 @@ namespace RoeiJeRot.View.Wpf.Views.UserControls
                     {
                         bool result = _reservationService.PlaceReservation(selectedType.Id, 1, When.SelectedDate.Value + time,
                             duration);
-                        if (result) MessageBox.Show("Reservering geplaatst");
+                        if (result)
+                        {
+                            _mailService.SendConfirmation(_windowManager.UserSession.Email, _windowManager.UserSession.FirstName, When.SelectedDate.Value, time);
+                            MessageBox.Show("Reservering geplaatst");
+                        }
                         else MessageBox.Show("Reservatie niet geplaatst");
 
                         UpdateAvailableList();
