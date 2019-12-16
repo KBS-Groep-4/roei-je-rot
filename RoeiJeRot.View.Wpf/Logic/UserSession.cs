@@ -8,8 +8,9 @@ namespace RoeiJeRot.View.Wpf.Logic
     /// </summary>
     public class UserSession
     {
-        public UserSession(string username, string email, string firstName, string lastName, PermissionType permissionType)
+        public UserSession(int userId, string username, string email, string firstName, string lastName, PermissionType permissionType)
         {
+            UserId = userId;
             Username = username;
             Email = email;
             FirstName = firstName;
@@ -17,16 +18,15 @@ namespace RoeiJeRot.View.Wpf.Logic
             PermissionType = permissionType;
         }
 
-        public string Username  { get;  }
-        public string  Email { get; }
-        public string FirstName { get; }
-        public string LastName { get; }
+        public int UserId { get; set; }
+        public string Username  { get; set; }
+        public string  Email { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
 
         /// <summary>
         /// The permission of the user.
         /// </summary>
         public PermissionType  PermissionType { get; }
     }
-
-
 }
