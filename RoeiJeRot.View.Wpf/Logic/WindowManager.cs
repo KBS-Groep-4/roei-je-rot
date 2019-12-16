@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using RoeiJeRot.Logic;
 using RoeiJeRot.Logic.Services;
 using RoeiJeRot.View.Wpf.ViewModels;
 using RoeiJeRot.View.Wpf.Views.Windows;
@@ -70,8 +73,12 @@ namespace RoeiJeRot.View.Wpf.Logic
             if (authenticationService.AuthenticateUser(username, password))
             {
                 var user =  userService.GetUserByUserName(username);
-                
-                UserSession = new UserSession(user.Username, user.Email, user.FirstName, user.LastName);
+
+                var permissions = userService.GetUserPermissions(user.Id);
+
+                PermissionType permissionType = Roles.GetPermissionType(permissions);
+
+                UserSession = new UserSession(user.Username, user.Email, user.FirstName, user.LastName, permissionType);
                 CurrentWindow.ShowNew(GetWindow<MainWindow>());
                 return true;
             }

@@ -49,6 +49,8 @@ namespace RoeiJeRot.Database.Database
         public DbSet<SailingCompetitionParticipant> SailingCompetitionParticipants { get; set; }
 
         public DbSet<BoatType> SailingBoatTypes { get; set; }
+        public DbSet<Permission> Permissions { get; set; }
+        public DbSet<UserPermission> PermissionUsers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using RoeiJeRot.Database.Database;
+using RoeiJeRot.Logic;
 using RoeiJeRot.View.Wpf.Logic;
 using RoeiJeRot.View.Wpf.ViewModels;
 using RoeiJeRot.View.Wpf.Views.UserControls;
@@ -17,6 +21,8 @@ namespace RoeiJeRot.View.Wpf.Views.Windows
     {
         private readonly WindowManager _windowManager;
 
+        private Dictionary<PermissionType, Button> Buttons { get; set; }
+
         public MainWindow(WindowManager windowManager)
         {
             _windowManager = windowManager;
@@ -25,19 +31,36 @@ namespace RoeiJeRot.View.Wpf.Views.Windows
             this.headerBar.BtnMinClick += MinimizeClick;
             this.headerBar.BtnMaxClick += MaximizeRestoreClick;
             this.headerBar.LogoutClick += OnLogout;
-
-            LoadButtons();
+            
+            InitializeButtons();
+            LoadButtonsForUser();
         }
 
-        private void LoadButtons()
+        private void InitializeButtons()
         {
-            var reservationOverViewWindow = new Button() {Content = "Reservering Overzicht",};
+            Buttons = new Dictionary<PermissionType, Button>();
+            var reservationOverViewWindow = new Button() { Content = "Reservering Overzicht", };
             reservationOverViewWindow.Click += OnReservationOverviewClick;
-            pnlPageButtons.Children.Add(reservationOverViewWindow);
 
-            var reservationWindow = new Button() { Content = "Reservering Plaatsen", };
+            var reservationWindow = new Button() {Content = "Reservering Plaatsen",};
             reservationWindow.Click += OnReservationClick;
-            pnlPageButtons.Children.Add(reservationWindow);
+
+            Buttons.Add(PermissionType.Admin | PermissionType.Staff, reservationOverViewWindow);
+            Buttons.Add(PermissionType.Admin | PermissionType.Mc | PermissionType.Member | PermissionType.Staff | PermissionType.Wc, reservationWindow);
+        }
+
+        private void LoadButtonsForUser()
+        {
+            var permissionType = _windowManager.UserSession.PermissionType;
+
+            var buttonsForUser = Buttons
+                .Where(x => x.Key.HasFlag(permissionType ))
+                .Select(x => x.Value);
+
+            foreach (var buttonForUser in buttonsForUser)
+            {
+                pnlPageButtons.Children.Add(buttonForUser);
+            }
         }
 
         private void OnReservationOverviewClick(object sender, RoutedEventArgs e)
