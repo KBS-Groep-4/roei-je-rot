@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -17,12 +18,13 @@ namespace RoeiJeRot.View.Wpf.Views.UserControls
     public partial class ReservationOverviewScreen : CustomUserControl
     {
         private readonly WindowManager _windowManager;
-
+        private IMailService _mailService;
         private IReservationService _reservationService;
 
-        public ReservationOverviewScreen(IReservationService reservationService, WindowManager windowManager)
+        public ReservationOverviewScreen(IReservationService reservationService, WindowManager windowManager, IMailService mailService)
         {
             _windowManager = windowManager;
+            _mailService = mailService;
             InitializeComponent();
             SetReservationData(reservationService);
             DeviceDataGrid.ItemsSource = Items;
@@ -39,10 +41,12 @@ namespace RoeiJeRot.View.Wpf.Views.UserControls
                 .Select(r => new ReservationViewModel
                 {
                     Id = r.Id,
-                    ReservationDate = r.Date.ToString("g"),
+                    ReservationDate = r.Date,
                     Duration = r.Duration.ToString(@"hh\:mm"),
                     ReservedByUserId = r.ReservedBy.Username,
-                    ReservedBoatId = r.ReservedSailingBoatId
+                    ReservedBoatId = r.ReservedSailingBoatId,
+                    Email = r.ReservedBy.Email,
+                    FirstName = r.ReservedBy.FirstName
                 }).ToList();
 
             foreach (var reservation in reservations) Items.Add(reservation);
@@ -50,11 +54,15 @@ namespace RoeiJeRot.View.Wpf.Views.UserControls
 
         private void OnCancelClick(object sender, RoutedEventArgs e)
         {
+            var toRemoveModel = new List<ReservationViewModel>();
             foreach (var data in DeviceDataGrid.SelectedItems)
             {
-                _reservationService.CancelReservation(((ReservationViewModel)data).Id);
+                var model = (ReservationViewModel)data;
+                _mailService.SendCancelConfirmation(model.Email, model.FirstName, model.ReservationDate);
+                _reservationService.CancelReservation((model).Id);
+                toRemoveModel.Add(model);
             }
-
+            toRemoveModel.ForEach(x => Items.Remove(x));
             MessageBox.Show("Reservering(en) verwijderd");
         }
     }

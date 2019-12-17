@@ -64,7 +64,7 @@ namespace RoeiJeRot.View.Wpf.Views.UserControls
                             duration);
                         if (result)
                         {
-                            _mailService.SendConfirmation(_windowManager.UserSession.Email, _windowManager.UserSession.FirstName, When.SelectedDate.Value, duration);
+                            _mailService.SendConfirmation(_windowManager.UserSession.Email, _windowManager.UserSession.FirstName, When.SelectedDate.Value + time, duration);
                             MessageBox.Show("Reservering geplaatst");
                         }
                         else MessageBox.Show("Reservatie niet geplaatst");
