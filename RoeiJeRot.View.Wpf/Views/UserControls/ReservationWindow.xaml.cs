@@ -89,7 +89,7 @@ namespace RoeiJeRot.View.Wpf.Views.UserControls
                 int.TryParse(Duration.Text, out durationInt) &&
                 When.SelectedDate.HasValue)
             {
-                var boats = _boatService.GetAvailableBoats(When.SelectedDate.Value + time,
+                var boats = _reservationService.GetAvailableBoats(When.SelectedDate.Value + time,
                     TimeSpan.FromMinutes(durationInt));
                 var availableTypes = new List<BoatType>();
 

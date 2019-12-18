@@ -30,15 +30,6 @@ namespace RoeiJeRot.Logic.Services
         /// <param name="boatId">The boat identifier.</param>
         /// <param name="status"></param>
         void UpdateBoatStatus(int boatId, BoatState status);
-
-        /// <summary>
-        ///     Returns a list of boats which can be reserved on the given date.
-        /// </summary>
-        /// <param name="reservationDate"></param>
-        /// <param name="duration"></param>
-        /// <param name="typeId"></param>
-        /// <returns></returns>
-        List<SailingBoat> GetAvailableBoats(DateTime reservationDate, TimeSpan duration);
     }
 
     public class BoatService : IBoatService
@@ -72,28 +63,6 @@ namespace RoeiJeRot.Logic.Services
             if (boat != null) boat.Status = (int) status;
 
             _context.SaveChanges();
-        }
-
-        public List<SailingBoat> GetAvailableBoats(DateTime reservationDate, TimeSpan duration)
-        {
-            var boats = GetAllBoats();
-            var availableBoats = new List<SailingBoat>();
-
-            foreach (var boat in boats)
-            {
-                var available = true;
-                foreach (var reserv in boat.SailingReservations)
-                {
-                    Console.WriteLine(
-                        $"Checking {reserv.Date} - {reserv.Duration} on {reservationDate} - {duration} --> {DateChecker.AvailableOn(reserv.Date, reserv.Duration, reservationDate, duration)}");
-                    if (!DateChecker.AvailableOn(reserv.Date, reserv.Duration, reservationDate, duration))
-                        available = false;
-                }
-
-                if (available) availableBoats.Add(boat);
-            }
-
-            return availableBoats;
         }
 
         /// <inheritdoc />

@@ -33,7 +33,18 @@ namespace RoeiJeRot.Logic.Services
         /// <returns>A list of reservations that could not be reallocated</returns>
         List<SailingReservation> AllocateBoatReservations(int boatId);
 
+        /// <summary>
+        ///     Returns a list of boats which can be reserved on the given date.
+        /// </summary>
+        /// <param name="reservationDate"></param>
+        /// <param name="duration"></param>
+        /// <param name="typeId"></param>
+        /// <returns></returns>
+        List<SailingBoat> GetAvailableBoats(DateTime reservationDate, TimeSpan duration);
+
         List<SailingReservation> GetFutureReservations(int memberId);
+
+        List<BoatType> AvailableBoatTypes(DateTime reservationDateTime, TimeSpan duration);
     }
 
     public class ReservationService : IReservationService
@@ -51,7 +62,7 @@ namespace RoeiJeRot.Logic.Services
         /// <inheritdoc />
         public bool PlaceReservation(int boatType, int memberId, DateTime reservationDate, TimeSpan duration)
         {
-            var availableBoats = _boatService.GetAvailableBoats(reservationDate, duration).Where(boat => boat.BoatTypeId == boatType && boat.Status != (int)BoatState.InService).ToList();
+            var availableBoats = GetAvailableBoats(reservationDate, duration).Where(boat => boat.BoatTypeId == boatType && boat.Status != (int)BoatState.InService).ToList();
 
             // Checks if the reservation doesn't violate any constraints
             ReservationConstraintsMessage message = ReservationConstraints.IsValid(reservationDate, duration, this, memberId);
@@ -93,6 +104,25 @@ namespace RoeiJeRot.Logic.Services
         {
             var user = _context.Users.Where(user => user.Id == memberId).ToList()[0];
             return user.Reservations.Where(reserv => (reserv.Date + reserv.Duration) >= DateTime.Now && reserv.ReservedByUserId == memberId).ToList();
+        }
+
+        public List<BoatType> AvailableBoatTypes(DateTime reservationDateTime, TimeSpan duration)
+        {
+            var boats = GetAvailableBoats(reservationDateTime,
+                duration);
+            var availableTypes = new List<BoatType>();
+
+            foreach (var boat in boats)
+            {
+                var alreadyIn = false;
+                foreach (var type in availableTypes)
+                    if (type.Id == boat.BoatTypeId)
+                        alreadyIn = true;
+
+                if (!alreadyIn) availableTypes.Add(boat.BoatType);
+            }
+
+            return availableTypes;
         }
 
         /// <inheritdoc />
@@ -141,6 +171,28 @@ namespace RoeiJeRot.Logic.Services
             }
 
             return notReAllocatable;
+        }
+
+        public List<SailingBoat> GetAvailableBoats(DateTime reservationDate, TimeSpan duration)
+        {
+            var boats = _boatService.GetAllBoats();
+            var availableBoats = new List<SailingBoat>();
+
+            foreach (var boat in boats)
+            {
+                var available = true;
+                foreach (var reserv in boat.SailingReservations)
+                {
+                    Console.WriteLine(
+                        $"Checking {reserv.Date} - {reserv.Duration} on {reservationDate} - {duration} --> {DateChecker.AvailableOn(reserv.Date, reserv.Duration, reservationDate, duration)}");
+                    if (!DateChecker.AvailableOn(reserv.Date, reserv.Duration, reservationDate, duration))
+                        available = false;
+                }
+
+                if (available) availableBoats.Add(boat);
+            }
+
+            return availableBoats;
         }
     }
 }

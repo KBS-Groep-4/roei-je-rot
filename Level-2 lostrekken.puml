@@ -1,0 +1,37 @@
+@startuml naam
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0/C4_Container.puml
+
+Person(lid, "Lid")
+Person(medewerker, "Medewerker")
+Person(beheerder, "Beheerder")
+Person(wedstrijdCom, "Wedstrijdcommisaris")
+Person(matCom, "Materiaalcommisaris")
+
+LAYOUT_LEFT_RIGHT
+
+System_Boundary(reserveerSysteem, "Reserveer Systeem"){
+    Container(app, "Roei-Je-Rot Desktop App", "C#, .Net Core, WPF")
+    
+    Container(api, "Roei-Je-Rot API", "C# .NET Core, Entity Framework, ASP.NET")
+    Container(webapp, "Roei-Je-Rot Webapp", "HTML, CSS, JS")
+
+    ContainerDb(db, "Roei-Je-Rot Database", "MS-SQL")
+
+    Rel(app, api, "Doet aanvragen", "JSON, HTTPS")
+    Rel(webapp, api, "Doet aanvragen", "JSON, HTTPS")
+    Rel(api, db, "Hanteerd")
+}
+
+System_Ext(mail, "Gmail API")
+Rel(api, mail, "Vraagt om bericht te sturen")
+Rel(mail, lid, "Stuur mails naar")
+
+
+Rel(lid, app, "Maakt reserveringen met")
+Rel(lid, webapp, "Maakt reserveringen met")
+Rel(medewerker, app, "Boten innemen en uitnemen en schade melden")
+Rel(beheerder, app, "Nieuwe boten en leden aanmaken en beheren")
+Rel(wedstrijdCom, app, "Wedstrijden organiseren en beheren")
+Rel(matCom, app, "Handelt schade af")
+
+@enduml
