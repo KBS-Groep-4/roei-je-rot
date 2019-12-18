@@ -18,9 +18,30 @@ namespace RoeiJeRot.View.Wpf.Views.UserControls
     public partial class ReservationScreen : CustomUserControl
     {
         private readonly IBoatService _boatService;
-        private readonly IReservationService _reservationService;
+        private IReservationService _reservationService;
+        private WindowManager _windowManager;
         private readonly IMailService _mailService;
-        private readonly WindowManager _windowManager;
+        public event EventHandler<MessageArgs> StatusMessageUpdate;
+
+        public ObservableCollection<ReservationViewModel> Items { get; set; } =
+            new ObservableCollection<ReservationViewModel>();
+
+        // Set data for the reservations view.
+        public void SetReservationData()
+        {
+            var reservations = _reservationService.GetFutureReservations(_windowManager.UserSession.UserId)
+                .Select(r => new ReservationViewModel
+                {
+                    Id = r.Id,
+                    ReservationDate = r.Date,
+                    Duration = r.Duration.ToString(@"hh\:mm"),
+                    ReservedByUserId = r.ReservedBy.Username,
+                    ReservedBoatId = r.ReservedSailingBoatId
+                }).ToList();
+
+            Items.Clear();
+            foreach (var reservation in reservations) Items.Add(reservation);
+        }
 
         public ReservationScreen(IBoatService boatService, IReservationService reservationService, IMailService mailService, WindowManager windowManager)
         {
@@ -28,10 +49,14 @@ namespace RoeiJeRot.View.Wpf.Views.UserControls
             _reservationService = reservationService;
             _mailService = mailService;
             _windowManager = windowManager;
+
             InitializeComponent();
             When.SelectedDate = DateTime.Today;
-            
+
             UpdateAvailableList();
+
+            SetReservationData();
+            DeviceDataGrid.ItemsSource = Items;
         }
 
         public ObservableCollection<BoatTypeViewModel> ObservableAvailableTypes { get; set; }
@@ -52,7 +77,7 @@ namespace RoeiJeRot.View.Wpf.Views.UserControls
                     var selectedItemObject = AvailableBoats.SelectedItem;
                     if (selectedItemObject == null)
                     {
-                        MessageBox.Show("Geen boot geselecteerd");
+                        StatusMessageUpdate?.Invoke(this, new MessageArgs("Reservering niet geplaatst: Geen boot geselecteerd.", "error"));
                         return;
                     }
 
@@ -61,13 +86,19 @@ namespace RoeiJeRot.View.Wpf.Views.UserControls
                     if (When.SelectedDate.HasValue)
                     {
                         bool result = _reservationService.PlaceReservation(selectedType.Id, _windowManager.UserSession.UserId, When.SelectedDate.Value + time,
-                            duration);
+                            duration).IsValid;
+                        string message = _reservationService.PlaceReservation(selectedType.Id, _windowManager.UserSession.UserId, When.SelectedDate.Value + time,
+                            duration).Reason;
                         if (result)
                         {
-                            _mailService.SendConfirmation(_windowManager.UserSession.Email, _windowManager.UserSession.FirstName, When.SelectedDate.Value + time, duration);
-                            MessageBox.Show("Reservering geplaatst");
+                            _mailService.SendConfirmation(_windowManager.UserSession.Email, _windowManager.UserSession.FirstName, When.SelectedDate.Value, duration);
+                            StatusMessageUpdate?.Invoke(this, new MessageArgs("Reservering geplaatst.", "succeed"));
+                            SetReservationData();
                         }
-                        else MessageBox.Show("Reservatie niet geplaatst");
+                        else
+                        {
+                            StatusMessageUpdate?.Invoke(this, new MessageArgs("Reservering niet geplaatst: " + message, "error"));
+                        }
 
                         UpdateAvailableList();
                     }
@@ -121,8 +152,15 @@ namespace RoeiJeRot.View.Wpf.Views.UserControls
             }
         }
 
-        public void OnClose()
+        private void OnCancelClick(object sender, RoutedEventArgs e)
         {
+            foreach (var data in DeviceDataGrid.SelectedItems)
+            {
+                _reservationService.CancelReservation(((ReservationViewModel)data).Id);
+            }
+
+            StatusMessageUpdate?.Invoke(this, new MessageArgs("Reservering(en) verwijderd.", "cancel"));
+            SetReservationData();
         }
     }
 }

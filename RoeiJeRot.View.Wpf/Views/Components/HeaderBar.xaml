@@ -22,7 +22,7 @@
         <components:LogoutButton x:Name="logoutButton" Grid.Row="0" Grid.ColumnSpan="1" Margin="3,-5,10,-4"/>
         <Label  HorizontalAlignment="Center" Foreground="White" Width="78" Content="Roei Je Rot" Grid.Column="1" VerticalAlignment="Center"/>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" WindowChrome.IsHitTestVisibleInChrome="True" Width="134" Height="32" Grid.Column="2">
-            <Button Foreground="White" Click="Minimize_Click" Content="&#xE949;" FontFamily="Segoe MDL2 Assets" FontSize="10" Padding="15,15,15,5" Background="#FF90B80D" BorderBrush="Transparent" />
+            <Button Foreground="White" Click="Minimize_Click" Content="&#xE949;" FontFamily="Segoe MDL2 Assets" FontSize="10" Padding="15,15,15,5" Background="#007acc" BorderBrush="#0058aa" />
             <Button Foreground="White" Click="Maximize_Click" FontFamily="Segoe MDL2 Assets" FontSize="10" Padding="15,10" Background="Transparent" BorderBrush="Transparent">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">

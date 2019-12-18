@@ -12,6 +12,16 @@ using RoeiJeRot.View.Wpf.Views.Windows;
 
 namespace RoeiJeRot.View.Wpf.Views.UserControls
 {
+    public class MessageArgs : EventArgs
+    {
+        public string Message { get; set; }
+        public string Error { get; set; }
+        public MessageArgs(string message, string error)
+        {
+            Message = message;
+            Error = error;
+        }
+    }
     /// <summary>
     ///     Interaction logic for ReservationOverviewScreen.xaml
     /// </summary>
@@ -20,6 +30,7 @@ namespace RoeiJeRot.View.Wpf.Views.UserControls
         private readonly WindowManager _windowManager;
         private IMailService _mailService;
         private IReservationService _reservationService;
+        public event EventHandler<MessageArgs> StatusMessageUpdate;
 
         public ReservationOverviewScreen(IReservationService reservationService, WindowManager windowManager, IMailService mailService)
         {
@@ -60,10 +71,9 @@ namespace RoeiJeRot.View.Wpf.Views.UserControls
                 var model = (ReservationViewModel)data;
                 _mailService.SendCancelConfirmation(model.Email, model.FirstName, model.ReservationDate);
                 _reservationService.CancelReservation((model).Id);
-                toRemoveModel.Add(model);
             }
+            StatusMessageUpdate?.Invoke(this, new MessageArgs("Reservering(en) verwijderd.", "cancel"));
             toRemoveModel.ForEach(x => Items.Remove(x));
-            MessageBox.Show("Reservering(en) verwijderd");
         }
     }
 }

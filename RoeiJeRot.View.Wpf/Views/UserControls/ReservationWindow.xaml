@@ -12,43 +12,78 @@
         TextOptions.TextFormattingMode="Ideal" 
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{DynamicResource MaterialDesignFont}"
-      >
+        FontFamily="{DynamicResource MaterialDesignFont}">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="250" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <StackPanel Margin="10" Orientation="Vertical">
-                <StackPanel Orientation="Horizontal"/>
-                <DatePicker SelectedDateChanged="OnReservationDetailChange" Name = "When"  HorizontalAlignment="Left" Width="248"  />
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="Vanaf (HH:MM)" FontSize="18" Padding="5 5 5 0" Width="379" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="268" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Margin="10" Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal"/>
+                    <DatePicker SelectedDateChanged="OnReservationDetailChange" Name = "When"  HorizontalAlignment="Left" Width="248"  />
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Vanaf (HH:MM)" FontSize="18" Padding="5 5 5 0" Width="379" />
+                    </StackPanel>
+                    <TextBox Name="Time" TextWrapping="Wrap" TextChanged="OnReservationDetailChange" />
+                    <Label Content="Duratie (Max: 120 minuten):" FontSize="18" Padding="5 5 5 0" />
+                    <TextBox TextWrapping="Wrap" VerticalAlignment="Top" Name="Duration" TextChanged="OnReservationDetailChange" />
+                    <Button x:Name="ReserveerButton_Copy" Content="Reservering plaatsen"  BorderThickness="0" Background="#007acc" Foreground="White" Click="ReservButtonOnClick" Grid.Column="1" Margin="5, 10, 5, 5"/>
                 </StackPanel>
-                <TextBox Name="Time" Text="13:20" TextWrapping="Wrap" TextChanged="OnReservationDetailChange" />
-                <Label Content="Duratie (Max: 120 minuten):" FontSize="18" Padding="5 5 5 0" />
-                <TextBox Text="120" TextWrapping="Wrap" VerticalAlignment="Top" Name="Duration" TextChanged="OnReservationDetailChange" />
-                <Button x:Name="ReserveerButton_Copy" Content="Reservering plaatsen"  BorderThickness="0" Background="#FF13A9FF" Foreground="White" Click="ReservButtonOnClick" Grid.Column="1" Margin="5, 10, 5, 5"/>
+            </Grid>
+            <StackPanel Grid.Row="1" Orientation="Vertical" Margin="10,10,10,4">
+                <Label Content="Soort Boot" FontSize="25" />
+
+                <ListView Margin="5" Name="AvailableBoats" FontWeight="bold">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Niveau" Width="80" DisplayMemberBinding="{Binding RequiredLevel}" />
+                            <GridViewColumn Header="Naam" Width="500" DisplayMemberBinding="{Binding Name}" />
+                            <GridViewColumn Header="Plaatsen" Width="90" DisplayMemberBinding="{Binding PossiblePassengers}" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
             </StackPanel>
         </Grid>
-        <StackPanel Grid.Row="1" Orientation="Vertical" Margin="10,10,10,4">
-            <Label Content="Soort Boot" FontSize="25" />
+        <Grid Grid.Column="1">
+            <Label Height="35" Content="Jouw reserveringen" Background="#FF2B2E33" FontWeight="Bold" Foreground="#FFF0F0F0" Grid.RowSpan="2" VerticalAlignment="Top"/>
 
-            <ListView Margin="5" Name="AvailableBoats" FontWeight="bold">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="Niveau" Width="100" DisplayMemberBinding="{Binding RequiredLevel}" />
-                        <GridViewColumn Header="Naam" Width="500" DisplayMemberBinding="{Binding Name}" />
-                        <GridViewColumn Header="Plaatsen" Width="200" DisplayMemberBinding="{Binding PossiblePassengers}" />
-                    </GridView>
-                </ListView.View>
-            </ListView>
-        </StackPanel>
+            <DataGrid Margin="0, 30, 0, 0" IsReadOnly="True" ItemsSource="{Binding Items}" x:Name="DeviceDataGrid" AutoGenerateColumns="False" Background="White"
+                      EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" MinColumnWidth="150"
+                      Grid.Column="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" BorderThickness="0" Height="452" VerticalAlignment="Top">
+                <DataGrid.Columns>
+                    <DataGridTextColumn x:Name="Id" Binding="{Binding Id}" 
+                                        Header="Reserveernummer" Width="Auto" />
+                    <DataGridTextColumn x:Name="Gereserveerdeboot" Binding="{Binding ReservedBoatId}"
+                                        Header="Gereserveerde boot" Width="*" />
+                    <DataGridTextColumn x:Name="ReservatieDatum" Binding="{Binding ReservationDate}"
+                                        Header="Reservatie Datum" Width="*" />
+                    <DataGridTextColumn x:Name="ReservatieDuratie" Binding="{Binding Duration}"
+                                        Header="Reservatie Duratie" Width="*" />
+                </DataGrid.Columns>
+            </DataGrid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="1" Margin="5, 5, 5, 5" Name="CancelButton" Background="Red" VerticalAlignment="Bottom" BorderBrush="Transparent" Click="OnCancelClick">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Clear" Foreground="White" Margin="0, 0, 5, 0"/>
+                        <TextBlock Text="Annuleer Reservering"/>
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </Grid>
     </Grid>
 </logic:CustomUserControl>

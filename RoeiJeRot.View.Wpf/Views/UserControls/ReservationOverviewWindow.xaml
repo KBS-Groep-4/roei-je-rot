@@ -19,7 +19,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
-        <Label Grid.Column="0" Grid.Row="0" Height="35" Content="Lijst met boot reserveringen" Background="#FF2B2E33" FontWeight="Bold" Foreground="#FFF0F0F0" Grid.RowSpan="2" VerticalAlignment="Top"/>
+        <Label Grid.Column="0" Grid.Row="0" Height="35" Content="Lijst met alle reserveringen" Background="#FF2B2E33" FontWeight="Bold" Foreground="#FFF0F0F0" Grid.RowSpan="2" VerticalAlignment="Top"/>
 
         <DataGrid IsReadOnly="True" ItemsSource="{Binding Items}" x:Name="DeviceDataGrid" AutoGenerateColumns="False" Background="White"
                   EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" MinColumnWidth="150"
