@@ -50,9 +50,9 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBox BorderBrush="#007acc" x:Name="UsernameTextbox" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center"
-                        VerticalAlignment="Top" Width="368"/>
+                        VerticalAlignment="Top" Width="368" KeyDown="OnEnterClick"/>
                 <PasswordBox BorderBrush="#007acc" x:Name="PasswordTextbox" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center"
-                             VerticalAlignment="Top" Width="368" />
+                             VerticalAlignment="Top" Width="368" KeyDown="OnEnterClick" />
                 <Label Grid.Row="1" Grid.Column="1" Content="Gebruikersnaam:" Margin="0,135,0,3" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="2" >
 
                 </Label>

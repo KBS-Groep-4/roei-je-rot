@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Input;
 using RoeiJeRot.Logic.Services;
 using RoeiJeRot.View.Wpf.Logic;
 using Window = System.Windows.Window;
@@ -47,6 +48,14 @@ namespace RoeiJeRot.View.Wpf.Views.Windows
         private void MinimizeClick(object sender, RoutedEventArgs e)
         {
             _windowManager.CurrentWindow.MinimizeWindow();
+        }
+
+        private void OnEnterClick(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                OnLogInClick(this, e);
+            }
         }
     }
 }
