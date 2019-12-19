@@ -11,6 +11,7 @@ using RoeiJeRot.Logic;
 using RoeiJeRot.View.Wpf.Logic;
 using RoeiJeRot.View.Wpf.ViewModels;
 using RoeiJeRot.View.Wpf.Views.UserControls;
+using Type = RoeiJeRot.View.Wpf.Views.UserControls.Type;
 using Window = System.Windows.Window;
 
 namespace RoeiJeRot.View.Wpf.Views.Windows
@@ -111,17 +112,13 @@ namespace RoeiJeRot.View.Wpf.Views.Windows
         private void OnStatusMessageUpdate(Object sender, MessageArgs args)
         {
             StatusLabel.Content = args.Message;
-            switch (args.Error)
+            switch (args.Type)
             {
-                case "error":
+                case Type.Red:
                     StatusLabel.Background = Brushes.Red;
                     StatusLabel.BorderBrush = Brushes.Red;
                     break;
-                case "succeed":
-                    StatusLabel.Background = Brushes.LimeGreen;
-                    StatusLabel.BorderBrush = Brushes.LimeGreen;
-                    break;
-                case "cancel":
+                case Type.Green:
                     StatusLabel.Background = Brushes.LimeGreen;
                     StatusLabel.BorderBrush = Brushes.LimeGreen;
                     break;

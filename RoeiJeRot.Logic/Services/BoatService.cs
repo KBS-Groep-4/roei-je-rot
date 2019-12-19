@@ -31,14 +31,6 @@ namespace RoeiJeRot.Logic.Services
         /// <param name="status"></param>
         void UpdateBoatStatus(int boatId, BoatState status);
 
-        /// <summary>
-        ///     Returns a list of boats which can be reserved on the given date.
-        /// </summary>
-        /// <param name="reservationDate"></param>
-        /// <param name="duration"></param>
-        /// <param name="typeId"></param>
-        /// <returns></returns>
-        List<SailingBoat> GetAvailableBoats(DateTime reservationDate, TimeSpan duration);
         bool ReportDamage(int boatType, int memberId, DateTime datum);
     }
 

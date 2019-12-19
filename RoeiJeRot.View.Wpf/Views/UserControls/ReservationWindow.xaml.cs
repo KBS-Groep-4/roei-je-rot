@@ -77,7 +77,7 @@ namespace RoeiJeRot.View.Wpf.Views.UserControls
                     var selectedItemObject = AvailableBoats.SelectedItem;
                     if (selectedItemObject == null)
                     {
-                        StatusMessageUpdate?.Invoke(this, new MessageArgs("Reservering niet geplaatst: Geen boot geselecteerd.", "error"));
+                        StatusMessageUpdate?.Invoke(this, new MessageArgs("Reservering niet geplaatst: Geen boot geselecteerd.", Type.Red));
                         return;
                     }
 
@@ -92,12 +92,12 @@ namespace RoeiJeRot.View.Wpf.Views.UserControls
                         if (result)
                         {
                             _mailService.SendConfirmation(_windowManager.UserSession.Email, _windowManager.UserSession.FirstName, When.SelectedDate.Value, duration);
-                            StatusMessageUpdate?.Invoke(this, new MessageArgs("Reservering geplaatst.", "succeed"));
+                            StatusMessageUpdate?.Invoke(this, new MessageArgs("Reservering geplaatst.", Type.Green));
                             SetReservationData();
                         }
                         else
                         {
-                            StatusMessageUpdate?.Invoke(this, new MessageArgs("Reservering niet geplaatst: " + message, "error"));
+                            StatusMessageUpdate?.Invoke(this, new MessageArgs("Reservering niet geplaatst: " + message, Type.Red));
                         }
 
                         UpdateAvailableList();
@@ -159,7 +159,7 @@ namespace RoeiJeRot.View.Wpf.Views.UserControls
                 _reservationService.CancelReservation(((ReservationViewModel)data).Id);
             }
 
-            StatusMessageUpdate?.Invoke(this, new MessageArgs("Reservering(en) verwijderd.", "cancel"));
+            StatusMessageUpdate?.Invoke(this, new MessageArgs("Reservering(en) verwijderd.", Type.Green));
             SetReservationData();
         }
     }
