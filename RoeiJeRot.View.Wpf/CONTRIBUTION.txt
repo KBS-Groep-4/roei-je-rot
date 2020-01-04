@@ -1,0 +1,25 @@
+# Contributing
+In dit document staat omschreven hoe je het project kan opzetten, en hoe je kan beginnen met ontwikkelen.
+
+## Project
+- Installeer .net core 3.0 SDK
+- run: dotnet tool install --global dotnet-ef
+
+## Database
+1. Zorg dat je een microsoft sql server database hebt runnen.
+2. Zorg dat in "roei-je-rot\RoeiJeRot.View.Wpf\appsettings.json" de juiste connectiestring naar je database staat. Verander hier het IP en poort naar van je eigen database.
+3. Ga naar map: "roei-je-rot\RoeiJeRot.View.Wpf"
+4. Start Powershell
+5. Run: `./migration.ps`1 (mogelijk moet je nog `Set-ExecutionPolicy unrestricted` uitvoeren als admin om poweshell scrips te runnen)
+6. Als deze is succeed kan je de microsoft server ook toevoeggen aan visual studio.
+7. Klik 'Tools' => 'connect to database' => Voeg je microsoft database toe.
+
+
+## Code Style
+
+
+- Comment Alle Code
+- Function comments starten in meervoud beginnen met hoofdletter, en hebben een punt.
+- Namen moeten engels zijn
+- Er mag geen ongebruikte code zijn
+- Gebruik van resharper code conventions
