@@ -1,0 +1,60 @@
+﻿<logic:CustomUserControl x:Class="RoeiJeRot.View.Wpf.Views.UserControls.BoatOverviewWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"             
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d" MinWidth="200" MinHeight="100"
+        xmlns:logic="clr-namespace:RoeiJeRot.View.Wpf.Logic"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}">
+
+    <Grid Height="600">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="34"></RowDefinition>
+            <RowDefinition Height="700"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Label Grid.Column="0" Grid.Row="0" Height="35" Content="Lijst met boten" Background="#FF2B2E33" FontWeight="Bold" Foreground="#FFF0F0F0" Grid.RowSpan="2" VerticalAlignment="Top"/>
+
+        <DataGrid ItemsSource="{Binding Items}" x:Name="DeviceDataGrid" AutoGenerateColumns="False" Background="White"
+                  EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" MinColumnWidth="150"
+                  Grid.Column="0" Grid.Row="1" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" BorderThickness="0" Height="500" VerticalAlignment="Top">
+            <DataGrid.Columns >
+                <DataGridTextColumn x:Name="Id" Binding="{Binding Id}" Header="Boot ID" Width="Auto" />
+                <DataGridTextColumn x:Name="PossiblePassengers" Binding="{Binding PossiblePassengers}"
+                                    Header="Hoeveel personen" Width="*" />
+                <DataGridTextColumn x:Name="RequiredLevel" Binding="{Binding RequiredLevel}"
+                                    Header="Ervaring level" Width="*" />
+                <DataGridTextColumn x:Name="Name" Binding="{Binding Name}"
+                                    Header="Boot naam" Width="*" />
+                <DataGridTextColumn x:Name="HasCommanderSeat" Binding="{Binding HasCommanderSeat}"
+                                     Header="Aanvoerders stoel" Width="*" />
+                <DataGridTextColumn x:Name="Status" Binding="{Binding Status}"
+                                     Header="Status" Width="*" />
+
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="200"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="1" Margin="0,350,10,-46" Name="ReportDamageButton" Background="Red" BorderBrush="Transparent" Click="OnReportDamageClick">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Meld Schade"/>
+                </StackPanel>
+            </Button>
+            <Button Margin="490,532,10,136" Name="DisableDamage" Background="Green" BorderBrush="Transparent" Click="OnDisableDamageClick">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Geef Schade Vrij"/>
+                </StackPanel>
+            </Button>
+        </Grid>
+    </Grid>
+</logic:CustomUserControl>

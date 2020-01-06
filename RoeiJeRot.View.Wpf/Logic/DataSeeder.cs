@@ -195,8 +195,13 @@ namespace RoeiJeRot.View.Wpf.Logic
         {
             _context.SailingBoatTypes.Add(new BoatType
                 {PossiblePassengers = 3, RequiredLevel = 2, Name = "Grote kano"});
+
             _context.SailingBoatTypes.Add(
                 new BoatType {PossiblePassengers = 1, RequiredLevel = 1, Name = "Kleine kano"});
+
+            _context.SailingBoatTypes.Add(
+                new BoatType { PossiblePassengers = 1, RequiredLevel = 1, Name = "Kleine kano 2" });
+
             _context.SailingBoatTypes.Add(new BoatType()
             {
                 PossiblePassengers = 5,

@@ -145,9 +145,9 @@ namespace RoeiJeRot.Logic.Services
             mail.To.Add(new MailAddress(email, firstName));
             mail.Subject = "Uw reservering is geannuleerd";
             mail.Body = $"Beste {firstName}" + Environment.NewLine + Environment.NewLine +
-                           $"Je ontvangt deze mail, omdat je reservering op {datum.ToString("d")} helaas niet door kan gaan in verband met een beschadigde boot. Alle boten van hetzelfde type zijn voor die dag al gereserveerd" +
+                           $"Je ontvangt deze mail, omdat je reservering op {datum.ToString("d")} helaas niet door kan gaan in verband met een beschadigde boot. Alle boten van hetzelfde type zijn voor dit tijdstip al gereserveerd." +
                            Environment.NewLine + Environment.NewLine +
-                           "We verzoeken u om een nieuwe reservering te maken voor een andere datum. Excuus voor het ongemak" + Environment.NewLine + Environment.NewLine +
+                           "We verzoeken u om een nieuwe reservering te maken voor een andere datum. Excuus voor het ongemak." + Environment.NewLine + Environment.NewLine +
                            "Met vriendelijke groeten," + Environment.NewLine +
                            Environment.NewLine +
                            "Roeivereniging Roei-je-Rot";

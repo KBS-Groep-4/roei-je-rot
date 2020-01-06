@@ -58,6 +58,7 @@ namespace RoeiJeRot.View.Wpf
                         .AddTransient<LoginWindow>()
                         .AddTransient<ReservationScreen>()
                         .AddTransient<ReservationOverviewScreen>()
+                        .AddTransient<BoatOverviewWindow>()
 
                         .AddSingleton<DataSeeder>();
                 })

@@ -171,7 +171,6 @@ namespace RoeiJeRot.Logic.Services
                 _context.Remove(reservation);
                 _context.SaveChanges();
             }
-
             return notReAllocatable;
         }
 

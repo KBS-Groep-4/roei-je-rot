@@ -47,6 +47,10 @@ namespace RoeiJeRot.View.Wpf.Views.Windows
             var reservationWindow = new Button() {Content = "Reservering Plaatsen",};
             reservationWindow.Click += OnReservationClick;
 
+            var boatOverviewWindow = new Button() { Content = "Boten Overzicht", };
+            boatOverviewWindow.Click += OnBoatOverviewClick;
+
+            Buttons.Add(PermissionType.Admin | PermissionType.Staff | PermissionType.Mc, boatOverviewWindow);
             Buttons.Add(PermissionType.Admin | PermissionType.Staff, reservationOverViewWindow);
             Buttons.Add(PermissionType.Admin | PermissionType.Mc | PermissionType.Member | PermissionType.Staff | PermissionType.Wc, reservationWindow);
         }
@@ -84,6 +88,17 @@ namespace RoeiJeRot.View.Wpf.Views.Windows
                 ReservationScreen rs = InstanceCreator.Instance.CreateInstance<ReservationScreen>();
                 rs.StatusMessageUpdate += OnStatusMessageUpdate;
                 _windowManager.CurrentWindow.PushEmbeddedScreen(rs);
+            }
+
+            OnScreenUpdate();
+        }
+
+        private void OnBoatOverviewClick(object sender, RoutedEventArgs e)
+        {
+            if (e.Source is Button)
+            {
+                _windowManager.CurrentWindow.PushEmbeddedScreen(InstanceCreator.Instance
+                    .CreateInstance<BoatOverviewWindow>());
             }
 
             OnScreenUpdate();

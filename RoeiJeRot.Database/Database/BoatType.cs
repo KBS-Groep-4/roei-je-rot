@@ -14,6 +14,6 @@ namespace RoeiJeRot.Database.Database
 
         public string Name { get; set; }
 
-        protected bool HasCommanderSeat { get; set; }
+        public bool HasCommanderSeat { get; set; }
     }
 }

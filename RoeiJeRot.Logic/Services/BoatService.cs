@@ -31,6 +31,13 @@ namespace RoeiJeRot.Logic.Services
         /// <param name="status"></param>
         void UpdateBoatStatus(int boatId, BoatState status);
 
+        /// <summary>
+        ///     Update from the boatlist, the status.
+        /// </summary>
+        /// <param name="reservationDate"></param>
+        /// <param name="duration"></param>
+        /// <param name="typeId"></param>
+        /// <returns></returns>
         bool ReportDamage(int boatType, int memberId, DateTime datum);
     }
 
@@ -75,7 +82,7 @@ namespace RoeiJeRot.Logic.Services
 
         public bool ReportDamage(int boatType, int memberId, DateTime datum)
         {
-            //Create a reservation for this boat
+            //Create a damage for this boat
             _context.SailingBoatDamageReports.Add(new SailingBoatDamageReport
             {
                 DamagedSailingBoatId = boatType,
