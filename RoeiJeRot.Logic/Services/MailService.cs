@@ -8,7 +8,7 @@ namespace RoeiJeRot.Logic.Services
 {
     public interface IMailService
     {
-        void SendConfirmation(string email, string firstName, DateTime datum, TimeSpan tijd);
+        void SendConfirmation(string email, string firstName, DateTime datum, TimeSpan reservationTime, TimeSpan duration);
         void SendCancelConfirmation(string email, string firstName, DateTime datum);
         void SendCancelMail(string email, string firstName, DateTime datum);
     }
@@ -18,6 +18,7 @@ namespace RoeiJeRot.Logic.Services
         private readonly MailAddress fromAddress = new MailAddress("roeijerot@gmail.com", "Roeivereniging Roei-je-Rot");
         private readonly string passWord;
         private readonly string userName;
+        private IMailService _mailServiceImplementation;
 
 
         public MailService(IConfig config)
@@ -26,7 +27,7 @@ namespace RoeiJeRot.Logic.Services
             passWord = config.Secret;
         }
 
-        public void SendConfirmation(string email, string firstName, DateTime datum, TimeSpan tijd)
+        public void SendConfirmation(string email, string firstName, DateTime datum, TimeSpan reservationTime, TimeSpan duration)
         {
             try
             {
@@ -35,7 +36,7 @@ namespace RoeiJeRot.Logic.Services
                 mail.To.Add(new MailAddress(email, firstName));
                 mail.Subject = "Bevestiging boot reservatie";
                 mail.Body = $"Beste {firstName}" + Environment.NewLine + Environment.NewLine +
-                            $"Je ontvangt deze mail omdat je een reservering hebt geplaatst voor een boot op {datum.ToString("d")} voor {tijd.TotalMinutes} minuten. In de bijlage vind u de afspraak die u kunt toevoegen aan uw eigen agenda." +
+                            $"Je ontvangt deze mail omdat je een reservering hebt geplaatst voor een boot op {datum.ToString("d")} van {reservationTime} tot {reservationTime + duration}. In de bijlage vind u de afspraak die u kunt toevoegen aan uw eigen agenda." +
                             Environment.NewLine + Environment.NewLine +
                             "We wens u veel roei plezier!" + Environment.NewLine + Environment.NewLine +
                             "Met vriendelijke groeten," + Environment.NewLine +
@@ -51,7 +52,7 @@ namespace RoeiJeRot.Logic.Services
                 str.AppendLine("BEGIN:VEVENT");
                 str.AppendLine(string.Format("DTSTART:{0:yyyyMMddTHHmmss}", datum));
                 str.AppendLine(string.Format("DTSTAMP:{0:yyyyMMddTHHmmss}", DateTime.UtcNow));
-                str.AppendLine(string.Format("DTEND:{0:yyyyMMddTHHmmss}", datum + tijd));
+                str.AppendLine(string.Format("DTEND:{0:yyyyMMddTHHmmss}", datum + reservationTime));
                 str.AppendLine("LOCATION: Vereneging Roei-je-Rot");
                 str.AppendLine(string.Format("UID:{0}", Guid.NewGuid()));
                 str.AppendLine("DESCRIPTION: Reservering Roei-je-Rot");

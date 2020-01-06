@@ -17,14 +17,16 @@ namespace RoeiJeRot.View.Wpf.Views.UserControls
     public partial class ReservationScreen : CustomUserControl
     {
         private readonly IReservationService _reservationService;
+        private readonly IMailService _mailService;
         private readonly WindowManager _windowManager;
 
         private Dictionary<TimeSpan, List<BoatType>> TimeAvailableTypes = new Dictionary<TimeSpan, List<BoatType>>();
 
-        public ReservationScreen(IBoatService boatService, IReservationService reservationService,
+        public ReservationScreen(IReservationService reservationService,
             IMailService mailService, WindowManager windowManager)
         {
             _reservationService = reservationService;
+            _mailService = mailService;
             _windowManager = windowManager;
 
             InitializeComponent();
@@ -80,6 +82,8 @@ namespace RoeiJeRot.View.Wpf.Views.UserControls
 
                         if (msg.IsValid)
                         {
+                            var userSession = _windowManager.UserSession;
+                            _mailService.SendConfirmation(userSession.Email, userSession.FirstName, When.SelectedDate.Value, selectedTime, duration);
                             UpdateDictionary();
                             SetReservationData();
                         }
