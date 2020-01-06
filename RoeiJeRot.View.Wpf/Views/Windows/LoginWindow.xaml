@@ -7,21 +7,23 @@
         xmlns:components="clr-namespace:RoeiJeRot.View.Wpf.Views.Components"
         mc:Ignorable="d"
         Icon="/Resources/logo.png"
-        Title="Roei Je Rot" Height="600" Width="1165" WindowStyle="None" ResizeMode="CanResize" x:Name="loginWindow" WindowStartupLocation="CenterScreen" WindowState="Maximized"
+        Title="Roei Je Rot" Height="600" Width="1165" WindowStyle="None" ResizeMode="CanResize" x:Name="loginWindow"
+        WindowStartupLocation="CenterScreen" WindowState="Maximized"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
-        TextOptions.TextFormattingMode="Ideal" 
-        TextOptions.TextRenderingMode="Auto"        
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}">
     <DockPanel>
-        <components:HeaderBar x:Name="headerBar" DockPanel.Dock="Top" Height="40" Width="{Binding ActualWidth, ElementName=loginWindow}"/>
-        <Grid DockPanel.Dock="Bottom" >
+        <components:HeaderBar x:Name="headerBar" DockPanel.Dock="Top" Height="40"
+                              Width="{Binding ActualWidth, ElementName=loginWindow}" />
+        <Grid DockPanel.Dock="Bottom">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="66*" />
-                <ColumnDefinition Width="85*"/>
+                <ColumnDefinition Width="85*" />
                 <ColumnDefinition Width="89" />
                 <ColumnDefinition Width="696" />
                 <ColumnDefinition Width="98" />
@@ -34,33 +36,39 @@
             </Grid.RowDefinitions>
             <Grid Height="540" VerticalAlignment="Top" Grid.Row="1" Grid.Column="3" Margin="0,10,0,0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="135*"/>
-                    <RowDefinition Height="135*"/>
-                    <RowDefinition Height="40*"/>
-                    <RowDefinition Height="39*"/>
-                    <RowDefinition Height="55*"/>
-                    <RowDefinition Height="135*"/>
+                    <RowDefinition Height="135*" />
+                    <RowDefinition Height="135*" />
+                    <RowDefinition Height="40*" />
+                    <RowDefinition Height="39*" />
+                    <RowDefinition Height="55*" />
+                    <RowDefinition Height="135*" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="79*"/>
-                    <ColumnDefinition Width="Auto" MinWidth="112"/>
-                    <ColumnDefinition Width="368*"/>
-                    <ColumnDefinition Width="91*"/>
-                    <ColumnDefinition Width="46*"/>
+                    <ColumnDefinition Width="79*" />
+                    <ColumnDefinition Width="Auto" MinWidth="112" />
+                    <ColumnDefinition Width="368*" />
+                    <ColumnDefinition Width="91*" />
+                    <ColumnDefinition Width="46*" />
                 </Grid.ColumnDefinitions>
 
-                <TextBox BorderBrush="#007acc" x:Name="UsernameTextbox" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center"
-                        VerticalAlignment="Top" Width="368" KeyDown="OnEnterClick"/>
-                <PasswordBox BorderBrush="#007acc" x:Name="PasswordTextbox" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center"
+                <TextBox BorderBrush="#007acc" x:Name="UsernameTextbox" Grid.Row="2" Grid.Column="2"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Top" Width="368" KeyDown="OnEnterClick" />
+                <PasswordBox BorderBrush="#007acc" x:Name="PasswordTextbox" Grid.Row="3" Grid.Column="2"
+                             HorizontalAlignment="Center"
                              VerticalAlignment="Top" Width="368" KeyDown="OnEnterClick" />
-                <Label Grid.Row="1" Grid.Column="1" Content="Gebruikersnaam:" Margin="0,135,0,3" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="2" >
-
-                </Label>
-                <Button BorderBrush="#0058aa" Background="#007acc" Content="Log In" Grid.Column="2" HorizontalAlignment="Left" Margin="137,28,0,0" Grid.Row="4" VerticalAlignment="Top" Name="LogInButton" Click="OnLogInClick" Grid.RowSpan="2" Height="32" Width="71"/>
+                <Label Grid.Row="1" Grid.Column="1" Content="Gebruikersnaam:" Margin="0,135,0,3"
+                       RenderTransformOrigin="0.5,0.5" Grid.RowSpan="2" />
+                <Button BorderBrush="#0058aa" Background="#007acc" Content="Log In" Grid.Column="2"
+                        HorizontalAlignment="Left" Margin="137,28,0,0" Grid.Row="4" VerticalAlignment="Top"
+                        Name="LogInButton" Click="OnLogInClick" Grid.RowSpan="2" Height="32" Width="71" />
                 <Label Grid.ColumnSpan="3" Content="Roeivereniging Roei Je Rot" FontSize="40"
-                    HorizontalAlignment="Center" VerticalAlignment="Top" Height="77" Width="571" Grid.Column="1" Margin="0,58,0,0" />
-                <Image Grid.Column="2" Source="/Resources/logo.png" Stretch="None" HorizontalAlignment="Left" Height="126" VerticalAlignment="Top" Width="202" Margin="66,135,0,0" Grid.RowSpan="2" />
-                <Label Grid.Row="3" Grid.Column="1" Content="Wachtwoord:" Margin="0,2,0,3" RenderTransformOrigin="0.5,0.5" />
+                       HorizontalAlignment="Center" VerticalAlignment="Top" Height="77" Width="571" Grid.Column="1"
+                       Margin="0,58,0,0" />
+                <Image Grid.Column="2" Source="/Resources/logo.png" Stretch="None" HorizontalAlignment="Left"
+                       Height="126" VerticalAlignment="Top" Width="202" Margin="66,135,0,0" Grid.RowSpan="2" />
+                <Label Grid.Row="3" Grid.Column="1" Content="Wachtwoord:" Margin="0,2,0,3"
+                       RenderTransformOrigin="0.5,0.5" />
             </Grid>
         </Grid>
     </DockPanel>

@@ -1,27 +1,27 @@
 ﻿<logic:CustomUserControl x:Class="RoeiJeRot.View.Wpf.Views.UserControls.ReservationScreen"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" MinWidth="800" MinHeight="200"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:logic="clr-namespace:RoeiJeRot.View.Wpf.Logic"
-        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-        TextElement.FontWeight="Regular"
-        TextElement.FontSize="13"
-        TextOptions.TextFormattingMode="Ideal" 
-        TextOptions.TextRenderingMode="Auto"        
-        Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{DynamicResource MaterialDesignFont}">
+                         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                         mc:Ignorable="d" MinWidth="800" MinHeight="200"
+                         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+                         xmlns:logic="clr-namespace:RoeiJeRot.View.Wpf.Logic"
+                         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+                         TextElement.FontWeight="Regular"
+                         TextElement.FontSize="13"
+                         TextOptions.TextFormattingMode="Ideal"
+                         TextOptions.TextRenderingMode="Auto"
+                         Background="{DynamicResource MaterialDesignPaper}"
+                         FontFamily="{DynamicResource MaterialDesignFont}">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto" MinWidth="718" />
+            <ColumnDefinition Width="Auto" MinWidth="600" />
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -30,22 +30,27 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <StackPanel Margin="10" Orientation="Vertical">
-                    <StackPanel Orientation="Horizontal"/>
-                    <DatePicker SelectedDateChanged="OnReservationDetailChange" Name = "When"  HorizontalAlignment="Left" Width="248"  />
-                    <StackPanel Orientation="Horizontal"/>
+                    <StackPanel Orientation="Horizontal" />
+                    <DatePicker SelectedDateChanged="OnReservationDetailChange" Name="When" HorizontalAlignment="Left"
+                                Width="248" />
+                    <StackPanel Orientation="Horizontal" />
                     <Label Content="Duratie (Max: 120 minuten):" FontSize="18" Padding="5 5 5 0" />
-                    <TextBox TextWrapping="Wrap" VerticalAlignment="Top" Name="Duration" TextChanged="OnReservationDetailChange" />
-                    <Button x:Name="ReserveerButton_Copy" Content="Reservering plaatsen"  BorderThickness="0" Background="#007acc" Foreground="White" Click="ReservButtonOnClick" Grid.Column="1" Margin="5, 10, 5, 5"/>
+                    <TextBox TextWrapping="Wrap" VerticalAlignment="Top" Name="Duration"
+                             TextChanged="OnReservationDetailChange" />
                 </StackPanel>
+                <Button x:Name="ReserveerButton_Copy" Content="Reservering plaatsen" BorderThickness="0"
+                            Background="#007acc" Foreground="White" Click="ReservButtonOnClick"
+                            Margin="10,10,10,54" Grid.Column="2" />
             </Grid>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="237"/>
-                    <ColumnDefinition Width="481"/>
+                    <ColumnDefinition Width="237" />
+                    <ColumnDefinition Width="481" />
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Vertical" Margin="10,10,10,4" Grid.Column="0">
                     <Label Content="Beschikbare Tijden" FontSize="25" />
-                    <ListView Margin="5" Name="AvailableTimes" FontWeight="bold" Height="400" SelectionMode="Single" SelectionChanged="OnTimeChange">
+                    <ListView Margin="5" Name="AvailableTimes" FontWeight="bold" Height="400" SelectionMode="Single"
+                              SelectionChanged="OnTimeChange">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Tijd" Width="80" DisplayMemberBinding="{Binding Time}" />
@@ -55,12 +60,15 @@
                 </StackPanel>
                 <StackPanel Orientation="Vertical" Margin="10,10,10,4" Grid.Column="1">
                     <Label Content="Beschikbare Boten" FontSize="25" />
-                    <ListView Margin="5" Name="AvailableBoats" FontWeight="bold" Height="400" SelectionMode="Single" SelectionChanged="OnBoatTypeChange">
+                    <ListView Margin="5" Name="AvailableBoats" FontWeight="bold" Height="400" SelectionMode="Single"
+                              SelectionChanged="OnBoatTypeChange">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="Niveau" Width="80" DisplayMemberBinding="{Binding RequiredLevel}" />
+                                <GridViewColumn Header="Niveau" Width="80"
+                                                DisplayMemberBinding="{Binding RequiredLevel}" />
                                 <GridViewColumn Header="Naam" Width="260" DisplayMemberBinding="{Binding Name}" />
-                                <GridViewColumn Header="Plaatsen" Width="90" DisplayMemberBinding="{Binding PossiblePassengers}" />
+                                <GridViewColumn Header="Plaatsen" Width="90"
+                                                DisplayMemberBinding="{Binding PossiblePassengers}" />
                             </GridView>
                         </ListView.View>
                     </ListView>
@@ -68,13 +76,26 @@
             </Grid>
         </Grid>
         <Grid Grid.Column="1">
-            <Label Height="35" Content="Jouw reserveringen" Background="#FF2B2E33" FontWeight="Bold" Foreground="#FFF0F0F0" Grid.RowSpan="2" VerticalAlignment="Top"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="21*"/>
+                <ColumnDefinition Width="19*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35*"/>
+                <RowDefinition Height="600*"/>
+                <RowDefinition Height="65*"/>
+            </Grid.RowDefinitions>
+            <Label  Height="35" Content="Jouw reserveringen" Background="#FF2B2E33" FontWeight="Bold"
+                   Foreground="#FFF0F0F0" VerticalAlignment="Center" Grid.ColumnSpan="2" />
 
-            <DataGrid Margin="0, 30, 0, 0" IsReadOnly="True" ItemsSource="{Binding Items}" x:Name="DeviceDataGrid" AutoGenerateColumns="False" Background="White"
-                      EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" MinColumnWidth="150"
-                      Grid.Column="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" BorderThickness="0" Height="452" VerticalAlignment="Top">
+            <DataGrid IsReadOnly="True" ItemsSource="{Binding Items}" x:Name="DeviceDataGrid"
+                      AutoGenerateColumns="False" Background="White"
+                      EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected"
+                      MinColumnWidth="150"
+                      HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                      BorderThickness="0" Height="452" VerticalAlignment="Top" Grid.RowSpan="2" Grid.ColumnSpan="2" Grid.Row="1" Grid.Column="0" Margin="0,0,0,0">
                 <DataGrid.Columns>
-                    <DataGridTextColumn x:Name="Id" Binding="{Binding Id}" 
+                    <DataGridTextColumn x:Name="Id" Binding="{Binding Id}"
                                         Header="Reserveernummer" Width="Auto" />
                     <DataGridTextColumn x:Name="Gereserveerdeboot" Binding="{Binding ReservedBoatId}"
                                         Header="Gereserveerde boot" Width="*" />
@@ -84,18 +105,13 @@
                                         Header="Reservatie Duratie" Width="*" />
                 </DataGrid.Columns>
             </DataGrid>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="200"/>
-                </Grid.ColumnDefinitions>
-                <Button Grid.Column="1" Margin="5, 5, 5, 5" Name="CancelButton" Background="Red" VerticalAlignment="Bottom" BorderBrush="Transparent" Click="OnCancelClick">
-                    <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="Clear" Foreground="White" Margin="0, 0, 5, 0"/>
-                        <TextBlock Text="Annuleer Reservering"/>
-                    </StackPanel>
-                </Button>
-            </Grid>
+            <Button Grid.Row="2"  Name="CancelButton" Background="Red"
+                     BorderBrush="Transparent" Click="OnCancelClick" Grid.Column="1"  Margin="0,0,0,0">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="Clear" Foreground="White" Margin="0, 0, 5, 0" />
+                    <TextBlock Text="Annuleer Reservering" />
+                </StackPanel>
+            </Button>
         </Grid>
     </Grid>
 </logic:CustomUserControl>

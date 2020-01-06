@@ -8,8 +8,8 @@
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              TextElement.FontWeight="Regular"
              TextElement.FontSize="13"
-             TextOptions.TextFormattingMode="Ideal" 
-             TextOptions.TextRenderingMode="Auto"        
+             TextOptions.TextFormattingMode="Ideal"
+             TextOptions.TextRenderingMode="Auto"
              FontFamily="{DynamicResource MaterialDesignFont}">
-    <Button Content="Log uit" Click="LogOutButton_Click" Background="#007acc" BorderBrush="#0058aa"/>
+    <Button Content="Log uit" Click="LogOutButton_Click" Background="#007acc" BorderBrush="#0058aa" />
 </UserControl>

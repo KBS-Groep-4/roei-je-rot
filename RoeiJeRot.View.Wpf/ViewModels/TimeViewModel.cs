@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace RoeiJeRot.View.Wpf.ViewModels
 {
-    class TimeViewModel
+    internal class TimeViewModel
     {
         public TimeSpan Time { get; set; }
     }

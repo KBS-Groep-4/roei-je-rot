@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Innovative.SolarCalculator;
 
 namespace RoeiJeRot.Logic.Helper
@@ -14,9 +12,9 @@ namespace RoeiJeRot.Logic.Helper
 
         public static bool IsDay(DateTime date, TimeSpan duration)
         {
-            SolarTimes solar = GetSolorTimes(date);
+            var solar = GetSolorTimes(date);
 
-            return date < solar.Sunset && date > solar.Sunrise && date + duration < solar.Sunset;
+            return  date < solar.Sunset && date > solar.Sunrise && date + duration < solar.Sunset;
         }
     }
 }

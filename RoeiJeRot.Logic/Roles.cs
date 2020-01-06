@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace RoeiJeRot.Logic
 {
     /// <summary>
-    /// The permission a user can have.
+    ///     The permission a user can have.
     /// </summary>
     [Flags]
     public enum PermissionType
@@ -20,7 +18,7 @@ namespace RoeiJeRot.Logic
     }
 
     /// <summary>
-    /// Wrapper over the roles of Roei Je Rot.
+    ///     Wrapper over the roles of Roei Je Rot.
     /// </summary>
     public class Roles
     {
@@ -31,34 +29,19 @@ namespace RoeiJeRot.Logic
         public const string STAFF = "STAFF";
 
         /// <summary>
-        /// Returns an `PermissionType` from the given permissions.
+        ///     Returns an `PermissionType` from the given permissions.
         /// </summary>
         /// <param name="permissions"></param>
         /// <returns></returns>
         public static PermissionType GetPermissionType(string[] permissions)
         {
-            PermissionType permissionType = PermissionType.None;
+            var permissionType = PermissionType.None;
 
-            if (permissions.Contains(Roles.ADMIN))
-            {
-                permissionType |= PermissionType.Admin;
-            }
-            if (permissions.Contains(Roles.MC))
-            {
-                permissionType |= PermissionType.Mc;
-            }
-            if (permissions.Contains(Roles.WC))
-            {
-                permissionType |= PermissionType.Wc;
-            }
-            if (permissions.Contains(Roles.MEMBER))
-            {
-                permissionType |= PermissionType.Member;
-            }
-            if (permissions.Contains(Roles.STAFF))
-            {
-                permissionType |= PermissionType.Staff;
-            }
+            if (permissions.Contains(ADMIN)) permissionType |= PermissionType.Admin;
+            if (permissions.Contains(MC)) permissionType |= PermissionType.Mc;
+            if (permissions.Contains(WC)) permissionType |= PermissionType.Wc;
+            if (permissions.Contains(MEMBER)) permissionType |= PermissionType.Member;
+            if (permissions.Contains(STAFF)) permissionType |= PermissionType.Staff;
 
             return permissionType;
         }

@@ -1,58 +1,53 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media;
-using RoeiJeRot.Database.Database;
 using RoeiJeRot.Logic;
 using RoeiJeRot.View.Wpf.Logic;
-using RoeiJeRot.View.Wpf.ViewModels;
 using RoeiJeRot.View.Wpf.Views.UserControls;
-using Type = RoeiJeRot.View.Wpf.Views.UserControls.Type;
-using Window = System.Windows.Window;
 
 namespace RoeiJeRot.View.Wpf.Views.Windows
 {
     /// <summary>
-    /// Interaction logic for ClieMainWindow.xaml
+    ///     Interaction logic for ClieMainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
         private readonly WindowManager _windowManager;
 
-        private Dictionary<PermissionType, Button> Buttons { get; set; }
-
         public MainWindow(WindowManager windowManager)
         {
             _windowManager = windowManager;
             InitializeComponent();
-            this.headerBar.BtnCloseClick += CloseClick;
-            this.headerBar.BtnMinClick += MinimizeClick;
-            this.headerBar.BtnMaxClick += MaximizeRestoreClick;
-            this.headerBar.LogoutClick += OnLogout;
-            
+            headerBar.BtnCloseClick += CloseClick;
+            headerBar.BtnMinClick += MinimizeClick;
+            headerBar.BtnMaxClick += MaximizeRestoreClick;
+            headerBar.LogoutClick += OnLogout;
+
             InitializeButtons();
             LoadButtonsForUser();
         }
 
+        private Dictionary<PermissionType, Button> Buttons { get; set; }
+
         private void InitializeButtons()
         {
             Buttons = new Dictionary<PermissionType, Button>();
-            var reservationOverViewWindow = new Button() { Content = "Reservering Overzicht", };
+            var reservationOverViewWindow = new Button {Content = "Reservering Overzicht"};
             reservationOverViewWindow.Click += OnReservationOverviewClick;
 
-            var reservationWindow = new Button() {Content = "Reservering Plaatsen",};
+            var reservationWindow = new Button {Content = "Reservering Plaatsen"};
             reservationWindow.Click += OnReservationClick;
 
-            var boatOverviewWindow = new Button() { Content = "Boten Overzicht", };
+            var boatOverviewWindow = new Button {Content = "Boten Overzicht"};
             boatOverviewWindow.Click += OnBoatOverviewClick;
 
             Buttons.Add(PermissionType.Admin | PermissionType.Staff | PermissionType.Mc, boatOverviewWindow);
             Buttons.Add(PermissionType.Admin | PermissionType.Staff, reservationOverViewWindow);
-            Buttons.Add(PermissionType.Admin | PermissionType.Mc | PermissionType.Member | PermissionType.Staff | PermissionType.Wc, reservationWindow);
+            Buttons.Add(
+                PermissionType.Admin | PermissionType.Mc | PermissionType.Member | PermissionType.Staff |
+                PermissionType.Wc, reservationWindow);
         }
 
         private void LoadButtonsForUser()
@@ -60,20 +55,17 @@ namespace RoeiJeRot.View.Wpf.Views.Windows
             var permissionType = _windowManager.UserSession.PermissionType;
 
             var buttonsForUser = Buttons
-                .Where(x => x.Key.HasFlag(permissionType ))
+                .Where(x => x.Key.HasFlag(permissionType))
                 .Select(x => x.Value);
 
-            foreach (var buttonForUser in buttonsForUser)
-            {
-                pnlPageButtons.Children.Add(buttonForUser);
-            }
+            foreach (var buttonForUser in buttonsForUser) pnlPageButtons.Children.Add(buttonForUser);
         }
 
         private void OnReservationOverviewClick(object sender, RoutedEventArgs e)
         {
             if (e.Source is Button)
             {
-                ReservationOverviewScreen ros = InstanceCreator.Instance.CreateInstance<ReservationOverviewScreen>();
+                var ros = _windowManager.GetService<ReservationOverviewScreen>();
                 ros.StatusMessageUpdate += OnStatusMessageUpdate;
                 _windowManager.CurrentWindow.PushEmbeddedScreen(ros);
             }
@@ -85,7 +77,7 @@ namespace RoeiJeRot.View.Wpf.Views.Windows
         {
             if (e.Source is Button)
             {
-                ReservationScreen rs = InstanceCreator.Instance.CreateInstance<ReservationScreen>();
+                var rs = _windowManager.GetService<ReservationScreen>();
                 rs.StatusMessageUpdate += OnStatusMessageUpdate;
                 _windowManager.CurrentWindow.PushEmbeddedScreen(rs);
             }
@@ -97,8 +89,9 @@ namespace RoeiJeRot.View.Wpf.Views.Windows
         {
             if (e.Source is Button)
             {
-                _windowManager.CurrentWindow.PushEmbeddedScreen(InstanceCreator.Instance
-                    .CreateInstance<BoatOverviewWindow>());
+                var overviewWindow = _windowManager.GetService<BoatOverviewWindow>();
+                overviewWindow.StatusMessageUpdate += OnStatusMessageUpdate;
+                _windowManager.CurrentWindow.PushEmbeddedScreen(overviewWindow);
             }
 
             OnScreenUpdate();
@@ -124,7 +117,7 @@ namespace RoeiJeRot.View.Wpf.Views.Windows
             _windowManager.Logout();
         }
 
-        private void OnStatusMessageUpdate(Object sender, MessageArgs args)
+        private void OnStatusMessageUpdate(object sender, MessageArgs args)
         {
             StatusLabel.Content = args.Message;
             switch (args.Type)
@@ -138,6 +131,7 @@ namespace RoeiJeRot.View.Wpf.Views.Windows
                     StatusLabel.BorderBrush = Brushes.LimeGreen;
                     break;
             }
+
             OnScreenUpdate();
         }
 

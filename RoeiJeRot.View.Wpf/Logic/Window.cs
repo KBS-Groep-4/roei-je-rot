@@ -1,18 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using RoeiJeRot.View.Wpf.Views.Windows;
 
 namespace RoeiJeRot.View.Wpf.Logic
 {
     /// <summary>
-    /// Wrapper over `System.Windows.Window`.
+    ///     Wrapper over `System.Windows.Window`.
     /// </summary>
-    public class CustomWindow<T>  where T: UserControl, IEmbeddedScreen
+    public class CustomWindow<T> where T : UserControl, IEmbeddedScreen
     {
-        private System.Windows.Window _window;
         private readonly Stack<T> _embeddedScreens;
+        private Window _window;
 
         public CustomWindow()
         {
@@ -20,7 +19,7 @@ namespace RoeiJeRot.View.Wpf.Logic
         }
 
         /// <summary>
-        /// Maximizes the current window.
+        ///     Maximizes the current window.
         /// </summary>
         public void MaximizeWindow()
         {
@@ -28,7 +27,7 @@ namespace RoeiJeRot.View.Wpf.Logic
         }
 
         /// <summary>
-        /// Minimizes the current window.
+        ///     Minimizes the current window.
         /// </summary>
         public void MinimizeWindow()
         {
@@ -36,7 +35,7 @@ namespace RoeiJeRot.View.Wpf.Logic
         }
 
         /// <summary>
-        /// Swaps the current window with the given window.
+        ///     Swaps the current window with the given window.
         /// </summary>
         public void Swap(Window window)
         {
@@ -44,7 +43,7 @@ namespace RoeiJeRot.View.Wpf.Logic
         }
 
         /// <summary>
-        /// Closes the current window.
+        ///     Closes the current window.
         /// </summary>
         public void Close()
         {
@@ -54,7 +53,7 @@ namespace RoeiJeRot.View.Wpf.Logic
         }
 
         /// <summary>
-        /// Hides the previous window and shows the new window.
+        ///     Hides the previous window and shows the new window.
         /// </summary>
         public void ShowNew(Window window)
         {
@@ -64,8 +63,8 @@ namespace RoeiJeRot.View.Wpf.Logic
         }
 
         /// <summary>
-        /// Pushes an embedded screen into this screen.
-        /// This screen will be the screen the users sees.
+        ///     Pushes an embedded screen into this screen.
+        ///     This screen will be the screen the users sees.
         /// </summary>
         /// <param name="screen"></param>
         public void PushEmbeddedScreen(T screen)
@@ -74,19 +73,16 @@ namespace RoeiJeRot.View.Wpf.Logic
         }
 
         /// <summary>
-        /// Closes the top screen.
-        /// The previous window is shown when this screen is closed.
+        ///     Closes the top screen.
+        ///     The previous window is shown when this screen is closed.
         /// </summary>
         public void CloseTopScreen()
         {
-            if (_embeddedScreens.TryPop(out T screen))
-            {
-                screen.OnClose();
-            }
+            if (_embeddedScreens.TryPop(out var screen)) screen.OnClose();
         }
 
         /// <summary>
-        /// Returns the top window.
+        ///     Returns the top window.
         /// </summary>
         /// <returns></returns>
         public T TopScreen()
@@ -95,14 +91,11 @@ namespace RoeiJeRot.View.Wpf.Logic
         }
 
         /// <summary>
-        /// Close all screens in the current window.
+        ///     Close all screens in the current window.
         /// </summary>
         public void CloseAllScreens()
         {
-            while (_embeddedScreens.TryPop(out T screen))
-            {
-                screen.OnClose();
-            }
+            while (_embeddedScreens.TryPop(out var screen)) screen.OnClose();
         }
     }
 }

@@ -9,14 +9,14 @@ namespace RoeiJeRot.View.Wpf.Views.Components
     /// </summary>
     public partial class LogoutButton : UserControl
     {
-        public event EventHandler<RoutedEventArgs> Click;
-
         public LogoutButton()
         {
             InitializeComponent();
         }
-        
-        private void LogOutButton_Click(object sender, System.Windows.RoutedEventArgs e)
+
+        public event EventHandler<RoutedEventArgs> Click;
+
+        private void LogOutButton_Click(object sender, RoutedEventArgs e)
         {
             Click?.Invoke(this, e);
         }

@@ -69,15 +69,9 @@ namespace RoeiJeRot.Logic.Services
         {
             var boat = _context.SailingBoats.FirstOrDefault(b => b.Id == boatId);
 
-            if (boat != null) boat.Status = (int)status;
+            if (boat != null) boat.Status = (int) status;
 
             _context.SaveChanges();
-        }
-
-        /// <inheritdoc />
-        public List<SailingBoat> GetBoats()
-        {
-            return _context.SailingBoats.Include(x => x.BoatType).ToList();
         }
 
         public bool ReportDamage(int boatType, int memberId, DateTime datum)
@@ -92,6 +86,12 @@ namespace RoeiJeRot.Logic.Services
 
             _context.SaveChanges();
             return true;
+        }
+
+        /// <inheritdoc />
+        public List<SailingBoat> GetBoats()
+        {
+            return _context.SailingBoats.Include(x => x.BoatType).ToList();
         }
     }
 }

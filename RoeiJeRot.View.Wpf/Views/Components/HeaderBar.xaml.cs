@@ -5,20 +5,20 @@ using System.Windows.Controls;
 namespace RoeiJeRot.View.Wpf.Views.Components
 {
     /// <summary>
-    /// Interaction logic for HeaderBar.xaml
+    ///     Interaction logic for HeaderBar.xaml
     /// </summary>
     public partial class HeaderBar : UserControl
     {
-        public event EventHandler<RoutedEventArgs> BtnCloseClick;
-        public event EventHandler<RoutedEventArgs> BtnMinClick;
-        public event EventHandler<RoutedEventArgs> BtnMaxClick;
-        public event EventHandler<RoutedEventArgs> LogoutClick;
-
         public HeaderBar()
         {
             InitializeComponent();
             logoutButton.Click += OnLogoutClick;
         }
+
+        public event EventHandler<RoutedEventArgs> BtnCloseClick;
+        public event EventHandler<RoutedEventArgs> BtnMinClick;
+        public event EventHandler<RoutedEventArgs> BtnMaxClick;
+        public event EventHandler<RoutedEventArgs> LogoutClick;
 
         private void OnLogoutClick(object sender, RoutedEventArgs e)
         {
@@ -32,7 +32,8 @@ namespace RoeiJeRot.View.Wpf.Views.Components
 
         private void Maximize_Click(object sender, RoutedEventArgs e)
         {
-            BtnMaxClick?.Invoke(this, e);}
+            BtnMaxClick?.Invoke(this, e);
+        }
 
         private void Close_Click(object sender, RoutedEventArgs e)
         {

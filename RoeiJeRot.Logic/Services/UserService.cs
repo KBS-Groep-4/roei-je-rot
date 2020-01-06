@@ -37,7 +37,7 @@ namespace RoeiJeRot.Logic.Services
 
         public User GetUserByUserName(string username)
         {
-           return  _context.Users.FirstOrDefault(x => x.Username == username);
+            return _context.Users.FirstOrDefault(x => x.Username == username);
         }
 
         public string[] GetUserPermissions(int userId)

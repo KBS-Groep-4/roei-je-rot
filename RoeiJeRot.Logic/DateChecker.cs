@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RoeiJeRot.Logic.Services
+namespace RoeiJeRot.Logic
 {
     public static class DateChecker
     {

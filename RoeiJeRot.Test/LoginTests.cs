@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 using RoeiJeRot.Database.Database;
 using RoeiJeRot.Logic;
@@ -23,12 +24,12 @@ namespace RoeiJeRot.Test
 
         public User GetUserByUserName(string username)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public string[] GetUserPermissions(int userId)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 

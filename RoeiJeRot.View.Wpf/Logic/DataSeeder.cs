@@ -51,27 +51,27 @@ namespace RoeiJeRot.View.Wpf.Logic
         {
             _context.Permissions.Add(new Permission
             {
-               Name = Roles.ADMIN, 
+                Name = Roles.ADMIN
             });
 
             _context.Permissions.Add(new Permission
             {
-                Name = Roles.MEMBER,
+                Name = Roles.MEMBER
             });
 
             _context.Permissions.Add(new Permission
             {
-                Name = Roles.MC,
+                Name = Roles.MC
             });
 
             _context.Permissions.Add(new Permission
             {
-                Name = Roles.WC,
+                Name = Roles.WC
             });
-            
+
             _context.Permissions.Add(new Permission
             {
-                Name = Roles.STAFF,
+                Name = Roles.STAFF
             });
 
             _context.SaveChanges();
@@ -79,31 +79,31 @@ namespace RoeiJeRot.View.Wpf.Logic
 
         private void SeedUserPermissions()
         {
-            _context.PermissionUsers.Add(new UserPermission()
+            _context.PermissionUsers.Add(new UserPermission
             {
                 PermissionId = 1,
                 UserId = 5
             });
 
-            _context.PermissionUsers.Add(new UserPermission()
+            _context.PermissionUsers.Add(new UserPermission
             {
                 PermissionId = 2,
                 UserId = 4
             });
 
-            _context.PermissionUsers.Add(new UserPermission()
+            _context.PermissionUsers.Add(new UserPermission
             {
                 PermissionId = 3,
                 UserId = 3
             });
 
-            _context.PermissionUsers.Add(new UserPermission()
+            _context.PermissionUsers.Add(new UserPermission
             {
                 PermissionId = 4,
                 UserId = 2
             });
 
-            _context.PermissionUsers.Add(new UserPermission()
+            _context.PermissionUsers.Add(new UserPermission
             {
                 PermissionId = 5,
                 UserId = 1
@@ -184,9 +184,9 @@ namespace RoeiJeRot.View.Wpf.Logic
         private void SeedBoats()
         {
             //Make for every boat type 5 boats
-            foreach (BoatType type in _context.SailingBoatTypes)
-                for (int i = 0; i < 1; i++)
-                    _context.SailingBoats.Add(new SailingBoat { Status = 0, BoatTypeId = type.Id });
+            foreach (var type in _context.SailingBoatTypes)
+                for (var i = 0; i < 1; i++)
+                    _context.SailingBoats.Add(new SailingBoat {Status = 0, BoatTypeId = type.Id});
 
             _context.SaveChanges();
         }
@@ -200,21 +200,21 @@ namespace RoeiJeRot.View.Wpf.Logic
                 new BoatType {PossiblePassengers = 1, RequiredLevel = 1, Name = "Kleine kano"});
 
             _context.SailingBoatTypes.Add(
-                new BoatType { PossiblePassengers = 1, RequiredLevel = 1, Name = "Kleine kano 2" });
+                new BoatType {PossiblePassengers = 1, RequiredLevel = 1, Name = "Kleine kano 2"});
 
-            _context.SailingBoatTypes.Add(new BoatType()
+            _context.SailingBoatTypes.Add(new BoatType
             {
                 PossiblePassengers = 5,
                 Name = "Zeilboot",
                 RequiredLevel = 5
             });
-            _context.SailingBoatTypes.Add(new BoatType()
+            _context.SailingBoatTypes.Add(new BoatType
             {
                 PossiblePassengers = 4,
                 Name = "Zwaartboot",
                 RequiredLevel = 6
             });
-            _context.SailingBoatTypes.Add(new BoatType()
+            _context.SailingBoatTypes.Add(new BoatType
             {
                 Name = "Flying Dutchman",
                 PossiblePassengers = 5,

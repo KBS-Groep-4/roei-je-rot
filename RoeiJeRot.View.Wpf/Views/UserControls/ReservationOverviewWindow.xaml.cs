@@ -3,12 +3,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
-using RoeiJeRot.Database.Database;
 using RoeiJeRot.Logic.Services;
 using RoeiJeRot.View.Wpf.Logic;
 using RoeiJeRot.View.Wpf.ViewModels;
-using RoeiJeRot.View.Wpf.Views.Windows;
 
 namespace RoeiJeRot.View.Wpf.Views.UserControls
 {
@@ -20,27 +17,27 @@ namespace RoeiJeRot.View.Wpf.Views.UserControls
 
     public class MessageArgs : EventArgs
     {
-        public string Message { get; private set; }
-        public Type Type { get; private set; }
-        
-
         public MessageArgs(string message, Type type)
         {
             Message = message;
             Type = type;
         }
+
+        public string Message { get; }
+        public Type Type { get; }
     }
+
     /// <summary>
     ///     Interaction logic for ReservationOverviewScreen.xaml
     /// </summary>
     public partial class ReservationOverviewScreen : CustomUserControl
     {
         private readonly WindowManager _windowManager;
-        private IMailService _mailService;
+        private readonly IMailService _mailService;
         private IReservationService _reservationService;
-        public event EventHandler<MessageArgs> StatusMessageUpdate;
 
-        public ReservationOverviewScreen(IReservationService reservationService, WindowManager windowManager, IMailService mailService)
+        public ReservationOverviewScreen(IReservationService reservationService, WindowManager windowManager,
+            IMailService mailService)
         {
             _windowManager = windowManager;
             _mailService = mailService;
@@ -51,6 +48,8 @@ namespace RoeiJeRot.View.Wpf.Views.UserControls
 
         public ObservableCollection<ReservationViewModel> Items { get; set; } =
             new ObservableCollection<ReservationViewModel>();
+
+        public event EventHandler<MessageArgs> StatusMessageUpdate;
 
         // Set data for the reservations view.
         public void SetReservationData(IReservationService reservationService)
@@ -76,10 +75,12 @@ namespace RoeiJeRot.View.Wpf.Views.UserControls
             var toRemoveModel = new List<ReservationViewModel>();
             foreach (var data in DeviceDataGrid.SelectedItems)
             {
-                var model = (ReservationViewModel)data;
+                var model = (ReservationViewModel) data;
                 _mailService.SendCancelConfirmation(model.Email, model.FirstName, model.ReservationDate);
-                _reservationService.CancelReservation((model).Id);
+                _reservationService.CancelReservation(model.Id);
+                toRemoveModel.Add(model);
             }
+
             StatusMessageUpdate?.Invoke(this, new MessageArgs("Reservering(en) verwijderd.", Type.Green));
             toRemoveModel.ForEach(x => Items.Remove(x));
         }

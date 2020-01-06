@@ -1,8 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Input;
-using RoeiJeRot.Logic.Services;
 using RoeiJeRot.View.Wpf.Logic;
-using Window = System.Windows.Window;
 
 namespace RoeiJeRot.View.Wpf.Views.Windows
 {
@@ -17,9 +15,9 @@ namespace RoeiJeRot.View.Wpf.Views.Windows
         {
             _windowManager = windowManager;
             InitializeComponent();
-            this.headerBar.BtnCloseClick += CloseClick;
-            this.headerBar.BtnMinClick += MinimizeClick;
-            this.headerBar.BtnMaxClick += MaximizeRestoreClick;
+            headerBar.BtnCloseClick += CloseClick;
+            headerBar.BtnMinClick += MinimizeClick;
+            headerBar.BtnMaxClick += MaximizeRestoreClick;
 
             headerBar.logoutButton.Visibility = Visibility.Hidden;
         }
@@ -52,10 +50,7 @@ namespace RoeiJeRot.View.Wpf.Views.Windows
 
         private void OnEnterClick(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Enter)
-            {
-                OnLogInClick(this, e);
-            }
+            if (e.Key == Key.Enter) OnLogInClick(this, e);
         }
     }
 }
