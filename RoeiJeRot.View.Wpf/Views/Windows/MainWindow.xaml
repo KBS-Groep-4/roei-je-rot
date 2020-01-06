@@ -6,7 +6,7 @@
         xmlns:viewModels="clr-namespace:RoeiJeRot.View.Wpf.ViewModels"
         xmlns:components="clr-namespace:RoeiJeRot.View.Wpf.Views.Components"
         mc:Ignorable="d"
-        Title="Roei Je Rot" Height="600" Width="1165" WindowStyle="None" ResizeMode="CanResize" x:Name="window" WindowStartupLocation="CenterScreen" WindowState="Maximized"
+        Title="Roei Je Rot" MinHeight="600" MinWidth="1165" Height="Auto" WindowStyle="None" ResizeMode="CanResize" x:Name="window" WindowStartupLocation="CenterScreen" WindowState="Maximized"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"

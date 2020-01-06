@@ -96,7 +96,7 @@ namespace RoeiJeRot.Logic.Services
                 });
 
                 _context.SaveChanges();
-                return new ReservationConstraintsMessage(true, "valid");
+                return new ReservationConstraintsMessage(true, "Reservering is geplaatst");
             }
 
             return new ReservationConstraintsMessage(false, "Geen boten beschikbaar.");
@@ -144,7 +144,7 @@ namespace RoeiJeRot.Logic.Services
                 _context.Remove(reservation);
                 _context.SaveChanges();
             }
-            else throw new Exception("No reservation of this id found");
+            else return;
         }
 
         /// <inheritdoc />

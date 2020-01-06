@@ -28,7 +28,6 @@ namespace RoeiJeRot.View.Wpf.Logic
                 try
                 {
                     _context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT users ON");
-                    _context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT permissions ON");
 
                     _context.SaveChanges();
 
@@ -44,7 +43,7 @@ namespace RoeiJeRot.View.Wpf.Logic
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex);
+                    throw ex;
                 }
         }
 
@@ -186,7 +185,7 @@ namespace RoeiJeRot.View.Wpf.Logic
         {
             //Make for every boat type 5 boats
             foreach (BoatType type in _context.SailingBoatTypes)
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < 1; i++)
                     _context.SailingBoats.Add(new SailingBoat { Status = 0, BoatTypeId = type.Id });
 
             _context.SaveChanges();

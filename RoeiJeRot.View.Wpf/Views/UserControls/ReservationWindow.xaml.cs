@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using RoeiJeRot.Database.Database;
+using RoeiJeRot.Logic.Helper;
 using RoeiJeRot.Logic.Services;
 using RoeiJeRot.View.Wpf.Logic;
 using RoeiJeRot.View.Wpf.ViewModels;
@@ -17,14 +18,14 @@ namespace RoeiJeRot.View.Wpf.Views.UserControls
     /// </summary>
     public partial class ReservationScreen : CustomUserControl
     {
-        private readonly IBoatService _boatService;
-        private IReservationService _reservationService;
-        private WindowManager _windowManager;
-        private readonly IMailService _mailService;
+        private readonly IReservationService _reservationService;
+        private readonly WindowManager _windowManager;
         public event EventHandler<MessageArgs> StatusMessageUpdate;
 
         public ObservableCollection<ReservationViewModel> Items { get; set; } =
             new ObservableCollection<ReservationViewModel>();
+
+        private Dictionary<TimeSpan, List<BoatType>> TimeAvailableTypes = new Dictionary<TimeSpan, List<BoatType>>();
 
         // Set data for the reservations view.
         public void SetReservationData()
@@ -45,15 +46,13 @@ namespace RoeiJeRot.View.Wpf.Views.UserControls
 
         public ReservationScreen(IBoatService boatService, IReservationService reservationService, IMailService mailService, WindowManager windowManager)
         {
-            _boatService = boatService;
             _reservationService = reservationService;
-            _mailService = mailService;
             _windowManager = windowManager;
 
             InitializeComponent();
             When.SelectedDate = DateTime.Today;
 
-            UpdateAvailableList();
+            UpdateTimeAvailableTypes();
 
             SetReservationData();
             DeviceDataGrid.ItemsSource = Items;
@@ -63,44 +62,22 @@ namespace RoeiJeRot.View.Wpf.Views.UserControls
 
         public void ReservButtonOnClick(object sender, RoutedEventArgs args)
         {
-            TimeSpan time;
-            if (TimeSpan.TryParse(Time.Text, out time))
+            if (int.TryParse(Duration.Text, out int durationInt))
             {
-                if (time.TotalHours > 24)
-                    return;
+                TimeSpan duration = TimeSpan.FromMinutes(durationInt);
 
-                int durationInt;
-                if (int.TryParse(Duration.Text, out durationInt))
+                if (When.SelectedDate.HasValue)
                 {
-                    var duration = TimeSpan.FromMinutes(durationInt);
-
-                    var selectedItemObject = AvailableBoats.SelectedItem;
-                    if (selectedItemObject == null)
+                    if (AvailableTimes.SelectedItem != null && AvailableBoats.SelectedItem != null)
                     {
-                        StatusMessageUpdate?.Invoke(this, new MessageArgs("Reservering niet geplaatst: Geen boot geselecteerd.", Type.Red));
+                        TimeSpan selectedTime = ((TimeViewModel)AvailableTimes.SelectedItem).Time;
+                        BoatType selectedType = (BoatType)AvailableBoats.SelectedItem;
+
+                        ReservationConstraintsMessage msg = _reservationService.PlaceReservation(selectedType.Id, _windowManager.UserSession.UserId,
+                            When.SelectedDate.Value + selectedTime, duration);
+
+                        StatusMessageUpdate?.Invoke(this, new MessageArgs(msg.Reason, msg.IsValid ? Type.Green : Type.Red));
                         return;
-                    }
-
-                    var selectedType = (BoatTypeViewModel) selectedItemObject;
-
-                    if (When.SelectedDate.HasValue)
-                    {
-                        bool result = _reservationService.PlaceReservation(selectedType.Id, _windowManager.UserSession.UserId, When.SelectedDate.Value + time,
-                            duration).IsValid;
-                        string message = _reservationService.PlaceReservation(selectedType.Id, _windowManager.UserSession.UserId, When.SelectedDate.Value + time,
-                            duration).Reason;
-                        if (result)
-                        {
-                            _mailService.SendConfirmation(_windowManager.UserSession.Email, _windowManager.UserSession.FirstName, When.SelectedDate.Value, duration);
-                            StatusMessageUpdate?.Invoke(this, new MessageArgs("Reservering geplaatst.", Type.Green));
-                            SetReservationData();
-                        }
-                        else
-                        {
-                            StatusMessageUpdate?.Invoke(this, new MessageArgs("Reservering niet geplaatst: " + message, Type.Red));
-                        }
-
-                        UpdateAvailableList();
                     }
                 }
             }
@@ -108,48 +85,121 @@ namespace RoeiJeRot.View.Wpf.Views.UserControls
 
         public void OnReservationDetailChange(object sender, EventArgs args)
         {
-            UpdateAvailableList();
+            UpdateTimeAvailableTypes();
         }
 
-        public void UpdateAvailableList()
+        public void OnBoatTypeChange(object sender, EventArgs args)
         {
-            TimeSpan time;
-            int durationInt;
+            UpdateTimeList();
+        }
 
-            if (TimeSpan.TryParse(Time.Text, out time) && Duration != null &&
-                int.TryParse(Duration.Text, out durationInt) &&
-                When.SelectedDate.HasValue)
+        // Updates the time list
+        private void UpdateTimeList()
+        {
+            if(AvailableTimes.SelectedItem == null)
             {
-                var boats = _reservationService.GetAvailableBoats(When.SelectedDate.Value + time,
-                    TimeSpan.FromMinutes(durationInt));
-                var availableTypes = new List<BoatType>();
-
-                foreach (var boat in boats)
+                ObservableCollection<TimeViewModel> times = new ObservableCollection<TimeViewModel>();
+                foreach (TimeSpan availableTime in TimeAvailableTypes.Keys)
                 {
-                    var alreadyIn = false;
-                    foreach (var type in availableTypes)
-                        if (type.Id == boat.BoatTypeId)
-                            alreadyIn = true;
-
-                    if (!alreadyIn) availableTypes.Add(boat.BoatType);
-                }
-
-                ObservableAvailableTypes = new ObservableCollection<BoatTypeViewModel>(availableTypes
-                    .Select(type => new BoatTypeViewModel
+                    if (AvailableBoats.SelectedItem == null)
+                        times.Add(new TimeViewModel
+                        {
+                            Time = availableTime
+                        });
+                    else
                     {
-                        Id = type.Id,
-                        Name = type.Name,
-                        PossiblePassengers = type.PossiblePassengers,
-                        RequiredLevel = type.RequiredLevel
-                    })
-                    .ToList());
+                        BoatType selectedType = (BoatType)AvailableBoats.SelectedItem;
+                        bool hasTypeAvailable = false;
+                        foreach (BoatType type in TimeAvailableTypes[availableTime])
+                        {
+                            if (type.Id == selectedType.Id)
+                                hasTypeAvailable = true;
+                        }
 
-                AvailableBoats.ItemsSource = ObservableAvailableTypes;
-            }
-            else if (AvailableBoats != null)
+                        if (hasTypeAvailable)
+                            times.Add(new TimeViewModel
+                            {
+                                Time = availableTime
+                            });
+                    }
+                }
+                AvailableTimes.ItemsSource = times;
+            } else if(AvailableBoats.SelectedItem == null)
             {
-                AvailableBoats.ItemsSource = null;
+                UpdateBoatTypeList();
             }
+        }
+
+        public void OnTimeChange(object sender, EventArgs args)
+        {
+            UpdateBoatTypeList();
+        }
+
+        // Update the boat type list
+        private void UpdateBoatTypeList()
+        {
+            if (AvailableBoats.SelectedItem == null)
+            {
+                ObservableCollection<BoatType> typesObservableCollection = new ObservableCollection<BoatType>();
+                if (AvailableTimes.SelectedItem == null)
+                {
+                    List<BoatType> types = new List<BoatType>();
+                    foreach (List<BoatType> boatTypes in TimeAvailableTypes.Values)
+                    {
+                        foreach (BoatType boatType in boatTypes)
+                        {
+                            types.Add(boatType);
+                        }
+                    }
+
+                    types = types.GroupBy(x => x.Id).Select(x => x.First()).ToList();
+
+                    foreach (BoatType boatType in types)
+                    {
+                        typesObservableCollection.Add(boatType);
+                    }
+                }
+                else
+                {
+                    TimeSpan selectedTime = ((TimeViewModel)AvailableTimes.SelectedItem).Time;
+
+                    foreach (BoatType boatType in TimeAvailableTypes[selectedTime])
+                    {
+                        typesObservableCollection.Add(boatType);
+                    }
+                }
+                AvailableBoats.ItemsSource = typesObservableCollection;
+            } else if (AvailableTimes.SelectedItem == null)
+            {
+                UpdateTimeList();
+            }
+        }
+
+        // Updates the dictionary
+        public void UpdateTimeAvailableTypes()
+        {
+            TimeAvailableTypes = new Dictionary<TimeSpan, List<BoatType>>();
+            if (When.SelectedDate.HasValue)
+            {
+                if (int.TryParse(Duration.Text, out int durationInt))
+                {
+                    TimeSpan duration = TimeSpan.FromMinutes(durationInt);
+                    for (TimeSpan i = TimeSpan.Zero; i < new TimeSpan(0, 23, 59, 0); i += TimeSpan.FromMinutes(15))
+                    {
+                        if (DayChecker.IsDay(When.SelectedDate.Value + i, duration))
+                        {
+                            List<BoatType> availableTypes = _reservationService.AvailableBoatTypes(When.SelectedDate.Value + i, duration);
+                            if (availableTypes.Any())
+                            {
+                                TimeAvailableTypes[i] = availableTypes;
+                            }
+                        }
+                    }
+                }
+            }
+
+            UpdateTimeList();
+            UpdateBoatTypeList();
         }
 
         private void OnCancelClick(object sender, RoutedEventArgs e)
